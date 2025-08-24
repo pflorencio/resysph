@@ -1,0 +1,82 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Restaurant {
+  id           String     @id @default(uuid())
+  name         String
+  timezone     String     @default("Asia/Manila")
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  members      RestaurantMember[]
+  floors       Floor[]
+  tables       Table[]
+  reservations Reservation[]
+}
+
+model RestaurantMember {
+  id           String   @id @default(uuid())
+  restaurantId String
+  userId       String
+  role         String   @default("HOST")
+  createdAt    DateTime @default(now())
+
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+
+  @@unique([restaurantId, userId])
+}
+
+model Floor {
+  id           String     @id @default(uuid())
+  restaurantId String
+  name         String
+  position     Int        @default(0)
+
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  tables       Table[]
+}
+
+model Table {
+  id           String     @id @default(uuid())
+  restaurantId String
+  floorId      String?
+  label        String
+  capacity     Int        @default(2)
+  status       String     @default("ACTIVE")
+  shape        String     @default("RECT")
+  position     Json?
+  metadata     Json?
+  createdAt    DateTime   @default(now())
+
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  floor        Floor?     @relation(fields: [floorId], references: [id])
+  reservations Reservation[]
+}
+
+model Reservation {
+  id           String     @id @default(uuid())
+  restaurantId String
+  tableId      String?
+  startsAt     DateTime
+  endsAt       DateTime
+  partySize    Int
+  guestName    String
+  guestPhone   String?
+  guestNote    String?
+  status       String     @default("BOOKED")
+  source       String     @default("ONLINE")
+  tags         String[]
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+  table        Table?     @relation(fields: [tableId], references: [id])
+
+  @@index([restaurantId, startsAt])
+}
