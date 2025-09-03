@@ -150,7 +150,7 @@ class Prisma(AsyncBasePrisma):
     def _default_datasource(self) -> Datasource:
         return {
             'name': 'db',
-            'url': OptionalValueFromEnvVar(**{'value': 'file:./dev.db', 'fromEnvVar': None}).resolve(),
+            'url': OptionalValueFromEnvVar(**{'value': 'file:dev.db', 'fromEnvVar': None}).resolve(),
             'source_file_path': '/Users/pflorencio/resysph/backend/schema.prisma',
         }
 

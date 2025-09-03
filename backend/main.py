@@ -1,29 +1,33 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routes.routes import router as api_router  # ✅ explicit import from routes/routes.py
-from prisma_client import Prisma
+from routes.routes import router as api_router
+from db import connect, disconnect, prisma
 
-app = FastAPI()
+app = FastAPI(title="ResysPH API")
 
-# CORS middleware (optional, but useful during dev)
+# CORS (open for dev; tighten in prod)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Or specify allowed origins
+    allow_origins=["*"],  # Or specify allowed origins in production
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Prisma client init (not used directly in main.py, but initialized here)
-prisma = Prisma()
-
 @app.on_event("startup")
-async def startup():
-    await prisma.connect()
+async def startup() -> None:
+    await connect()
+    # Expose Prisma client globally if you want to access it from request.app.state
+    app.state.prisma = prisma
 
 @app.on_event("shutdown")
-async def shutdown():
-    await prisma.disconnect()
+async def shutdown() -> None:
+    await disconnect()
 
-# Include all routes from routes.py
-app.include_router(api_router)
+# Health check endpoint
+@app.get("/health")
+async def health():
+    return {"status": "ok"}
+
+# Mount your API under /api
+app.include_router(api_router, prefix="/api")
