@@ -63,3 +63,10 @@ backend/prisma_client/engine/
 ##### Editors/IDE (optional)
 .vscode/
 .idea/
+
+# SQLite / local DBs
+**/*.db
+**/*.db-shm
+**/*.db-wal
+**/*.sqlite
+**/*.sqlite3
