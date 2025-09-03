@@ -1,8 +1,17 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# dependencies
-/node_modules
-/.pnp
+##### Node / Next.js (monorepo-safe)
+**/node_modules/
+**/.next/
+**/out/
+**/dist/
+**/build/
+**/.turbo/
+# Vercel
+**/.vercel/
+
+##### Yarn / pnpm
+**/.pnp
 .pnp.*
 .yarn/*
 !.yarn/patches
@@ -10,41 +19,47 @@
 !.yarn/releases
 !.yarn/versions
 
-# testing
-/coverage
+##### Testing coverage
+**/coverage/
 
-# next.js
-/.next/
-/out/
-
-# production
-/build
-
-# misc
+##### Misc
 .DS_Store
 *.pem
 
-# debug
+##### Debug logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
-.env*
+##### Env files (do not commit secrets)
+**/.env
+**/.env.*
 
-# vercel
-.vercel
-
-# typescript
+##### TypeScript
 *.tsbuildinfo
-next-env.d.ts
+# next-env.d.ts is auto-generated; fine to commit, but leave ignored if you prefer
+# next-env.d.ts
 
-# python
-venv/
+##### Python (monorepo-safe)
+**/venv/
+**/.venv/
+**/__pycache__/
+**/*.py[cod]
+*.egg-info/
+.python-version
 
-/src/generated/prisma
+##### Prisma (heavy engines are also ignored in backend/.gitignore)
+backend/prisma_client/binaries/
+backend/prisma_client/engine/
 
-# Supabase local CLI files
+##### Supabase local CLI
 **/.branches/
 **/.temp/
+
+##### Generated code
+**/src/generated/prisma
+
+##### Editors/IDE (optional)
+.vscode/
+.idea/
