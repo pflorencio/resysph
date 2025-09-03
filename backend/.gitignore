@@ -1,0 +1,4 @@
+__pycache__/
+*.pyc
+prisma_client/binaries/
+prisma_client/engine/

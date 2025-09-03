@@ -40,4 +40,11 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# python
+venv/
+
 /src/generated/prisma
+
+# Supabase local CLI files
+**/.branches/
+**/.temp/

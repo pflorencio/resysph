@@ -1,0 +1,50 @@
+generator client {
+  provider = "prisma-client-py"
+  output   = "prisma_client"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Restaurant {
+  id       Int     @id @default(autoincrement())
+  name     String
+  location String
+  floors   Floor[]
+}
+
+model Floor {
+  id           Int        @id @default(autoincrement())
+  name         String
+  restaurantId Int
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+  tables       Table[]
+}
+
+model Table {
+  id           Int           @id @default(autoincrement())
+  number       Int
+  floorId      Int
+  floor        Floor         @relation(fields: [floorId], references: [id])
+  capacity     Int
+  reservations Reservation[]
+}
+
+model Member {
+  id           Int           @id @default(autoincrement())
+  name         String
+  email        String
+  reservations Reservation[]
+  phone        String
+}
+
+model Reservation {
+  id       Int      @id @default(autoincrement())
+  date     DateTime
+  tableId  Int
+  table    Table    @relation(fields: [tableId], references: [id])
+  memberId Int
+  member   Member   @relation(fields: [memberId], references: [id])
+}
