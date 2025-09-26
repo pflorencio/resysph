@@ -36,7 +36,7 @@ from typing import (
 from typing_extensions import TypedDict, Literal
 
 
-LiteralString = str
+from typing_extensions import LiteralString
 # -- template models.py.jinja --
 import os
 import logging
@@ -61,23 +61,9 @@ class Restaurant(bases.BaseRestaurant):
 
     id: _int
     name: _str
-    location: _str
+    location: Optional[_str] = None
     floors: Optional[List['models.Floor']] = None
 
-    # take *args and **kwargs so that other metaclasses can define arguments
-    def __init_subclass__(
-        cls,
-        *args: Any,
-        warn_subclass: Optional[bool] = None,
-        **kwargs: Any,
-    ) -> None:
-        super().__init_subclass__()
-        if warn_subclass is not None:
-            warnings.warn(
-                'The `warn_subclass` argument is deprecated as it is no longer necessary and will be removed in the next release',
-                DeprecationWarning,
-                stacklevel=3,
-            )
 
 
     @staticmethod
@@ -191,25 +177,11 @@ class Floor(bases.BaseFloor):
     """Represents a Floor record"""
 
     id: _int
-    name: _str
+    name: Optional[_str] = None
     restaurantId: _int
     restaurant: Optional['models.Restaurant'] = None
     tables: Optional[List['models.Table']] = None
 
-    # take *args and **kwargs so that other metaclasses can define arguments
-    def __init_subclass__(
-        cls,
-        *args: Any,
-        warn_subclass: Optional[bool] = None,
-        **kwargs: Any,
-    ) -> None:
-        super().__init_subclass__()
-        if warn_subclass is not None:
-            warnings.warn(
-                'The `warn_subclass` argument is deprecated as it is no longer necessary and will be removed in the next release',
-                DeprecationWarning,
-                stacklevel=3,
-            )
 
 
     @staticmethod
@@ -324,25 +296,18 @@ class Table(bases.BaseTable):
 
     id: _int
     number: _int
-    floorId: _int
+    floorId: Optional[_int] = None
     floor: Optional['models.Floor'] = None
-    capacity: _int
+    capacity: Optional[_int] = None
+    posX: Optional[_int] = None
+    posY: Optional[_int] = None
+    width: Optional[_int] = None
+    height: Optional[_int] = None
+    rotation: Optional[_int] = None
+    label: Optional[_str] = None
+    area: Optional[_str] = None
     reservations: Optional[List['models.Reservation']] = None
 
-    # take *args and **kwargs so that other metaclasses can define arguments
-    def __init_subclass__(
-        cls,
-        *args: Any,
-        warn_subclass: Optional[bool] = None,
-        **kwargs: Any,
-    ) -> None:
-        super().__init_subclass__()
-        if warn_subclass is not None:
-            warnings.warn(
-                'The `warn_subclass` argument is deprecated as it is no longer necessary and will be removed in the next release',
-                DeprecationWarning,
-                stacklevel=3,
-            )
 
 
     @staticmethod
@@ -458,23 +423,9 @@ class Member(bases.BaseMember):
     id: _int
     name: _str
     email: _str
+    phone: Optional[_str] = None
     reservations: Optional[List['models.Reservation']] = None
-    phone: _str
 
-    # take *args and **kwargs so that other metaclasses can define arguments
-    def __init_subclass__(
-        cls,
-        *args: Any,
-        warn_subclass: Optional[bool] = None,
-        **kwargs: Any,
-    ) -> None:
-        super().__init_subclass__()
-        if warn_subclass is not None:
-            warnings.warn(
-                'The `warn_subclass` argument is deprecated as it is no longer necessary and will be removed in the next release',
-                DeprecationWarning,
-                stacklevel=3,
-            )
 
 
     @staticmethod
@@ -593,21 +544,12 @@ class Reservation(bases.BaseReservation):
     table: Optional['models.Table'] = None
     memberId: _int
     member: Optional['models.Member'] = None
+    status: _str
+    partySize: Optional[_int] = None
+    notes: Optional[_str] = None
+    createdAt: datetime.datetime
+    updatedAt: datetime.datetime
 
-    # take *args and **kwargs so that other metaclasses can define arguments
-    def __init_subclass__(
-        cls,
-        *args: Any,
-        warn_subclass: Optional[bool] = None,
-        **kwargs: Any,
-    ) -> None:
-        super().__init_subclass__()
-        if warn_subclass is not None:
-            warnings.warn(
-                'The `warn_subclass` argument is deprecated as it is no longer necessary and will be removed in the next release',
-                DeprecationWarning,
-                stacklevel=3,
-            )
 
 
     @staticmethod
@@ -742,7 +684,7 @@ _Restaurant_fields: Dict['types.RestaurantKeys', PartialModelField] = OrderedDic
         ('location', {
             'name': 'location',
             'is_list': False,
-            'optional': False,
+            'optional': True,
             'type': '_str',
             'is_relational': False,
             'documentation': None,
@@ -775,7 +717,7 @@ _Floor_fields: Dict['types.FloorKeys', PartialModelField] = OrderedDict(
         ('name', {
             'name': 'name',
             'is_list': False,
-            'optional': False,
+            'optional': True,
             'type': '_str',
             'is_relational': False,
             'documentation': None,
@@ -832,7 +774,7 @@ _Table_fields: Dict['types.TableKeys', PartialModelField] = OrderedDict(
         ('floorId', {
             'name': 'floorId',
             'is_list': False,
-            'optional': False,
+            'optional': True,
             'type': '_int',
             'is_relational': False,
             'documentation': None,
@@ -848,8 +790,64 @@ _Table_fields: Dict['types.TableKeys', PartialModelField] = OrderedDict(
         ('capacity', {
             'name': 'capacity',
             'is_list': False,
-            'optional': False,
+            'optional': True,
             'type': '_int',
+            'is_relational': False,
+            'documentation': None,
+        }),
+        ('posX', {
+            'name': 'posX',
+            'is_list': False,
+            'optional': True,
+            'type': '_int',
+            'is_relational': False,
+            'documentation': None,
+        }),
+        ('posY', {
+            'name': 'posY',
+            'is_list': False,
+            'optional': True,
+            'type': '_int',
+            'is_relational': False,
+            'documentation': None,
+        }),
+        ('width', {
+            'name': 'width',
+            'is_list': False,
+            'optional': True,
+            'type': '_int',
+            'is_relational': False,
+            'documentation': None,
+        }),
+        ('height', {
+            'name': 'height',
+            'is_list': False,
+            'optional': True,
+            'type': '_int',
+            'is_relational': False,
+            'documentation': None,
+        }),
+        ('rotation', {
+            'name': 'rotation',
+            'is_list': False,
+            'optional': True,
+            'type': '_int',
+            'is_relational': False,
+            'documentation': None,
+        }),
+        ('label', {
+            'name': 'label',
+            'is_list': False,
+            'optional': True,
+            'type': '_str',
+            'is_relational': False,
+            'documentation': None,
+        }),
+        ('area', {
+            'name': 'area',
+            'is_list': False,
+            'optional': True,
+            'type': '_str',
             'is_relational': False,
             'documentation': None,
         }),
@@ -893,20 +891,20 @@ _Member_fields: Dict['types.MemberKeys', PartialModelField] = OrderedDict(
             'is_relational': False,
             'documentation': None,
         }),
+        ('phone', {
+            'name': 'phone',
+            'is_list': False,
+            'optional': True,
+            'type': '_str',
+            'is_relational': False,
+            'documentation': None,
+        }),
         ('reservations', {
             'name': 'reservations',
             'is_list': True,
             'optional': True,
             'type': 'List[\'models.Reservation\']',
             'is_relational': True,
-            'documentation': None,
-        }),
-        ('phone', {
-            'name': 'phone',
-            'is_list': False,
-            'optional': False,
-            'type': '_str',
-            'is_relational': False,
             'documentation': None,
         }),
     ],
@@ -964,6 +962,46 @@ _Reservation_fields: Dict['types.ReservationKeys', PartialModelField] = OrderedD
             'optional': True,
             'type': 'models.Member',
             'is_relational': True,
+            'documentation': None,
+        }),
+        ('status', {
+            'name': 'status',
+            'is_list': False,
+            'optional': False,
+            'type': '_str',
+            'is_relational': False,
+            'documentation': None,
+        }),
+        ('partySize', {
+            'name': 'partySize',
+            'is_list': False,
+            'optional': True,
+            'type': '_int',
+            'is_relational': False,
+            'documentation': None,
+        }),
+        ('notes', {
+            'name': 'notes',
+            'is_list': False,
+            'optional': True,
+            'type': '_str',
+            'is_relational': False,
+            'documentation': None,
+        }),
+        ('createdAt', {
+            'name': 'createdAt',
+            'is_list': False,
+            'optional': False,
+            'type': 'datetime.datetime',
+            'is_relational': False,
+            'documentation': None,
+        }),
+        ('updatedAt', {
+            'name': 'updatedAt',
+            'is_list': False,
+            'optional': False,
+            'type': 'datetime.datetime',
+            'is_relational': False,
             'documentation': None,
         }),
     ],

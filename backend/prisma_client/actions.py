@@ -37,7 +37,7 @@ from typing import (
 from typing_extensions import TypedDict, Literal
 
 
-LiteralString = str
+from typing_extensions import LiteralString
 # -- template actions.py.jinja --
 from typing import TypeVar
 import warnings
@@ -176,7 +176,6 @@ class RestaurantActions(Generic[_PrismaModelT]):
             data={
                 # data to create a Restaurant record
                 'name': 'ggciceaie',
-                'location': 'bbehjachib',
             },
         )
         ```
@@ -231,13 +230,11 @@ class RestaurantActions(Generic[_PrismaModelT]):
             data=[
                 {
                     # data to create a Restaurant record
-                    'name': 'cadfabfehe',
-                    'location': 'dgiiaaijj',
+                    'name': 'bbehjachib',
                 },
                 {
                     # data to create a Restaurant record
-                    'name': 'bfaiacjjfc',
-                    'location': 'eigcfgbif',
+                    'name': 'cadfabfehe',
                 },
             ],
             skip_duplicates=True,
@@ -291,7 +288,7 @@ class RestaurantActions(Generic[_PrismaModelT]):
         ```py
         restaurant = await Restaurant.prisma().delete(
             where={
-                'id': 1062517886,
+                'id': 368800899,
             },
         )
         ```
@@ -343,7 +340,7 @@ class RestaurantActions(Generic[_PrismaModelT]):
         ```py
         restaurant = await Restaurant.prisma().find_unique(
             where={
-                'id': 267834847,
+                'id': 1508029952,
             },
         )
         ```
@@ -394,7 +391,7 @@ class RestaurantActions(Generic[_PrismaModelT]):
         ```py
         restaurant = await Restaurant.prisma().find_unique_or_raise(
             where={
-                'id': 180171308,
+                'id': 486256185,
             },
         )
         ```
@@ -646,7 +643,7 @@ class RestaurantActions(Generic[_PrismaModelT]):
         ```py
         restaurant = await Restaurant.prisma().update(
             where={
-                'id': 836760821,
+                'id': 1062517886,
             },
             data={
                 # data to update the Restaurant record to
@@ -703,17 +700,15 @@ class RestaurantActions(Generic[_PrismaModelT]):
         ```py
         restaurant = await Restaurant.prisma().upsert(
             where={
-                'id': 595337866,
+                'id': 267834847,
             },
             data={
                 'create': {
-                    'id': 595337866,
-                    'name': 'bfaiacjjfc',
-                    'location': 'eigcfgbif',
+                    'id': 267834847,
+                    'name': 'cadfabfehe',
                 },
                 'update': {
-                    'name': 'bfaiacjjfc',
-                    'location': 'eigcfgbif',
+                    'name': 'cadfabfehe',
                 },
             },
         )
@@ -761,7 +756,7 @@ class RestaurantActions(Generic[_PrismaModelT]):
         # update all Restaurant records
         total = await Restaurant.prisma().update_many(
             data={
-                'location': 'hjaecfifb'
+                'location': 'biabhbdai'
             },
             where={}
         )
@@ -970,7 +965,7 @@ class RestaurantActions(Generic[_PrismaModelT]):
     # TODO: statically type that the order argument is required when take or skip are present
     async def group_by(
         self,
-        by: List['types.RestaurantScalarFieldKeys'],
+        by: List['types.RestaurantScalarFieldKeysT'],
         *,
         where: Optional['types.RestaurantWhereInput'] = None,
         take: Optional[int] = None,
@@ -981,7 +976,7 @@ class RestaurantActions(Generic[_PrismaModelT]):
         max: Optional['types.RestaurantMaxAggregateInput'] = None,
         having: Optional['types.RestaurantScalarWhereWithAggregatesInput'] = None,
         count: Optional[Union[bool, 'types.RestaurantCountAggregateInput']] = None,
-        order: Optional[Union[Mapping['types.RestaurantScalarFieldKeys', 'types.SortOrder'], List[Mapping['types.RestaurantScalarFieldKeys', 'types.SortOrder']]]] = None,
+        order: Optional[Union[Mapping['types.RestaurantScalarFieldKeysT', 'types.SortOrder'], List[Mapping['types.RestaurantScalarFieldKeysT', 'types.SortOrder']]]] = None,
     ) -> List['types.RestaurantGroupByOutput']:
         """Group Restaurant records by one or more field values and perform aggregations
         each group such as finding the average.
@@ -1124,7 +1119,7 @@ class FloorActions(Generic[_PrismaModelT]):
         ```py
         users = await Floor.prisma().query_raw(
             'SELECT * FROM Floor WHERE id = ?',
-            2111915288,
+            836760821,
         )
         ```
         """
@@ -1164,7 +1159,7 @@ class FloorActions(Generic[_PrismaModelT]):
         ```py
         user = await Floor.prisma().query_first(
             'SELECT * FROM Floor WHERE name = ?',
-            'bbejhfidcb',
+            'fjfddhigg',
         )
         ```
         """
@@ -1203,8 +1198,7 @@ class FloorActions(Generic[_PrismaModelT]):
         floor = await Floor.prisma().create(
             data={
                 # data to create a Floor record
-                'name': 'bgeecijdgg',
-                'restaurantId': 1388290519,
+                'restaurantId': 790425851,
             },
         )
         ```
@@ -1259,13 +1253,11 @@ class FloorActions(Generic[_PrismaModelT]):
             data=[
                 {
                     # data to create a Floor record
-                    'name': 'bgehebiafc',
-                    'restaurantId': 1675546029,
+                    'restaurantId': 2111915288,
                 },
                 {
                     # data to create a Floor record
-                    'name': 'bhghchehcc',
-                    'restaurantId': 326272115,
+                    'restaurantId': 1149758321,
                 },
             ],
             skip_duplicates=True,
@@ -1319,7 +1311,7 @@ class FloorActions(Generic[_PrismaModelT]):
         ```py
         floor = await Floor.prisma().delete(
             where={
-                'id': 1343201072,
+                'id': 1644289366,
             },
         )
         ```
@@ -1371,7 +1363,7 @@ class FloorActions(Generic[_PrismaModelT]):
         ```py
         floor = await Floor.prisma().find_unique(
             where={
-                'id': 675780521,
+                'id': 1388290519,
             },
         )
         ```
@@ -1422,7 +1414,7 @@ class FloorActions(Generic[_PrismaModelT]):
         ```py
         floor = await Floor.prisma().find_unique_or_raise(
             where={
-                'id': 744964398,
+                'id': 1647418052,
             },
         )
         ```
@@ -1674,7 +1666,7 @@ class FloorActions(Generic[_PrismaModelT]):
         ```py
         floor = await Floor.prisma().update(
             where={
-                'id': 1969681615,
+                'id': 1675546029,
             },
             data={
                 # data to update the Floor record to
@@ -1731,17 +1723,15 @@ class FloorActions(Generic[_PrismaModelT]):
         ```py
         floor = await Floor.prisma().upsert(
             where={
-                'id': 1116175964,
+                'id': 1767274722,
             },
             data={
                 'create': {
-                    'id': 1116175964,
-                    'name': 'bhghchehcc',
-                    'restaurantId': 326272115,
+                    'id': 1767274722,
+                    'restaurantId': 1149758321,
                 },
                 'update': {
-                    'name': 'bhghchehcc',
-                    'restaurantId': 326272115,
+                    'restaurantId': 1149758321,
                 },
             },
         )
@@ -1789,7 +1779,7 @@ class FloorActions(Generic[_PrismaModelT]):
         # update all Floor records
         total = await Floor.prisma().update_many(
             data={
-                'restaurantId': 861472101
+                'restaurantId': 326272115
             },
             where={}
         )
@@ -1998,7 +1988,7 @@ class FloorActions(Generic[_PrismaModelT]):
     # TODO: statically type that the order argument is required when take or skip are present
     async def group_by(
         self,
-        by: List['types.FloorScalarFieldKeys'],
+        by: List['types.FloorScalarFieldKeysT'],
         *,
         where: Optional['types.FloorWhereInput'] = None,
         take: Optional[int] = None,
@@ -2009,7 +1999,7 @@ class FloorActions(Generic[_PrismaModelT]):
         max: Optional['types.FloorMaxAggregateInput'] = None,
         having: Optional['types.FloorScalarWhereWithAggregatesInput'] = None,
         count: Optional[Union[bool, 'types.FloorCountAggregateInput']] = None,
-        order: Optional[Union[Mapping['types.FloorScalarFieldKeys', 'types.SortOrder'], List[Mapping['types.FloorScalarFieldKeys', 'types.SortOrder']]]] = None,
+        order: Optional[Union[Mapping['types.FloorScalarFieldKeysT', 'types.SortOrder'], List[Mapping['types.FloorScalarFieldKeysT', 'types.SortOrder']]]] = None,
     ) -> List['types.FloorGroupByOutput']:
         """Group Floor records by one or more field values and perform aggregations
         each group such as finding the average.
@@ -2152,7 +2142,7 @@ class TableActions(Generic[_PrismaModelT]):
         ```py
         users = await Table.prisma().query_raw(
             'SELECT * FROM Table WHERE id = ?',
-            1303003706,
+            1343201072,
         )
         ```
         """
@@ -2192,7 +2182,7 @@ class TableActions(Generic[_PrismaModelT]):
         ```py
         user = await Table.prisma().query_first(
             'SELECT * FROM Table WHERE number = ?',
-            1686638315,
+            675780521,
         )
         ```
         """
@@ -2231,9 +2221,7 @@ class TableActions(Generic[_PrismaModelT]):
         table = await Table.prisma().create(
             data={
                 # data to create a Table record
-                'number': 2000430152,
-                'floorId': 1868141281,
-                'capacity': 1860847622,
+                'number': 744964398,
             },
         )
         ```
@@ -2288,15 +2276,11 @@ class TableActions(Generic[_PrismaModelT]):
             data=[
                 {
                     # data to create a Table record
-                    'number': 1448521415,
-                    'floorId': 1628650740,
-                    'capacity': 1249606685,
+                    'number': 1969681615,
                 },
                 {
                     # data to create a Table record
-                    'number': 835903122,
-                    'floorId': 763719779,
-                    'capacity': 429995104,
+                    'number': 1116175964,
                 },
             ],
             skip_duplicates=True,
@@ -2350,7 +2334,7 @@ class TableActions(Generic[_PrismaModelT]):
         ```py
         table = await Table.prisma().delete(
             where={
-                'id': 1775811865,
+                'id': 861472101,
             },
         )
         ```
@@ -2402,7 +2386,7 @@ class TableActions(Generic[_PrismaModelT]):
         ```py
         table = await Table.prisma().find_unique(
             where={
-                'id': 893145566,
+                'id': 1303003706,
             },
         )
         ```
@@ -2453,7 +2437,7 @@ class TableActions(Generic[_PrismaModelT]):
         ```py
         table = await Table.prisma().find_unique_or_raise(
             where={
-                'id': 995405759,
+                'id': 1686638315,
             },
         )
         ```
@@ -2648,11 +2632,11 @@ class TableActions(Generic[_PrismaModelT]):
         Example
         -------
         ```py
-        # find the second Table record ordered by the id field
+        # find the second Table record ordered by the posX field
         table = await Table.prisma().find_first_or_raise(
             skip=1,
             order={
-                'id': 'desc',
+                'posX': 'desc',
             },
         )
         ```
@@ -2705,7 +2689,7 @@ class TableActions(Generic[_PrismaModelT]):
         ```py
         table = await Table.prisma().update(
             where={
-                'id': 2102736524,
+                'id': 2000430152,
             },
             data={
                 # data to update the Table record to
@@ -2762,19 +2746,15 @@ class TableActions(Generic[_PrismaModelT]):
         ```py
         table = await Table.prisma().upsert(
             where={
-                'id': 271520213,
+                'id': 1868141281,
             },
             data={
                 'create': {
-                    'id': 271520213,
-                    'number': 835903122,
-                    'floorId': 763719779,
-                    'capacity': 429995104,
+                    'id': 1868141281,
+                    'number': 1116175964,
                 },
                 'update': {
-                    'number': 835903122,
-                    'floorId': 763719779,
-                    'capacity': 429995104,
+                    'number': 1116175964,
                 },
             },
         )
@@ -2822,7 +2802,7 @@ class TableActions(Generic[_PrismaModelT]):
         # update all Table records
         total = await Table.prisma().update_many(
             data={
-                'number': 456633834
+                'posY': 1860847622
             },
             where={}
         )
@@ -2886,7 +2866,7 @@ class TableActions(Generic[_PrismaModelT]):
         results = await Table.prisma().count(
             select={
                 '_all': True,
-                'floorId': True,
+                'width': True,
             },
         )
         ```
@@ -2953,7 +2933,7 @@ class TableActions(Generic[_PrismaModelT]):
         results = await Table.prisma().count(
             select={
                 '_all': True,
-                'capacity': True,
+                'height': True,
             },
         )
         ```
@@ -3031,7 +3011,7 @@ class TableActions(Generic[_PrismaModelT]):
     # TODO: statically type that the order argument is required when take or skip are present
     async def group_by(
         self,
-        by: List['types.TableScalarFieldKeys'],
+        by: List['types.TableScalarFieldKeysT'],
         *,
         where: Optional['types.TableWhereInput'] = None,
         take: Optional[int] = None,
@@ -3042,7 +3022,7 @@ class TableActions(Generic[_PrismaModelT]):
         max: Optional['types.TableMaxAggregateInput'] = None,
         having: Optional['types.TableScalarWhereWithAggregatesInput'] = None,
         count: Optional[Union[bool, 'types.TableCountAggregateInput']] = None,
-        order: Optional[Union[Mapping['types.TableScalarFieldKeys', 'types.SortOrder'], List[Mapping['types.TableScalarFieldKeys', 'types.SortOrder']]]] = None,
+        order: Optional[Union[Mapping['types.TableScalarFieldKeysT', 'types.SortOrder'], List[Mapping['types.TableScalarFieldKeysT', 'types.SortOrder']]]] = None,
     ) -> List['types.TableGroupByOutput']:
         """Group Table records by one or more field values and perform aggregations
         each group such as finding the average.
@@ -3093,10 +3073,10 @@ class TableActions(Generic[_PrismaModelT]):
         Example
         -------
         ```py
-        # group Table records by id values
+        # group Table records by rotation values
         # and count how many records are in each group
         results = await Table.prisma().group_by(
-            ['id'],
+            ['rotation'],
             count=True,
         )
         ```
@@ -3185,7 +3165,7 @@ class MemberActions(Generic[_PrismaModelT]):
         ```py
         users = await Member.prisma().query_raw(
             'SELECT * FROM Member WHERE id = ?',
-            2058258651,
+            1448521415,
         )
         ```
         """
@@ -3225,7 +3205,7 @@ class MemberActions(Generic[_PrismaModelT]):
         ```py
         user = await Member.prisma().query_first(
             'SELECT * FROM Member WHERE name = ?',
-            'bfidgijfjc',
+            'bgcigfahea',
         )
         ```
         """
@@ -3264,9 +3244,8 @@ class MemberActions(Generic[_PrismaModelT]):
         member = await Member.prisma().create(
             data={
                 # data to create a Member record
-                'name': 'ihieecagf',
-                'email': 'bghfciaafe',
-                'phone': 'bgchfhgceh',
+                'name': 'bcejgaggif',
+                'email': 'idfjadbcc',
             },
         )
         ```
@@ -3321,15 +3300,13 @@ class MemberActions(Generic[_PrismaModelT]):
             data=[
                 {
                     # data to create a Member record
-                    'name': 'cafeiaccbc',
-                    'email': 'gaddfhfh',
-                    'phone': 'gieegcbeg',
+                    'name': 'hgdhbjhhj',
+                    'email': 'ecjjjfbae',
                 },
                 {
                     # data to create a Member record
-                    'name': 'bgcffadich',
-                    'email': 'fcbichhci',
-                    'phone': 'bcggadccgf',
+                    'name': 'bhhfibbigf',
+                    'email': 'ijdbeffgg',
                 },
             ],
             skip_duplicates=True,
@@ -3383,7 +3360,7 @@ class MemberActions(Generic[_PrismaModelT]):
         ```py
         member = await Member.prisma().delete(
             where={
-                'id': 93253262,
+                'id': 995405759,
             },
         )
         ```
@@ -3435,7 +3412,7 @@ class MemberActions(Generic[_PrismaModelT]):
         ```py
         member = await Member.prisma().find_unique(
             where={
-                'id': 2053047983,
+                'id': 2102736524,
             },
         )
         ```
@@ -3486,7 +3463,7 @@ class MemberActions(Generic[_PrismaModelT]):
         ```py
         member = await Member.prisma().find_unique_or_raise(
             where={
-                'id': 685333180,
+                'id': 271520213,
             },
         )
         ```
@@ -3738,7 +3715,7 @@ class MemberActions(Generic[_PrismaModelT]):
         ```py
         member = await Member.prisma().update(
             where={
-                'id': 127474245,
+                'id': 456633834,
             },
             data={
                 # data to update the Member record to
@@ -3795,19 +3772,17 @@ class MemberActions(Generic[_PrismaModelT]):
         ```py
         member = await Member.prisma().upsert(
             where={
-                'id': 948921754,
+                'id': 2058258651,
             },
             data={
                 'create': {
-                    'id': 948921754,
-                    'name': 'bgcffadich',
-                    'email': 'fcbichhci',
-                    'phone': 'bcggadccgf',
+                    'id': 2058258651,
+                    'name': 'bhhfibbigf',
+                    'email': 'ijdbeffgg',
                 },
                 'update': {
-                    'name': 'bgcffadich',
-                    'email': 'fcbichhci',
-                    'phone': 'bcggadccgf',
+                    'name': 'bhhfibbigf',
+                    'email': 'ijdbeffgg',
                 },
             },
         )
@@ -3855,7 +3830,7 @@ class MemberActions(Generic[_PrismaModelT]):
         # update all Member records
         total = await Member.prisma().update_many(
             data={
-                'name': 'bjgejjabff'
+                'name': 'bfidgijfjc'
             },
             where={}
         )
@@ -4064,7 +4039,7 @@ class MemberActions(Generic[_PrismaModelT]):
     # TODO: statically type that the order argument is required when take or skip are present
     async def group_by(
         self,
-        by: List['types.MemberScalarFieldKeys'],
+        by: List['types.MemberScalarFieldKeysT'],
         *,
         where: Optional['types.MemberWhereInput'] = None,
         take: Optional[int] = None,
@@ -4075,7 +4050,7 @@ class MemberActions(Generic[_PrismaModelT]):
         max: Optional['types.MemberMaxAggregateInput'] = None,
         having: Optional['types.MemberScalarWhereWithAggregatesInput'] = None,
         count: Optional[Union[bool, 'types.MemberCountAggregateInput']] = None,
-        order: Optional[Union[Mapping['types.MemberScalarFieldKeys', 'types.SortOrder'], List[Mapping['types.MemberScalarFieldKeys', 'types.SortOrder']]]] = None,
+        order: Optional[Union[Mapping['types.MemberScalarFieldKeysT', 'types.SortOrder'], List[Mapping['types.MemberScalarFieldKeysT', 'types.SortOrder']]]] = None,
     ) -> List['types.MemberGroupByOutput']:
         """Group Member records by one or more field values and perform aggregations
         each group such as finding the average.
@@ -4218,7 +4193,7 @@ class ReservationActions(Generic[_PrismaModelT]):
         ```py
         users = await Reservation.prisma().query_raw(
             'SELECT * FROM Reservation WHERE id = ?',
-            1228891816,
+            878442065,
         )
         ```
         """
@@ -4298,8 +4273,8 @@ class ReservationActions(Generic[_PrismaModelT]):
             data={
                 # data to create a Reservation record
                 'date': datetime.datetime.utcnow(),
-                'tableId': 255202753,
-                'memberId': 1223573862,
+                'tableId': 1675280054,
+                'memberId': 1627576247,
             },
         )
         ```
@@ -4355,14 +4330,14 @@ class ReservationActions(Generic[_PrismaModelT]):
                 {
                     # data to create a Reservation record
                     'date': datetime.datetime.utcnow(),
-                    'tableId': 541269159,
-                    'memberId': 1064846676,
+                    'tableId': 2054802212,
+                    'memberId': 60335757,
                 },
                 {
                     # data to create a Reservation record
                     'date': datetime.datetime.utcnow(),
-                    'tableId': 508382461,
-                    'memberId': 1024265714,
+                    'tableId': 684462146,
+                    'memberId': 1625503827,
                 },
             ],
             skip_duplicates=True,
@@ -4416,7 +4391,7 @@ class ReservationActions(Generic[_PrismaModelT]):
         ```py
         reservation = await Reservation.prisma().delete(
             where={
-                'id': 872078403,
+                'id': 521827728,
             },
         )
         ```
@@ -4468,7 +4443,7 @@ class ReservationActions(Generic[_PrismaModelT]):
         ```py
         reservation = await Reservation.prisma().find_unique(
             where={
-                'id': 1874748096,
+                'id': 1266032265,
             },
         )
         ```
@@ -4519,7 +4494,7 @@ class ReservationActions(Generic[_PrismaModelT]):
         ```py
         reservation = await Reservation.prisma().find_unique_or_raise(
             where={
-                'id': 916896761,
+                'id': 93253262,
             },
         )
         ```
@@ -4714,11 +4689,11 @@ class ReservationActions(Generic[_PrismaModelT]):
         Example
         -------
         ```py
-        # find the second Reservation record ordered by the id field
+        # find the second Reservation record ordered by the status field
         reservation = await Reservation.prisma().find_first_or_raise(
             skip=1,
             order={
-                'id': 'desc',
+                'status': 'desc',
             },
         )
         ```
@@ -4771,7 +4746,7 @@ class ReservationActions(Generic[_PrismaModelT]):
         ```py
         reservation = await Reservation.prisma().update(
             where={
-                'id': 769267518,
+                'id': 2053047983,
             },
             data={
                 # data to update the Reservation record to
@@ -4828,19 +4803,19 @@ class ReservationActions(Generic[_PrismaModelT]):
         ```py
         reservation = await Reservation.prisma().upsert(
             where={
-                'id': 820312479,
+                'id': 685333180,
             },
             data={
                 'create': {
-                    'id': 820312479,
+                    'id': 685333180,
                     'date': datetime.datetime.utcnow(),
-                    'tableId': 508382461,
-                    'memberId': 1024265714,
+                    'tableId': 684462146,
+                    'memberId': 1625503827,
                 },
                 'update': {
                     'date': datetime.datetime.utcnow(),
-                    'tableId': 508382461,
-                    'memberId': 1024265714,
+                    'tableId': 684462146,
+                    'memberId': 1625503827,
                 },
             },
         )
@@ -4888,7 +4863,7 @@ class ReservationActions(Generic[_PrismaModelT]):
         # update all Reservation records
         total = await Reservation.prisma().update_many(
             data={
-                'date': datetime.datetime.utcnow()
+                'partySize': 127474245
             },
             where={}
         )
@@ -4952,7 +4927,7 @@ class ReservationActions(Generic[_PrismaModelT]):
         results = await Reservation.prisma().count(
             select={
                 '_all': True,
-                'tableId': True,
+                'notes': True,
             },
         )
         ```
@@ -5019,7 +4994,7 @@ class ReservationActions(Generic[_PrismaModelT]):
         results = await Reservation.prisma().count(
             select={
                 '_all': True,
-                'memberId': True,
+                'createdAt': True,
             },
         )
         ```
@@ -5097,7 +5072,7 @@ class ReservationActions(Generic[_PrismaModelT]):
     # TODO: statically type that the order argument is required when take or skip are present
     async def group_by(
         self,
-        by: List['types.ReservationScalarFieldKeys'],
+        by: List['types.ReservationScalarFieldKeysT'],
         *,
         where: Optional['types.ReservationWhereInput'] = None,
         take: Optional[int] = None,
@@ -5108,7 +5083,7 @@ class ReservationActions(Generic[_PrismaModelT]):
         max: Optional['types.ReservationMaxAggregateInput'] = None,
         having: Optional['types.ReservationScalarWhereWithAggregatesInput'] = None,
         count: Optional[Union[bool, 'types.ReservationCountAggregateInput']] = None,
-        order: Optional[Union[Mapping['types.ReservationScalarFieldKeys', 'types.SortOrder'], List[Mapping['types.ReservationScalarFieldKeys', 'types.SortOrder']]]] = None,
+        order: Optional[Union[Mapping['types.ReservationScalarFieldKeysT', 'types.SortOrder'], List[Mapping['types.ReservationScalarFieldKeysT', 'types.SortOrder']]]] = None,
     ) -> List['types.ReservationGroupByOutput']:
         """Group Reservation records by one or more field values and perform aggregations
         each group such as finding the average.
@@ -5159,10 +5134,10 @@ class ReservationActions(Generic[_PrismaModelT]):
         Example
         -------
         ```py
-        # group Reservation records by id values
+        # group Reservation records by updatedAt values
         # and count how many records are in each group
         results = await Reservation.prisma().group_by(
-            ['id'],
+            ['updatedAt'],
             count=True,
         )
         ```

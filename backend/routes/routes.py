@@ -1,5 +1,7 @@
 # backend/routes/routes.py
-from fastapi import APIRouter, HTTPException
+from typing import List, Optional
+
+from fastapi import APIRouter, HTTPException, Query
 from db import prisma
 from schemas import MemberCreate
 from prisma_client.models import Member as MemberModel
@@ -16,9 +18,45 @@ router.include_router(reservations_router)
 router.include_router(tables_router)
 
 
-# Members (DB uses a single `name` column)
+# -----------------------------
+# Members
+# -----------------------------
+
+@router.get("/members", response_model=List[MemberModel], tags=["members"])
+async def list_members(
+    q: Optional[str] = Query(None, description="Search by email, name, or phone"),
+    limit: int = Query(20, ge=1, le=100),
+    offset: int = Query(0, ge=0),
+):
+    """
+    List members with simple search & pagination.
+    NOTE: Avoids `mode: 'insensitive'` (not supported reliably in Prisma Python/SQLite).
+    """
+    if q:
+        try:
+            return await prisma.member.find_many(
+                where={
+                    "OR": [
+                        {"email": {"contains": q}},
+                        {"name": {"contains": q}},
+                        {"phone": {"contains": q}},
+                    ]
+                },
+                take=limit,
+                skip=offset,
+            )
+        except Exception as e:
+            # Surface a readable client error instead of 500
+            raise HTTPException(status_code=400, detail=f"Invalid search: {e}")
+    return await prisma.member.find_many(take=limit, skip=offset)
+
+
 @router.post("/members", response_model=MemberModel, status_code=201, tags=["members"])
 async def create_member(payload: MemberCreate):
+    """
+    Create a member. Returns 409 if the email already exists.
+    (DB has a UNIQUE index on Member.email.)
+    """
     # Fast path: if email exists, return 409 without hitting the constraint
     existing = await prisma.member.find_unique(where={"email": payload.email})
     if existing:
@@ -27,7 +65,7 @@ async def create_member(payload: MemberCreate):
     try:
         return await prisma.member.create(
             data={
-                "name": payload.name,     # already normalized by schema
+                "name": payload.name,     # normalized by schema
                 "email": payload.email,
                 "phone": payload.phone,
             }

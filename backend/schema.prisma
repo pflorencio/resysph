@@ -1,7 +1,9 @@
+// backend/schema.prisma
+
 generator client {
-  provider  = "prisma-client-py"
-  interface = "asyncio"
-  output    = "prisma_client"
+  provider             = "prisma-client-py"
+  recursive_type_depth = -1
+  output               = "prisma_client"   // <— add this so imports stay `from prisma_client import Prisma`
 }
 
 datasource db {
@@ -9,43 +11,68 @@ datasource db {
   url      = "file:dev.db"
 }
 
+//
+// ---------- MODELS ----------
+//
+
 model Restaurant {
   id       Int     @id @default(autoincrement())
   name     String
-  location String
+  location String?
   floors   Floor[]
 }
 
 model Floor {
-  id           Int        @id @default(autoincrement())
-  name         String
+  id           Int         @id @default(autoincrement())
+  name         String?
   restaurantId Int
-  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+  restaurant   Restaurant  @relation(fields: [restaurantId], references: [id])
   tables       Table[]
 }
 
 model Table {
-  id           Int           @id @default(autoincrement())
+  id           Int        @id @default(autoincrement())
   number       Int
-  floorId      Int
-  floor        Floor         @relation(fields: [floorId], references: [id])
-  capacity     Int
+  floorId      Int?
+  floor        Floor?     @relation(fields: [floorId], references: [id])
+  capacity     Int?
+
+  // layout fields for floorplan
+  posX         Int?
+  posY         Int?
+  width        Int?
+  height       Int?
+  rotation     Int?
+  label        String?
+  area         String?
+
   reservations Reservation[]
 }
 
 model Member {
-  id           Int           @id @default(autoincrement())
-  name         String
-  email        String
-  reservations Reservation[]
-  phone        String
+  id            Int           @id @default(autoincrement())
+  name          String
+  email         String        @unique
+  phone         String?
+  reservations  Reservation[]
 }
 
+// NOTE: Using String (not enum) because SQLite connector here doesn’t support enums.
 model Reservation {
-  id       Int      @id @default(autoincrement())
-  date     DateTime
-  tableId  Int
-  table    Table    @relation(fields: [tableId], references: [id])
-  memberId Int
-  member   Member   @relation(fields: [memberId], references: [id])
+  id        Int       @id @default(autoincrement())
+  date      DateTime
+  tableId   Int
+  table     Table     @relation(fields: [tableId], references: [id])
+  memberId  Int
+  member    Member    @relation(fields: [memberId], references: [id])
+
+  status    String    @default("CONFIRMED")
+  partySize Int?
+  notes     String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt   // <— add @default(now())
+  
+  @@index([date])
+  @@index([tableId, date])
 }

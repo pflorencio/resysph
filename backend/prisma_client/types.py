@@ -36,7 +36,7 @@ from typing import (
 from typing_extensions import TypedDict, Literal
 
 
-LiteralString = str
+from typing_extensions import LiteralString
 # -- template types.py.jinja --
 from typing import TypeVar
 
@@ -68,16 +68,14 @@ Serializable = Union[
     int,
     str,
     datetime.datetime,
-    List[Any],
-    Dict[None, Any],
-    Dict[bool, Any],
-    Dict[float, Any],
-    Dict[int, Any],
-    Dict[str, Any],
+    List['Serializable'],
+    Dict[None, 'Serializable'],
+    Dict[bool, 'Serializable'],
+    Dict[float, 'Serializable'],
+    Dict[int, 'Serializable'],
+    Dict[str, 'Serializable'],
 ]
 
-
-    
 
 StringFilter = TypedDict(
     'StringFilter',
@@ -92,85 +90,11 @@ StringFilter = TypedDict(
         'startswith': str,
         'endswith': str,
         'in': List[str],
-        'not': Union[str, 'StringFilterRecursive1'],
+        'not': Union[str, 'StringFilter'],
                     },
     total=False,
 )
 
-
-StringFilterRecursive1 = TypedDict(
-    'StringFilterRecursive1',
-    {
-        'equals': str,
-        'not_in': List[str],
-        'lt': str,
-        'lte': str,
-        'gt': str,
-        'gte': str,
-        'contains': str,
-        'startswith': str,
-        'endswith': str,
-        'in': List[str],
-        'not': Union[str, 'StringFilterRecursive2'],
-                    },
-    total=False,
-)
-
-
-StringFilterRecursive2 = TypedDict(
-    'StringFilterRecursive2',
-    {
-        'equals': str,
-        'not_in': List[str],
-        'lt': str,
-        'lte': str,
-        'gt': str,
-        'gte': str,
-        'contains': str,
-        'startswith': str,
-        'endswith': str,
-        'in': List[str],
-        'not': Union[str, 'StringFilterRecursive3'],
-                    },
-    total=False,
-)
-
-
-StringFilterRecursive3 = TypedDict(
-    'StringFilterRecursive3',
-    {
-        'equals': str,
-        'not_in': List[str],
-        'lt': str,
-        'lte': str,
-        'gt': str,
-        'gte': str,
-        'contains': str,
-        'startswith': str,
-        'endswith': str,
-        'in': List[str],
-        'not': Union[str, 'StringFilterRecursive4'],
-                    },
-    total=False,
-)
-
-
-StringFilterRecursive4 = TypedDict(
-    'StringFilterRecursive4',
-    {
-        'equals': str,
-        'not_in': List[str],
-        'lt': str,
-        'lte': str,
-        'gt': str,
-        'gte': str,
-        'contains': str,
-        'startswith': str,
-        'endswith': str,
-        'in': List[str],
-                            },
-    total=False,
-)
 
 
 class StringWithAggregatesFilter(StringFilter, total=False):
@@ -180,8 +104,6 @@ class StringWithAggregatesFilter(StringFilter, total=False):
     _avg: 'StringFilter'
     _count: 'IntFilter'
 
-
-    
 
 DateTimeFilter = TypedDict(
     'DateTimeFilter',
@@ -193,73 +115,11 @@ DateTimeFilter = TypedDict(
         'gt': datetime.datetime,
         'gte': datetime.datetime,
         'in': List[datetime.datetime],
-        'not': Union[datetime.datetime, 'DateTimeFilterRecursive1'],
+        'not': Union[datetime.datetime, 'DateTimeFilter'],
     },
     total=False,
 )
 
-
-DateTimeFilterRecursive1 = TypedDict(
-    'DateTimeFilterRecursive1',
-    {
-        'equals': datetime.datetime,
-        'not_in': List[datetime.datetime],
-        'lt': datetime.datetime,
-        'lte': datetime.datetime,
-        'gt': datetime.datetime,
-        'gte': datetime.datetime,
-        'in': List[datetime.datetime],
-        'not': Union[datetime.datetime, 'DateTimeFilterRecursive2'],
-    },
-    total=False,
-)
-
-
-DateTimeFilterRecursive2 = TypedDict(
-    'DateTimeFilterRecursive2',
-    {
-        'equals': datetime.datetime,
-        'not_in': List[datetime.datetime],
-        'lt': datetime.datetime,
-        'lte': datetime.datetime,
-        'gt': datetime.datetime,
-        'gte': datetime.datetime,
-        'in': List[datetime.datetime],
-        'not': Union[datetime.datetime, 'DateTimeFilterRecursive3'],
-    },
-    total=False,
-)
-
-
-DateTimeFilterRecursive3 = TypedDict(
-    'DateTimeFilterRecursive3',
-    {
-        'equals': datetime.datetime,
-        'not_in': List[datetime.datetime],
-        'lt': datetime.datetime,
-        'lte': datetime.datetime,
-        'gt': datetime.datetime,
-        'gte': datetime.datetime,
-        'in': List[datetime.datetime],
-        'not': Union[datetime.datetime, 'DateTimeFilterRecursive4'],
-    },
-    total=False,
-)
-
-
-DateTimeFilterRecursive4 = TypedDict(
-    'DateTimeFilterRecursive4',
-    {
-        'equals': datetime.datetime,
-        'not_in': List[datetime.datetime],
-        'lt': datetime.datetime,
-        'lte': datetime.datetime,
-        'gt': datetime.datetime,
-        'gte': datetime.datetime,
-        'in': List[datetime.datetime],
-            },
-    total=False,
-)
 
 
 class DateTimeWithAggregatesFilter(DateTimeFilter, total=False):
@@ -270,55 +130,15 @@ class DateTimeWithAggregatesFilter(DateTimeFilter, total=False):
     _count: 'IntFilter'
 
 
-    
-
 BooleanFilter = TypedDict(
     'BooleanFilter',
     {
         'equals': bool,
-        'not': Union[bool, 'BooleanFilterRecursive1'],
+        'not': Union[bool, 'BooleanFilter'],
     },
     total=False,
 )
 
-
-BooleanFilterRecursive1 = TypedDict(
-    'BooleanFilterRecursive1',
-    {
-        'equals': bool,
-        'not': Union[bool, 'BooleanFilterRecursive2'],
-    },
-    total=False,
-)
-
-
-BooleanFilterRecursive2 = TypedDict(
-    'BooleanFilterRecursive2',
-    {
-        'equals': bool,
-        'not': Union[bool, 'BooleanFilterRecursive3'],
-    },
-    total=False,
-)
-
-
-BooleanFilterRecursive3 = TypedDict(
-    'BooleanFilterRecursive3',
-    {
-        'equals': bool,
-        'not': Union[bool, 'BooleanFilterRecursive4'],
-    },
-    total=False,
-)
-
-
-BooleanFilterRecursive4 = TypedDict(
-    'BooleanFilterRecursive4',
-    {
-        'equals': bool,
-            },
-    total=False,
-)
 
 
 class BooleanWithAggregatesFilter(BooleanFilter, total=False):
@@ -328,8 +148,6 @@ class BooleanWithAggregatesFilter(BooleanFilter, total=False):
     _avg: 'BooleanFilter'
     _count: 'IntFilter'
 
-
-    
 
 IntFilter = TypedDict(
     'IntFilter',
@@ -341,73 +159,11 @@ IntFilter = TypedDict(
         'gt': int,
         'gte': int,
         'in': List[int],
-        'not': Union[int, 'IntFilterRecursive1'],
+        'not': Union[int, 'IntFilter'],
     },
     total=False,
 )
 
-
-IntFilterRecursive1 = TypedDict(
-    'IntFilterRecursive1',
-    {
-        'equals': int,
-        'not_in': List[int],
-        'lt': int,
-        'lte': int,
-        'gt': int,
-        'gte': int,
-        'in': List[int],
-        'not': Union[int, 'IntFilterRecursive2'],
-    },
-    total=False,
-)
-
-
-IntFilterRecursive2 = TypedDict(
-    'IntFilterRecursive2',
-    {
-        'equals': int,
-        'not_in': List[int],
-        'lt': int,
-        'lte': int,
-        'gt': int,
-        'gte': int,
-        'in': List[int],
-        'not': Union[int, 'IntFilterRecursive3'],
-    },
-    total=False,
-)
-
-
-IntFilterRecursive3 = TypedDict(
-    'IntFilterRecursive3',
-    {
-        'equals': int,
-        'not_in': List[int],
-        'lt': int,
-        'lte': int,
-        'gt': int,
-        'gte': int,
-        'in': List[int],
-        'not': Union[int, 'IntFilterRecursive4'],
-    },
-    total=False,
-)
-
-
-IntFilterRecursive4 = TypedDict(
-    'IntFilterRecursive4',
-    {
-        'equals': int,
-        'not_in': List[int],
-        'lt': int,
-        'lte': int,
-        'gt': int,
-        'gte': int,
-        'in': List[int],
-            },
-    total=False,
-)
 
 
 class IntWithAggregatesFilter(IntFilter, total=False):
@@ -420,8 +176,6 @@ class IntWithAggregatesFilter(IntFilter, total=False):
 
 BigIntFilter = IntFilter
 BigIntWithAggregatesFilter = IntWithAggregatesFilter
-    
-
 FloatFilter = TypedDict(
     'FloatFilter',
     {
@@ -432,73 +186,11 @@ FloatFilter = TypedDict(
         'gt': float,
         'gte': float,
         'in': List[float],
-        'not': Union[float, 'FloatFilterRecursive1'],
+        'not': Union[float, 'FloatFilter'],
     },
     total=False,
 )
 
-
-FloatFilterRecursive1 = TypedDict(
-    'FloatFilterRecursive1',
-    {
-        'equals': float,
-        'not_in': List[float],
-        'lt': float,
-        'lte': float,
-        'gt': float,
-        'gte': float,
-        'in': List[float],
-        'not': Union[float, 'FloatFilterRecursive2'],
-    },
-    total=False,
-)
-
-
-FloatFilterRecursive2 = TypedDict(
-    'FloatFilterRecursive2',
-    {
-        'equals': float,
-        'not_in': List[float],
-        'lt': float,
-        'lte': float,
-        'gt': float,
-        'gte': float,
-        'in': List[float],
-        'not': Union[float, 'FloatFilterRecursive3'],
-    },
-    total=False,
-)
-
-
-FloatFilterRecursive3 = TypedDict(
-    'FloatFilterRecursive3',
-    {
-        'equals': float,
-        'not_in': List[float],
-        'lt': float,
-        'lte': float,
-        'gt': float,
-        'gte': float,
-        'in': List[float],
-        'not': Union[float, 'FloatFilterRecursive4'],
-    },
-    total=False,
-)
-
-
-FloatFilterRecursive4 = TypedDict(
-    'FloatFilterRecursive4',
-    {
-        'equals': float,
-        'not_in': List[float],
-        'lt': float,
-        'lte': float,
-        'gt': float,
-        'gte': float,
-        'in': List[float],
-            },
-    total=False,
-)
 
 
 class FloatWithAggregatesFilter(FloatFilter, total=False):
@@ -509,65 +201,17 @@ class FloatWithAggregatesFilter(FloatFilter, total=False):
     _count: 'IntFilter'
 
 
-    
-
 BytesFilter = TypedDict(
     'BytesFilter',
     {
         'equals': 'fields.Base64',
         'in': List['fields.Base64'],
         'not_in': List['fields.Base64'],
-        'not': Union['fields.Base64', 'BytesFilterRecursive1'],
+        'not': Union['fields.Base64', 'BytesFilter'],
     },
     total=False,
 )
 
-
-BytesFilterRecursive1 = TypedDict(
-    'BytesFilterRecursive1',
-    {
-        'equals': 'fields.Base64',
-        'in': List['fields.Base64'],
-        'not_in': List['fields.Base64'],
-        'not': Union['fields.Base64', 'BytesFilterRecursive2'],
-    },
-    total=False,
-)
-
-
-BytesFilterRecursive2 = TypedDict(
-    'BytesFilterRecursive2',
-    {
-        'equals': 'fields.Base64',
-        'in': List['fields.Base64'],
-        'not_in': List['fields.Base64'],
-        'not': Union['fields.Base64', 'BytesFilterRecursive3'],
-    },
-    total=False,
-)
-
-
-BytesFilterRecursive3 = TypedDict(
-    'BytesFilterRecursive3',
-    {
-        'equals': 'fields.Base64',
-        'in': List['fields.Base64'],
-        'not_in': List['fields.Base64'],
-        'not': Union['fields.Base64', 'BytesFilterRecursive4'],
-    },
-    total=False,
-)
-
-
-BytesFilterRecursive4 = TypedDict(
-    'BytesFilterRecursive4',
-    {
-        'equals': 'fields.Base64',
-        'in': List['fields.Base64'],
-        'not_in': List['fields.Base64'],
-            },
-    total=False,
-)
 
 
 class BytesWithAggregatesFilter(BytesFilter, total=False):
@@ -597,8 +241,6 @@ class JsonWithAggregatesFilter(JsonFilter, total=False):
     _count: 'IntFilter'
 
 
-    
-
 DecimalFilter = TypedDict(
     'DecimalFilter',
     {
@@ -609,73 +251,11 @@ DecimalFilter = TypedDict(
         'gt': decimal.Decimal,
         'gte': decimal.Decimal,
         'in': List[decimal.Decimal],
-        'not': Union[decimal.Decimal, 'DecimalFilterRecursive1'],
+        'not': Union[decimal.Decimal, 'DecimalFilter'],
     },
     total=False,
 )
 
-
-DecimalFilterRecursive1 = TypedDict(
-    'DecimalFilterRecursive1',
-    {
-        'equals': decimal.Decimal,
-        'not_in': List[decimal.Decimal],
-        'lt': decimal.Decimal,
-        'lte': decimal.Decimal,
-        'gt': decimal.Decimal,
-        'gte': decimal.Decimal,
-        'in': List[decimal.Decimal],
-        'not': Union[decimal.Decimal, 'DecimalFilterRecursive2'],
-    },
-    total=False,
-)
-
-
-DecimalFilterRecursive2 = TypedDict(
-    'DecimalFilterRecursive2',
-    {
-        'equals': decimal.Decimal,
-        'not_in': List[decimal.Decimal],
-        'lt': decimal.Decimal,
-        'lte': decimal.Decimal,
-        'gt': decimal.Decimal,
-        'gte': decimal.Decimal,
-        'in': List[decimal.Decimal],
-        'not': Union[decimal.Decimal, 'DecimalFilterRecursive3'],
-    },
-    total=False,
-)
-
-
-DecimalFilterRecursive3 = TypedDict(
-    'DecimalFilterRecursive3',
-    {
-        'equals': decimal.Decimal,
-        'not_in': List[decimal.Decimal],
-        'lt': decimal.Decimal,
-        'lte': decimal.Decimal,
-        'gt': decimal.Decimal,
-        'gte': decimal.Decimal,
-        'in': List[decimal.Decimal],
-        'not': Union[decimal.Decimal, 'DecimalFilterRecursive4'],
-    },
-    total=False,
-)
-
-
-DecimalFilterRecursive4 = TypedDict(
-    'DecimalFilterRecursive4',
-    {
-        'equals': decimal.Decimal,
-        'not_in': List[decimal.Decimal],
-        'lt': decimal.Decimal,
-        'lte': decimal.Decimal,
-        'gt': decimal.Decimal,
-        'gte': decimal.Decimal,
-        'in': List[decimal.Decimal],
-            },
-    total=False,
-)
 
 
 class DecimalWithAggregatesFilter(StringFilter, total=False):
@@ -1135,13 +715,13 @@ DecimalListUpdate = Union[
 class RestaurantOptionalCreateInput(TypedDict, total=False):
     """Optional arguments to the Restaurant create method"""
     id: _int
+    location: Optional[_str]
     floors: 'FloorCreateManyNestedWithoutRelationsInput'
 
 
 class RestaurantCreateInput(RestaurantOptionalCreateInput):
     """Required arguments to the Restaurant create method"""
     name: _str
-    location: _str
 
 
 # TODO: remove this in favour of without explicit relations
@@ -1150,12 +730,12 @@ class RestaurantCreateInput(RestaurantOptionalCreateInput):
 class RestaurantOptionalCreateWithoutRelationsInput(TypedDict, total=False):
     """Optional arguments to the Restaurant create method, without relations"""
     id: _int
+    location: Optional[_str]
 
 
 class RestaurantCreateWithoutRelationsInput(RestaurantOptionalCreateWithoutRelationsInput):
     """Required arguments to the Restaurant create method, without relations"""
     name: _str
-    location: _str
 
 class RestaurantConnectOrCreateWithoutRelationsInput(TypedDict):
     create: 'RestaurantCreateWithoutRelationsInput'
@@ -1187,7 +767,7 @@ class RestaurantUpdateInput(TypedDict, total=False):
     """Optional arguments for updating a record"""
     id: Union[AtomicIntInput, _int]
     name: _str
-    location: _str
+    location: Optional[_str]
     floors: 'FloorUpdateManyWithoutRelationsInput'
 
 
@@ -1195,7 +775,7 @@ class RestaurantUpdateManyMutationInput(TypedDict, total=False):
     """Arguments for updating many records"""
     id: Union[AtomicIntInput, _int]
     name: _str
-    location: _str
+    location: Optional[_str]
 
 
 class RestaurantUpdateManyWithoutRelationsInput(TypedDict, total=False):
@@ -1266,24 +846,21 @@ RestaurantOrderByInput = Union[
 # TODO: cleanup these types
 
 
-# Dict[str, Any] is a mypy limitation
-# see https://github.com/RobertCraigie/prisma-client-py/issues/45
-# switch to pyright for improved types, see https://prisma-client-py.readthedocs.io/en/stable/reference/limitations/
 
 RestaurantRelationFilter = TypedDict(
     'RestaurantRelationFilter',
     {
-        'is': 'Dict[str, Any]',
-        'is_not': 'Dict[str, Any]',
+        'is': 'RestaurantWhereInput',
+        'is_not': 'RestaurantWhereInput',
     },
     total=False,
 )
 
 
 class RestaurantListRelationFilter(TypedDict, total=False):
-    some: 'Dict[str, Any]'
-    none: 'Dict[str, Any]'
-    every: 'Dict[str, Any]'
+    some: 'RestaurantWhereInput'
+    none: 'RestaurantWhereInput'
+    every: 'RestaurantWhereInput'
 
 
 class RestaurantInclude(TypedDict, total=False):
@@ -1291,57 +868,15 @@ class RestaurantInclude(TypedDict, total=False):
     floors: Union[bool, 'FindManyFloorArgsFromRestaurant']
 
 
-    
-
 class RestaurantIncludeFromRestaurant(TypedDict, total=False):
     """Relational arguments for Restaurant"""
-    floors: Union[bool, 'FindManyFloorArgsFromRestaurantRecursive1']
+    floors: Union[bool, 'FindManyFloorArgsFromRestaurant']
 
-
-class RestaurantIncludeFromRestaurantRecursive1(TypedDict, total=False):
-    """Relational arguments for Restaurant"""
-    floors: Union[bool, 'FindManyFloorArgsFromRestaurantRecursive2']
-
-
-class RestaurantIncludeFromRestaurantRecursive2(TypedDict, total=False):
-    """Relational arguments for Restaurant"""
-    floors: Union[bool, 'FindManyFloorArgsFromRestaurantRecursive3']
-
-
-class RestaurantIncludeFromRestaurantRecursive3(TypedDict, total=False):
-    """Relational arguments for Restaurant"""
-    floors: Union[bool, 'FindManyFloorArgsFromRestaurantRecursive4']
-
-
-class RestaurantIncludeFromRestaurantRecursive4(TypedDict, total=False):
-    """Relational arguments for Restaurant"""
-
-    
 
 class RestaurantArgsFromRestaurant(TypedDict, total=False):
     """Arguments for Restaurant"""
-    include: 'RestaurantIncludeFromRestaurantRecursive1'
+    include: 'RestaurantIncludeFromRestaurant'
 
-
-class RestaurantArgsFromRestaurantRecursive1(TypedDict, total=False):
-    """Arguments for Restaurant"""
-    include: 'RestaurantIncludeFromRestaurantRecursive2'
-
-
-class RestaurantArgsFromRestaurantRecursive2(TypedDict, total=False):
-    """Arguments for Restaurant"""
-    include: 'RestaurantIncludeFromRestaurantRecursive3'
-
-
-class RestaurantArgsFromRestaurantRecursive3(TypedDict, total=False):
-    """Arguments for Restaurant"""
-    include: 'RestaurantIncludeFromRestaurantRecursive4'
-
-
-class RestaurantArgsFromRestaurantRecursive4(TypedDict, total=False):
-    """Arguments for Restaurant"""
-    
-    
 
 class FindManyRestaurantArgsFromRestaurant(TypedDict, total=False):
     """Arguments for Restaurant"""
@@ -1351,106 +886,19 @@ class FindManyRestaurantArgsFromRestaurant(TypedDict, total=False):
     where: 'RestaurantWhereInput'
     cursor: 'RestaurantWhereUniqueInput'
     distinct: List['RestaurantScalarFieldKeys']
-    include: 'RestaurantIncludeFromRestaurantRecursive1'
+    include: 'RestaurantIncludeFromRestaurant'
 
-
-class FindManyRestaurantArgsFromRestaurantRecursive1(TypedDict, total=False):
-    """Arguments for Restaurant"""
-    take: int
-    skip: int
-    order_by: Union['RestaurantOrderByInput', List['RestaurantOrderByInput']]
-    where: 'RestaurantWhereInput'
-    cursor: 'RestaurantWhereUniqueInput'
-    distinct: List['RestaurantScalarFieldKeys']
-    include: 'RestaurantIncludeFromRestaurantRecursive2'
-
-
-class FindManyRestaurantArgsFromRestaurantRecursive2(TypedDict, total=False):
-    """Arguments for Restaurant"""
-    take: int
-    skip: int
-    order_by: Union['RestaurantOrderByInput', List['RestaurantOrderByInput']]
-    where: 'RestaurantWhereInput'
-    cursor: 'RestaurantWhereUniqueInput'
-    distinct: List['RestaurantScalarFieldKeys']
-    include: 'RestaurantIncludeFromRestaurantRecursive3'
-
-
-class FindManyRestaurantArgsFromRestaurantRecursive3(TypedDict, total=False):
-    """Arguments for Restaurant"""
-    take: int
-    skip: int
-    order_by: Union['RestaurantOrderByInput', List['RestaurantOrderByInput']]
-    where: 'RestaurantWhereInput'
-    cursor: 'RestaurantWhereUniqueInput'
-    distinct: List['RestaurantScalarFieldKeys']
-    include: 'RestaurantIncludeFromRestaurantRecursive4'
-
-
-class FindManyRestaurantArgsFromRestaurantRecursive4(TypedDict, total=False):
-    """Arguments for Restaurant"""
-    take: int
-    skip: int
-    order_by: Union['RestaurantOrderByInput', List['RestaurantOrderByInput']]
-    where: 'RestaurantWhereInput'
-    cursor: 'RestaurantWhereUniqueInput'
-    distinct: List['RestaurantScalarFieldKeys']
-    
-    
 
 class FloorIncludeFromRestaurant(TypedDict, total=False):
     """Relational arguments for Restaurant"""
-    restaurant: Union[bool, 'RestaurantArgsFromRestaurantRecursive1']
-    tables: Union[bool, 'FindManyTableArgsFromRestaurantRecursive1']
+    restaurant: Union[bool, 'RestaurantArgsFromRestaurant']
+    tables: Union[bool, 'FindManyTableArgsFromRestaurant']
 
-
-class FloorIncludeFromRestaurantRecursive1(TypedDict, total=False):
-    """Relational arguments for Restaurant"""
-    restaurant: Union[bool, 'RestaurantArgsFromRestaurantRecursive2']
-    tables: Union[bool, 'FindManyTableArgsFromRestaurantRecursive2']
-
-
-class FloorIncludeFromRestaurantRecursive2(TypedDict, total=False):
-    """Relational arguments for Restaurant"""
-    restaurant: Union[bool, 'RestaurantArgsFromRestaurantRecursive3']
-    tables: Union[bool, 'FindManyTableArgsFromRestaurantRecursive3']
-
-
-class FloorIncludeFromRestaurantRecursive3(TypedDict, total=False):
-    """Relational arguments for Restaurant"""
-    restaurant: Union[bool, 'RestaurantArgsFromRestaurantRecursive4']
-    tables: Union[bool, 'FindManyTableArgsFromRestaurantRecursive4']
-
-
-class FloorIncludeFromRestaurantRecursive4(TypedDict, total=False):
-    """Relational arguments for Restaurant"""
-
-    
 
 class FloorArgsFromRestaurant(TypedDict, total=False):
     """Arguments for Restaurant"""
-    include: 'FloorIncludeFromFloorRecursive1'
+    include: 'FloorIncludeFromFloor'
 
-
-class FloorArgsFromRestaurantRecursive1(TypedDict, total=False):
-    """Arguments for Restaurant"""
-    include: 'FloorIncludeFromFloorRecursive2'
-
-
-class FloorArgsFromRestaurantRecursive2(TypedDict, total=False):
-    """Arguments for Restaurant"""
-    include: 'FloorIncludeFromFloorRecursive3'
-
-
-class FloorArgsFromRestaurantRecursive3(TypedDict, total=False):
-    """Arguments for Restaurant"""
-    include: 'FloorIncludeFromFloorRecursive4'
-
-
-class FloorArgsFromRestaurantRecursive4(TypedDict, total=False):
-    """Arguments for Restaurant"""
-    
-    
 
 class FindManyFloorArgsFromRestaurant(TypedDict, total=False):
     """Arguments for Restaurant"""
@@ -1460,106 +908,19 @@ class FindManyFloorArgsFromRestaurant(TypedDict, total=False):
     where: 'FloorWhereInput'
     cursor: 'FloorWhereUniqueInput'
     distinct: List['FloorScalarFieldKeys']
-    include: 'FloorIncludeFromFloorRecursive1'
+    include: 'FloorIncludeFromFloor'
 
-
-class FindManyFloorArgsFromRestaurantRecursive1(TypedDict, total=False):
-    """Arguments for Restaurant"""
-    take: int
-    skip: int
-    order_by: Union['FloorOrderByInput', List['FloorOrderByInput']]
-    where: 'FloorWhereInput'
-    cursor: 'FloorWhereUniqueInput'
-    distinct: List['FloorScalarFieldKeys']
-    include: 'FloorIncludeFromFloorRecursive2'
-
-
-class FindManyFloorArgsFromRestaurantRecursive2(TypedDict, total=False):
-    """Arguments for Restaurant"""
-    take: int
-    skip: int
-    order_by: Union['FloorOrderByInput', List['FloorOrderByInput']]
-    where: 'FloorWhereInput'
-    cursor: 'FloorWhereUniqueInput'
-    distinct: List['FloorScalarFieldKeys']
-    include: 'FloorIncludeFromFloorRecursive3'
-
-
-class FindManyFloorArgsFromRestaurantRecursive3(TypedDict, total=False):
-    """Arguments for Restaurant"""
-    take: int
-    skip: int
-    order_by: Union['FloorOrderByInput', List['FloorOrderByInput']]
-    where: 'FloorWhereInput'
-    cursor: 'FloorWhereUniqueInput'
-    distinct: List['FloorScalarFieldKeys']
-    include: 'FloorIncludeFromFloorRecursive4'
-
-
-class FindManyFloorArgsFromRestaurantRecursive4(TypedDict, total=False):
-    """Arguments for Restaurant"""
-    take: int
-    skip: int
-    order_by: Union['FloorOrderByInput', List['FloorOrderByInput']]
-    where: 'FloorWhereInput'
-    cursor: 'FloorWhereUniqueInput'
-    distinct: List['FloorScalarFieldKeys']
-    
-    
 
 class TableIncludeFromRestaurant(TypedDict, total=False):
     """Relational arguments for Restaurant"""
-    floor: Union[bool, 'FloorArgsFromRestaurantRecursive1']
-    reservations: Union[bool, 'FindManyReservationArgsFromRestaurantRecursive1']
+    floor: Union[bool, 'FloorArgsFromRestaurant']
+    reservations: Union[bool, 'FindManyReservationArgsFromRestaurant']
 
-
-class TableIncludeFromRestaurantRecursive1(TypedDict, total=False):
-    """Relational arguments for Restaurant"""
-    floor: Union[bool, 'FloorArgsFromRestaurantRecursive2']
-    reservations: Union[bool, 'FindManyReservationArgsFromRestaurantRecursive2']
-
-
-class TableIncludeFromRestaurantRecursive2(TypedDict, total=False):
-    """Relational arguments for Restaurant"""
-    floor: Union[bool, 'FloorArgsFromRestaurantRecursive3']
-    reservations: Union[bool, 'FindManyReservationArgsFromRestaurantRecursive3']
-
-
-class TableIncludeFromRestaurantRecursive3(TypedDict, total=False):
-    """Relational arguments for Restaurant"""
-    floor: Union[bool, 'FloorArgsFromRestaurantRecursive4']
-    reservations: Union[bool, 'FindManyReservationArgsFromRestaurantRecursive4']
-
-
-class TableIncludeFromRestaurantRecursive4(TypedDict, total=False):
-    """Relational arguments for Restaurant"""
-
-    
 
 class TableArgsFromRestaurant(TypedDict, total=False):
     """Arguments for Restaurant"""
-    include: 'TableIncludeFromTableRecursive1'
+    include: 'TableIncludeFromTable'
 
-
-class TableArgsFromRestaurantRecursive1(TypedDict, total=False):
-    """Arguments for Restaurant"""
-    include: 'TableIncludeFromTableRecursive2'
-
-
-class TableArgsFromRestaurantRecursive2(TypedDict, total=False):
-    """Arguments for Restaurant"""
-    include: 'TableIncludeFromTableRecursive3'
-
-
-class TableArgsFromRestaurantRecursive3(TypedDict, total=False):
-    """Arguments for Restaurant"""
-    include: 'TableIncludeFromTableRecursive4'
-
-
-class TableArgsFromRestaurantRecursive4(TypedDict, total=False):
-    """Arguments for Restaurant"""
-    
-    
 
 class FindManyTableArgsFromRestaurant(TypedDict, total=False):
     """Arguments for Restaurant"""
@@ -1569,102 +930,18 @@ class FindManyTableArgsFromRestaurant(TypedDict, total=False):
     where: 'TableWhereInput'
     cursor: 'TableWhereUniqueInput'
     distinct: List['TableScalarFieldKeys']
-    include: 'TableIncludeFromTableRecursive1'
+    include: 'TableIncludeFromTable'
 
-
-class FindManyTableArgsFromRestaurantRecursive1(TypedDict, total=False):
-    """Arguments for Restaurant"""
-    take: int
-    skip: int
-    order_by: Union['TableOrderByInput', List['TableOrderByInput']]
-    where: 'TableWhereInput'
-    cursor: 'TableWhereUniqueInput'
-    distinct: List['TableScalarFieldKeys']
-    include: 'TableIncludeFromTableRecursive2'
-
-
-class FindManyTableArgsFromRestaurantRecursive2(TypedDict, total=False):
-    """Arguments for Restaurant"""
-    take: int
-    skip: int
-    order_by: Union['TableOrderByInput', List['TableOrderByInput']]
-    where: 'TableWhereInput'
-    cursor: 'TableWhereUniqueInput'
-    distinct: List['TableScalarFieldKeys']
-    include: 'TableIncludeFromTableRecursive3'
-
-
-class FindManyTableArgsFromRestaurantRecursive3(TypedDict, total=False):
-    """Arguments for Restaurant"""
-    take: int
-    skip: int
-    order_by: Union['TableOrderByInput', List['TableOrderByInput']]
-    where: 'TableWhereInput'
-    cursor: 'TableWhereUniqueInput'
-    distinct: List['TableScalarFieldKeys']
-    include: 'TableIncludeFromTableRecursive4'
-
-
-class FindManyTableArgsFromRestaurantRecursive4(TypedDict, total=False):
-    """Arguments for Restaurant"""
-    take: int
-    skip: int
-    order_by: Union['TableOrderByInput', List['TableOrderByInput']]
-    where: 'TableWhereInput'
-    cursor: 'TableWhereUniqueInput'
-    distinct: List['TableScalarFieldKeys']
-    
-    
 
 class MemberIncludeFromRestaurant(TypedDict, total=False):
     """Relational arguments for Restaurant"""
-    reservations: Union[bool, 'FindManyReservationArgsFromRestaurantRecursive1']
+    reservations: Union[bool, 'FindManyReservationArgsFromRestaurant']
 
-
-class MemberIncludeFromRestaurantRecursive1(TypedDict, total=False):
-    """Relational arguments for Restaurant"""
-    reservations: Union[bool, 'FindManyReservationArgsFromRestaurantRecursive2']
-
-
-class MemberIncludeFromRestaurantRecursive2(TypedDict, total=False):
-    """Relational arguments for Restaurant"""
-    reservations: Union[bool, 'FindManyReservationArgsFromRestaurantRecursive3']
-
-
-class MemberIncludeFromRestaurantRecursive3(TypedDict, total=False):
-    """Relational arguments for Restaurant"""
-    reservations: Union[bool, 'FindManyReservationArgsFromRestaurantRecursive4']
-
-
-class MemberIncludeFromRestaurantRecursive4(TypedDict, total=False):
-    """Relational arguments for Restaurant"""
-
-    
 
 class MemberArgsFromRestaurant(TypedDict, total=False):
     """Arguments for Restaurant"""
-    include: 'MemberIncludeFromMemberRecursive1'
+    include: 'MemberIncludeFromMember'
 
-
-class MemberArgsFromRestaurantRecursive1(TypedDict, total=False):
-    """Arguments for Restaurant"""
-    include: 'MemberIncludeFromMemberRecursive2'
-
-
-class MemberArgsFromRestaurantRecursive2(TypedDict, total=False):
-    """Arguments for Restaurant"""
-    include: 'MemberIncludeFromMemberRecursive3'
-
-
-class MemberArgsFromRestaurantRecursive3(TypedDict, total=False):
-    """Arguments for Restaurant"""
-    include: 'MemberIncludeFromMemberRecursive4'
-
-
-class MemberArgsFromRestaurantRecursive4(TypedDict, total=False):
-    """Arguments for Restaurant"""
-    
-    
 
 class FindManyMemberArgsFromRestaurant(TypedDict, total=False):
     """Arguments for Restaurant"""
@@ -1674,106 +951,19 @@ class FindManyMemberArgsFromRestaurant(TypedDict, total=False):
     where: 'MemberWhereInput'
     cursor: 'MemberWhereUniqueInput'
     distinct: List['MemberScalarFieldKeys']
-    include: 'MemberIncludeFromMemberRecursive1'
+    include: 'MemberIncludeFromMember'
 
-
-class FindManyMemberArgsFromRestaurantRecursive1(TypedDict, total=False):
-    """Arguments for Restaurant"""
-    take: int
-    skip: int
-    order_by: Union['MemberOrderByInput', List['MemberOrderByInput']]
-    where: 'MemberWhereInput'
-    cursor: 'MemberWhereUniqueInput'
-    distinct: List['MemberScalarFieldKeys']
-    include: 'MemberIncludeFromMemberRecursive2'
-
-
-class FindManyMemberArgsFromRestaurantRecursive2(TypedDict, total=False):
-    """Arguments for Restaurant"""
-    take: int
-    skip: int
-    order_by: Union['MemberOrderByInput', List['MemberOrderByInput']]
-    where: 'MemberWhereInput'
-    cursor: 'MemberWhereUniqueInput'
-    distinct: List['MemberScalarFieldKeys']
-    include: 'MemberIncludeFromMemberRecursive3'
-
-
-class FindManyMemberArgsFromRestaurantRecursive3(TypedDict, total=False):
-    """Arguments for Restaurant"""
-    take: int
-    skip: int
-    order_by: Union['MemberOrderByInput', List['MemberOrderByInput']]
-    where: 'MemberWhereInput'
-    cursor: 'MemberWhereUniqueInput'
-    distinct: List['MemberScalarFieldKeys']
-    include: 'MemberIncludeFromMemberRecursive4'
-
-
-class FindManyMemberArgsFromRestaurantRecursive4(TypedDict, total=False):
-    """Arguments for Restaurant"""
-    take: int
-    skip: int
-    order_by: Union['MemberOrderByInput', List['MemberOrderByInput']]
-    where: 'MemberWhereInput'
-    cursor: 'MemberWhereUniqueInput'
-    distinct: List['MemberScalarFieldKeys']
-    
-    
 
 class ReservationIncludeFromRestaurant(TypedDict, total=False):
     """Relational arguments for Restaurant"""
-    table: Union[bool, 'TableArgsFromRestaurantRecursive1']
-    member: Union[bool, 'MemberArgsFromRestaurantRecursive1']
+    table: Union[bool, 'TableArgsFromRestaurant']
+    member: Union[bool, 'MemberArgsFromRestaurant']
 
-
-class ReservationIncludeFromRestaurantRecursive1(TypedDict, total=False):
-    """Relational arguments for Restaurant"""
-    table: Union[bool, 'TableArgsFromRestaurantRecursive2']
-    member: Union[bool, 'MemberArgsFromRestaurantRecursive2']
-
-
-class ReservationIncludeFromRestaurantRecursive2(TypedDict, total=False):
-    """Relational arguments for Restaurant"""
-    table: Union[bool, 'TableArgsFromRestaurantRecursive3']
-    member: Union[bool, 'MemberArgsFromRestaurantRecursive3']
-
-
-class ReservationIncludeFromRestaurantRecursive3(TypedDict, total=False):
-    """Relational arguments for Restaurant"""
-    table: Union[bool, 'TableArgsFromRestaurantRecursive4']
-    member: Union[bool, 'MemberArgsFromRestaurantRecursive4']
-
-
-class ReservationIncludeFromRestaurantRecursive4(TypedDict, total=False):
-    """Relational arguments for Restaurant"""
-
-    
 
 class ReservationArgsFromRestaurant(TypedDict, total=False):
     """Arguments for Restaurant"""
-    include: 'ReservationIncludeFromReservationRecursive1'
+    include: 'ReservationIncludeFromReservation'
 
-
-class ReservationArgsFromRestaurantRecursive1(TypedDict, total=False):
-    """Arguments for Restaurant"""
-    include: 'ReservationIncludeFromReservationRecursive2'
-
-
-class ReservationArgsFromRestaurantRecursive2(TypedDict, total=False):
-    """Arguments for Restaurant"""
-    include: 'ReservationIncludeFromReservationRecursive3'
-
-
-class ReservationArgsFromRestaurantRecursive3(TypedDict, total=False):
-    """Arguments for Restaurant"""
-    include: 'ReservationIncludeFromReservationRecursive4'
-
-
-class ReservationArgsFromRestaurantRecursive4(TypedDict, total=False):
-    """Arguments for Restaurant"""
-    
-    
 
 class FindManyReservationArgsFromRestaurant(TypedDict, total=False):
     """Arguments for Restaurant"""
@@ -1783,128 +973,32 @@ class FindManyReservationArgsFromRestaurant(TypedDict, total=False):
     where: 'ReservationWhereInput'
     cursor: 'ReservationWhereUniqueInput'
     distinct: List['ReservationScalarFieldKeys']
-    include: 'ReservationIncludeFromReservationRecursive1'
+    include: 'ReservationIncludeFromReservation'
 
 
-class FindManyReservationArgsFromRestaurantRecursive1(TypedDict, total=False):
-    """Arguments for Restaurant"""
-    take: int
-    skip: int
-    order_by: Union['ReservationOrderByInput', List['ReservationOrderByInput']]
-    where: 'ReservationWhereInput'
-    cursor: 'ReservationWhereUniqueInput'
-    distinct: List['ReservationScalarFieldKeys']
-    include: 'ReservationIncludeFromReservationRecursive2'
-
-
-class FindManyReservationArgsFromRestaurantRecursive2(TypedDict, total=False):
-    """Arguments for Restaurant"""
-    take: int
-    skip: int
-    order_by: Union['ReservationOrderByInput', List['ReservationOrderByInput']]
-    where: 'ReservationWhereInput'
-    cursor: 'ReservationWhereUniqueInput'
-    distinct: List['ReservationScalarFieldKeys']
-    include: 'ReservationIncludeFromReservationRecursive3'
-
-
-class FindManyReservationArgsFromRestaurantRecursive3(TypedDict, total=False):
-    """Arguments for Restaurant"""
-    take: int
-    skip: int
-    order_by: Union['ReservationOrderByInput', List['ReservationOrderByInput']]
-    where: 'ReservationWhereInput'
-    cursor: 'ReservationWhereUniqueInput'
-    distinct: List['ReservationScalarFieldKeys']
-    include: 'ReservationIncludeFromReservationRecursive4'
-
-
-class FindManyReservationArgsFromRestaurantRecursive4(TypedDict, total=False):
-    """Arguments for Restaurant"""
-    take: int
-    skip: int
-    order_by: Union['ReservationOrderByInput', List['ReservationOrderByInput']]
-    where: 'ReservationWhereInput'
-    cursor: 'ReservationWhereUniqueInput'
-    distinct: List['ReservationScalarFieldKeys']
-    
 
 
 FindManyRestaurantArgs = FindManyRestaurantArgsFromRestaurant
 FindFirstRestaurantArgs = FindManyRestaurantArgsFromRestaurant
 
 
-    
-
 class RestaurantWhereInput(TypedDict, total=False):
     """Restaurant arguments for searching"""
     id: Union[_int, 'types.IntFilter']
     name: Union[_str, 'types.StringFilter']
-    location: Union[_str, 'types.StringFilter']
+    location: Union[None, _str, 'types.StringFilter']
     floors: 'FloorListRelationFilter'
 
-    # should be noted that AND and NOT should be Union['RestaurantWhereInputRecursive1', List['RestaurantWhereInputRecursive1']]
+    # should be noted that AND and NOT should be Union['RestaurantWhereInput', List['RestaurantWhereInput']]
     # but this causes mypy to hang :/
-    AND: List['RestaurantWhereInputRecursive1']
-    OR: List['RestaurantWhereInputRecursive1']
-    NOT: List['RestaurantWhereInputRecursive1']
-
-
-class RestaurantWhereInputRecursive1(TypedDict, total=False):
-    """Restaurant arguments for searching"""
-    id: Union[_int, 'types.IntFilter']
-    name: Union[_str, 'types.StringFilter']
-    location: Union[_str, 'types.StringFilter']
-    floors: 'FloorListRelationFilter'
-
-    # should be noted that AND and NOT should be Union['RestaurantWhereInputRecursive2', List['RestaurantWhereInputRecursive2']]
-    # but this causes mypy to hang :/
-    AND: List['RestaurantWhereInputRecursive2']
-    OR: List['RestaurantWhereInputRecursive2']
-    NOT: List['RestaurantWhereInputRecursive2']
-
-
-class RestaurantWhereInputRecursive2(TypedDict, total=False):
-    """Restaurant arguments for searching"""
-    id: Union[_int, 'types.IntFilter']
-    name: Union[_str, 'types.StringFilter']
-    location: Union[_str, 'types.StringFilter']
-    floors: 'FloorListRelationFilter'
-
-    # should be noted that AND and NOT should be Union['RestaurantWhereInputRecursive3', List['RestaurantWhereInputRecursive3']]
-    # but this causes mypy to hang :/
-    AND: List['RestaurantWhereInputRecursive3']
-    OR: List['RestaurantWhereInputRecursive3']
-    NOT: List['RestaurantWhereInputRecursive3']
-
-
-class RestaurantWhereInputRecursive3(TypedDict, total=False):
-    """Restaurant arguments for searching"""
-    id: Union[_int, 'types.IntFilter']
-    name: Union[_str, 'types.StringFilter']
-    location: Union[_str, 'types.StringFilter']
-    floors: 'FloorListRelationFilter'
-
-    # should be noted that AND and NOT should be Union['RestaurantWhereInputRecursive4', List['RestaurantWhereInputRecursive4']]
-    # but this causes mypy to hang :/
-    AND: List['RestaurantWhereInputRecursive4']
-    OR: List['RestaurantWhereInputRecursive4']
-    NOT: List['RestaurantWhereInputRecursive4']
-
-
-class RestaurantWhereInputRecursive4(TypedDict, total=False):
-    """Restaurant arguments for searching"""
-    id: Union[_int, 'types.IntFilter']
-    name: Union[_str, 'types.StringFilter']
-    location: Union[_str, 'types.StringFilter']
-    floors: 'FloorListRelationFilter'
+    AND: List['RestaurantWhereInput']
+    OR: List['RestaurantWhereInput']
+    NOT: List['RestaurantWhereInput']
 
 
 
 # aggregate Restaurant types
 
-
-    
 
 class RestaurantScalarWhereWithAggregatesInput(TypedDict, total=False):
     """Restaurant arguments for searching"""
@@ -1912,49 +1006,9 @@ class RestaurantScalarWhereWithAggregatesInput(TypedDict, total=False):
     name: Union[_str, 'types.StringWithAggregatesFilter']
     location: Union[_str, 'types.StringWithAggregatesFilter']
 
-    AND: List['RestaurantScalarWhereWithAggregatesInputRecursive1']
-    OR: List['RestaurantScalarWhereWithAggregatesInputRecursive1']
-    NOT: List['RestaurantScalarWhereWithAggregatesInputRecursive1']
-
-
-class RestaurantScalarWhereWithAggregatesInputRecursive1(TypedDict, total=False):
-    """Restaurant arguments for searching"""
-    id: Union[_int, 'types.IntWithAggregatesFilter']
-    name: Union[_str, 'types.StringWithAggregatesFilter']
-    location: Union[_str, 'types.StringWithAggregatesFilter']
-
-    AND: List['RestaurantScalarWhereWithAggregatesInputRecursive2']
-    OR: List['RestaurantScalarWhereWithAggregatesInputRecursive2']
-    NOT: List['RestaurantScalarWhereWithAggregatesInputRecursive2']
-
-
-class RestaurantScalarWhereWithAggregatesInputRecursive2(TypedDict, total=False):
-    """Restaurant arguments for searching"""
-    id: Union[_int, 'types.IntWithAggregatesFilter']
-    name: Union[_str, 'types.StringWithAggregatesFilter']
-    location: Union[_str, 'types.StringWithAggregatesFilter']
-
-    AND: List['RestaurantScalarWhereWithAggregatesInputRecursive3']
-    OR: List['RestaurantScalarWhereWithAggregatesInputRecursive3']
-    NOT: List['RestaurantScalarWhereWithAggregatesInputRecursive3']
-
-
-class RestaurantScalarWhereWithAggregatesInputRecursive3(TypedDict, total=False):
-    """Restaurant arguments for searching"""
-    id: Union[_int, 'types.IntWithAggregatesFilter']
-    name: Union[_str, 'types.StringWithAggregatesFilter']
-    location: Union[_str, 'types.StringWithAggregatesFilter']
-
-    AND: List['RestaurantScalarWhereWithAggregatesInputRecursive4']
-    OR: List['RestaurantScalarWhereWithAggregatesInputRecursive4']
-    NOT: List['RestaurantScalarWhereWithAggregatesInputRecursive4']
-
-
-class RestaurantScalarWhereWithAggregatesInputRecursive4(TypedDict, total=False):
-    """Restaurant arguments for searching"""
-    id: Union[_int, 'types.IntWithAggregatesFilter']
-    name: Union[_str, 'types.StringWithAggregatesFilter']
-    location: Union[_str, 'types.StringWithAggregatesFilter']
+    AND: List['RestaurantScalarWhereWithAggregatesInput']
+    OR: List['RestaurantScalarWhereWithAggregatesInput']
+    NOT: List['RestaurantScalarWhereWithAggregatesInput']
 
 
 
@@ -2058,6 +1112,7 @@ RestaurantRelationalFieldKeys = Literal[
 class FloorOptionalCreateInput(TypedDict, total=False):
     """Optional arguments to the Floor create method"""
     id: _int
+    name: Optional[_str]
     restaurantId: _int
     restaurant: 'RestaurantCreateNestedWithoutRelationsInput'
     tables: 'TableCreateManyNestedWithoutRelationsInput'
@@ -2065,7 +1120,6 @@ class FloorOptionalCreateInput(TypedDict, total=False):
 
 class FloorCreateInput(FloorOptionalCreateInput):
     """Required arguments to the Floor create method"""
-    name: _str
 
 
 # TODO: remove this in favour of without explicit relations
@@ -2074,12 +1128,12 @@ class FloorCreateInput(FloorOptionalCreateInput):
 class FloorOptionalCreateWithoutRelationsInput(TypedDict, total=False):
     """Optional arguments to the Floor create method, without relations"""
     id: _int
+    name: Optional[_str]
     restaurantId: _int
 
 
 class FloorCreateWithoutRelationsInput(FloorOptionalCreateWithoutRelationsInput):
     """Required arguments to the Floor create method, without relations"""
-    name: _str
 
 class FloorConnectOrCreateWithoutRelationsInput(TypedDict):
     create: 'FloorCreateWithoutRelationsInput'
@@ -2110,7 +1164,7 @@ FloorWhereUniqueInput = _FloorWhereUnique_id_Input
 class FloorUpdateInput(TypedDict, total=False):
     """Optional arguments for updating a record"""
     id: Union[AtomicIntInput, _int]
-    name: _str
+    name: Optional[_str]
     restaurant: 'RestaurantUpdateOneWithoutRelationsInput'
     tables: 'TableUpdateManyWithoutRelationsInput'
 
@@ -2118,7 +1172,7 @@ class FloorUpdateInput(TypedDict, total=False):
 class FloorUpdateManyMutationInput(TypedDict, total=False):
     """Arguments for updating many records"""
     id: Union[AtomicIntInput, _int]
-    name: _str
+    name: Optional[_str]
 
 
 class FloorUpdateManyWithoutRelationsInput(TypedDict, total=False):
@@ -2189,24 +1243,21 @@ FloorOrderByInput = Union[
 # TODO: cleanup these types
 
 
-# Dict[str, Any] is a mypy limitation
-# see https://github.com/RobertCraigie/prisma-client-py/issues/45
-# switch to pyright for improved types, see https://prisma-client-py.readthedocs.io/en/stable/reference/limitations/
 
 FloorRelationFilter = TypedDict(
     'FloorRelationFilter',
     {
-        'is': 'Dict[str, Any]',
-        'is_not': 'Dict[str, Any]',
+        'is': 'FloorWhereInput',
+        'is_not': 'FloorWhereInput',
     },
     total=False,
 )
 
 
 class FloorListRelationFilter(TypedDict, total=False):
-    some: 'Dict[str, Any]'
-    none: 'Dict[str, Any]'
-    every: 'Dict[str, Any]'
+    some: 'FloorWhereInput'
+    none: 'FloorWhereInput'
+    every: 'FloorWhereInput'
 
 
 class FloorInclude(TypedDict, total=False):
@@ -2215,57 +1266,15 @@ class FloorInclude(TypedDict, total=False):
     tables: Union[bool, 'FindManyTableArgsFromFloor']
 
 
-    
-
 class RestaurantIncludeFromFloor(TypedDict, total=False):
     """Relational arguments for Floor"""
-    floors: Union[bool, 'FindManyFloorArgsFromFloorRecursive1']
+    floors: Union[bool, 'FindManyFloorArgsFromFloor']
 
-
-class RestaurantIncludeFromFloorRecursive1(TypedDict, total=False):
-    """Relational arguments for Floor"""
-    floors: Union[bool, 'FindManyFloorArgsFromFloorRecursive2']
-
-
-class RestaurantIncludeFromFloorRecursive2(TypedDict, total=False):
-    """Relational arguments for Floor"""
-    floors: Union[bool, 'FindManyFloorArgsFromFloorRecursive3']
-
-
-class RestaurantIncludeFromFloorRecursive3(TypedDict, total=False):
-    """Relational arguments for Floor"""
-    floors: Union[bool, 'FindManyFloorArgsFromFloorRecursive4']
-
-
-class RestaurantIncludeFromFloorRecursive4(TypedDict, total=False):
-    """Relational arguments for Floor"""
-
-    
 
 class RestaurantArgsFromFloor(TypedDict, total=False):
     """Arguments for Floor"""
-    include: 'RestaurantIncludeFromRestaurantRecursive1'
+    include: 'RestaurantIncludeFromRestaurant'
 
-
-class RestaurantArgsFromFloorRecursive1(TypedDict, total=False):
-    """Arguments for Floor"""
-    include: 'RestaurantIncludeFromRestaurantRecursive2'
-
-
-class RestaurantArgsFromFloorRecursive2(TypedDict, total=False):
-    """Arguments for Floor"""
-    include: 'RestaurantIncludeFromRestaurantRecursive3'
-
-
-class RestaurantArgsFromFloorRecursive3(TypedDict, total=False):
-    """Arguments for Floor"""
-    include: 'RestaurantIncludeFromRestaurantRecursive4'
-
-
-class RestaurantArgsFromFloorRecursive4(TypedDict, total=False):
-    """Arguments for Floor"""
-    
-    
 
 class FindManyRestaurantArgsFromFloor(TypedDict, total=False):
     """Arguments for Floor"""
@@ -2275,106 +1284,19 @@ class FindManyRestaurantArgsFromFloor(TypedDict, total=False):
     where: 'RestaurantWhereInput'
     cursor: 'RestaurantWhereUniqueInput'
     distinct: List['RestaurantScalarFieldKeys']
-    include: 'RestaurantIncludeFromRestaurantRecursive1'
+    include: 'RestaurantIncludeFromRestaurant'
 
-
-class FindManyRestaurantArgsFromFloorRecursive1(TypedDict, total=False):
-    """Arguments for Floor"""
-    take: int
-    skip: int
-    order_by: Union['RestaurantOrderByInput', List['RestaurantOrderByInput']]
-    where: 'RestaurantWhereInput'
-    cursor: 'RestaurantWhereUniqueInput'
-    distinct: List['RestaurantScalarFieldKeys']
-    include: 'RestaurantIncludeFromRestaurantRecursive2'
-
-
-class FindManyRestaurantArgsFromFloorRecursive2(TypedDict, total=False):
-    """Arguments for Floor"""
-    take: int
-    skip: int
-    order_by: Union['RestaurantOrderByInput', List['RestaurantOrderByInput']]
-    where: 'RestaurantWhereInput'
-    cursor: 'RestaurantWhereUniqueInput'
-    distinct: List['RestaurantScalarFieldKeys']
-    include: 'RestaurantIncludeFromRestaurantRecursive3'
-
-
-class FindManyRestaurantArgsFromFloorRecursive3(TypedDict, total=False):
-    """Arguments for Floor"""
-    take: int
-    skip: int
-    order_by: Union['RestaurantOrderByInput', List['RestaurantOrderByInput']]
-    where: 'RestaurantWhereInput'
-    cursor: 'RestaurantWhereUniqueInput'
-    distinct: List['RestaurantScalarFieldKeys']
-    include: 'RestaurantIncludeFromRestaurantRecursive4'
-
-
-class FindManyRestaurantArgsFromFloorRecursive4(TypedDict, total=False):
-    """Arguments for Floor"""
-    take: int
-    skip: int
-    order_by: Union['RestaurantOrderByInput', List['RestaurantOrderByInput']]
-    where: 'RestaurantWhereInput'
-    cursor: 'RestaurantWhereUniqueInput'
-    distinct: List['RestaurantScalarFieldKeys']
-    
-    
 
 class FloorIncludeFromFloor(TypedDict, total=False):
     """Relational arguments for Floor"""
-    restaurant: Union[bool, 'RestaurantArgsFromFloorRecursive1']
-    tables: Union[bool, 'FindManyTableArgsFromFloorRecursive1']
+    restaurant: Union[bool, 'RestaurantArgsFromFloor']
+    tables: Union[bool, 'FindManyTableArgsFromFloor']
 
-
-class FloorIncludeFromFloorRecursive1(TypedDict, total=False):
-    """Relational arguments for Floor"""
-    restaurant: Union[bool, 'RestaurantArgsFromFloorRecursive2']
-    tables: Union[bool, 'FindManyTableArgsFromFloorRecursive2']
-
-
-class FloorIncludeFromFloorRecursive2(TypedDict, total=False):
-    """Relational arguments for Floor"""
-    restaurant: Union[bool, 'RestaurantArgsFromFloorRecursive3']
-    tables: Union[bool, 'FindManyTableArgsFromFloorRecursive3']
-
-
-class FloorIncludeFromFloorRecursive3(TypedDict, total=False):
-    """Relational arguments for Floor"""
-    restaurant: Union[bool, 'RestaurantArgsFromFloorRecursive4']
-    tables: Union[bool, 'FindManyTableArgsFromFloorRecursive4']
-
-
-class FloorIncludeFromFloorRecursive4(TypedDict, total=False):
-    """Relational arguments for Floor"""
-
-    
 
 class FloorArgsFromFloor(TypedDict, total=False):
     """Arguments for Floor"""
-    include: 'FloorIncludeFromFloorRecursive1'
+    include: 'FloorIncludeFromFloor'
 
-
-class FloorArgsFromFloorRecursive1(TypedDict, total=False):
-    """Arguments for Floor"""
-    include: 'FloorIncludeFromFloorRecursive2'
-
-
-class FloorArgsFromFloorRecursive2(TypedDict, total=False):
-    """Arguments for Floor"""
-    include: 'FloorIncludeFromFloorRecursive3'
-
-
-class FloorArgsFromFloorRecursive3(TypedDict, total=False):
-    """Arguments for Floor"""
-    include: 'FloorIncludeFromFloorRecursive4'
-
-
-class FloorArgsFromFloorRecursive4(TypedDict, total=False):
-    """Arguments for Floor"""
-    
-    
 
 class FindManyFloorArgsFromFloor(TypedDict, total=False):
     """Arguments for Floor"""
@@ -2384,106 +1306,19 @@ class FindManyFloorArgsFromFloor(TypedDict, total=False):
     where: 'FloorWhereInput'
     cursor: 'FloorWhereUniqueInput'
     distinct: List['FloorScalarFieldKeys']
-    include: 'FloorIncludeFromFloorRecursive1'
+    include: 'FloorIncludeFromFloor'
 
-
-class FindManyFloorArgsFromFloorRecursive1(TypedDict, total=False):
-    """Arguments for Floor"""
-    take: int
-    skip: int
-    order_by: Union['FloorOrderByInput', List['FloorOrderByInput']]
-    where: 'FloorWhereInput'
-    cursor: 'FloorWhereUniqueInput'
-    distinct: List['FloorScalarFieldKeys']
-    include: 'FloorIncludeFromFloorRecursive2'
-
-
-class FindManyFloorArgsFromFloorRecursive2(TypedDict, total=False):
-    """Arguments for Floor"""
-    take: int
-    skip: int
-    order_by: Union['FloorOrderByInput', List['FloorOrderByInput']]
-    where: 'FloorWhereInput'
-    cursor: 'FloorWhereUniqueInput'
-    distinct: List['FloorScalarFieldKeys']
-    include: 'FloorIncludeFromFloorRecursive3'
-
-
-class FindManyFloorArgsFromFloorRecursive3(TypedDict, total=False):
-    """Arguments for Floor"""
-    take: int
-    skip: int
-    order_by: Union['FloorOrderByInput', List['FloorOrderByInput']]
-    where: 'FloorWhereInput'
-    cursor: 'FloorWhereUniqueInput'
-    distinct: List['FloorScalarFieldKeys']
-    include: 'FloorIncludeFromFloorRecursive4'
-
-
-class FindManyFloorArgsFromFloorRecursive4(TypedDict, total=False):
-    """Arguments for Floor"""
-    take: int
-    skip: int
-    order_by: Union['FloorOrderByInput', List['FloorOrderByInput']]
-    where: 'FloorWhereInput'
-    cursor: 'FloorWhereUniqueInput'
-    distinct: List['FloorScalarFieldKeys']
-    
-    
 
 class TableIncludeFromFloor(TypedDict, total=False):
     """Relational arguments for Floor"""
-    floor: Union[bool, 'FloorArgsFromFloorRecursive1']
-    reservations: Union[bool, 'FindManyReservationArgsFromFloorRecursive1']
+    floor: Union[bool, 'FloorArgsFromFloor']
+    reservations: Union[bool, 'FindManyReservationArgsFromFloor']
 
-
-class TableIncludeFromFloorRecursive1(TypedDict, total=False):
-    """Relational arguments for Floor"""
-    floor: Union[bool, 'FloorArgsFromFloorRecursive2']
-    reservations: Union[bool, 'FindManyReservationArgsFromFloorRecursive2']
-
-
-class TableIncludeFromFloorRecursive2(TypedDict, total=False):
-    """Relational arguments for Floor"""
-    floor: Union[bool, 'FloorArgsFromFloorRecursive3']
-    reservations: Union[bool, 'FindManyReservationArgsFromFloorRecursive3']
-
-
-class TableIncludeFromFloorRecursive3(TypedDict, total=False):
-    """Relational arguments for Floor"""
-    floor: Union[bool, 'FloorArgsFromFloorRecursive4']
-    reservations: Union[bool, 'FindManyReservationArgsFromFloorRecursive4']
-
-
-class TableIncludeFromFloorRecursive4(TypedDict, total=False):
-    """Relational arguments for Floor"""
-
-    
 
 class TableArgsFromFloor(TypedDict, total=False):
     """Arguments for Floor"""
-    include: 'TableIncludeFromTableRecursive1'
+    include: 'TableIncludeFromTable'
 
-
-class TableArgsFromFloorRecursive1(TypedDict, total=False):
-    """Arguments for Floor"""
-    include: 'TableIncludeFromTableRecursive2'
-
-
-class TableArgsFromFloorRecursive2(TypedDict, total=False):
-    """Arguments for Floor"""
-    include: 'TableIncludeFromTableRecursive3'
-
-
-class TableArgsFromFloorRecursive3(TypedDict, total=False):
-    """Arguments for Floor"""
-    include: 'TableIncludeFromTableRecursive4'
-
-
-class TableArgsFromFloorRecursive4(TypedDict, total=False):
-    """Arguments for Floor"""
-    
-    
 
 class FindManyTableArgsFromFloor(TypedDict, total=False):
     """Arguments for Floor"""
@@ -2493,102 +1328,18 @@ class FindManyTableArgsFromFloor(TypedDict, total=False):
     where: 'TableWhereInput'
     cursor: 'TableWhereUniqueInput'
     distinct: List['TableScalarFieldKeys']
-    include: 'TableIncludeFromTableRecursive1'
+    include: 'TableIncludeFromTable'
 
-
-class FindManyTableArgsFromFloorRecursive1(TypedDict, total=False):
-    """Arguments for Floor"""
-    take: int
-    skip: int
-    order_by: Union['TableOrderByInput', List['TableOrderByInput']]
-    where: 'TableWhereInput'
-    cursor: 'TableWhereUniqueInput'
-    distinct: List['TableScalarFieldKeys']
-    include: 'TableIncludeFromTableRecursive2'
-
-
-class FindManyTableArgsFromFloorRecursive2(TypedDict, total=False):
-    """Arguments for Floor"""
-    take: int
-    skip: int
-    order_by: Union['TableOrderByInput', List['TableOrderByInput']]
-    where: 'TableWhereInput'
-    cursor: 'TableWhereUniqueInput'
-    distinct: List['TableScalarFieldKeys']
-    include: 'TableIncludeFromTableRecursive3'
-
-
-class FindManyTableArgsFromFloorRecursive3(TypedDict, total=False):
-    """Arguments for Floor"""
-    take: int
-    skip: int
-    order_by: Union['TableOrderByInput', List['TableOrderByInput']]
-    where: 'TableWhereInput'
-    cursor: 'TableWhereUniqueInput'
-    distinct: List['TableScalarFieldKeys']
-    include: 'TableIncludeFromTableRecursive4'
-
-
-class FindManyTableArgsFromFloorRecursive4(TypedDict, total=False):
-    """Arguments for Floor"""
-    take: int
-    skip: int
-    order_by: Union['TableOrderByInput', List['TableOrderByInput']]
-    where: 'TableWhereInput'
-    cursor: 'TableWhereUniqueInput'
-    distinct: List['TableScalarFieldKeys']
-    
-    
 
 class MemberIncludeFromFloor(TypedDict, total=False):
     """Relational arguments for Floor"""
-    reservations: Union[bool, 'FindManyReservationArgsFromFloorRecursive1']
+    reservations: Union[bool, 'FindManyReservationArgsFromFloor']
 
-
-class MemberIncludeFromFloorRecursive1(TypedDict, total=False):
-    """Relational arguments for Floor"""
-    reservations: Union[bool, 'FindManyReservationArgsFromFloorRecursive2']
-
-
-class MemberIncludeFromFloorRecursive2(TypedDict, total=False):
-    """Relational arguments for Floor"""
-    reservations: Union[bool, 'FindManyReservationArgsFromFloorRecursive3']
-
-
-class MemberIncludeFromFloorRecursive3(TypedDict, total=False):
-    """Relational arguments for Floor"""
-    reservations: Union[bool, 'FindManyReservationArgsFromFloorRecursive4']
-
-
-class MemberIncludeFromFloorRecursive4(TypedDict, total=False):
-    """Relational arguments for Floor"""
-
-    
 
 class MemberArgsFromFloor(TypedDict, total=False):
     """Arguments for Floor"""
-    include: 'MemberIncludeFromMemberRecursive1'
+    include: 'MemberIncludeFromMember'
 
-
-class MemberArgsFromFloorRecursive1(TypedDict, total=False):
-    """Arguments for Floor"""
-    include: 'MemberIncludeFromMemberRecursive2'
-
-
-class MemberArgsFromFloorRecursive2(TypedDict, total=False):
-    """Arguments for Floor"""
-    include: 'MemberIncludeFromMemberRecursive3'
-
-
-class MemberArgsFromFloorRecursive3(TypedDict, total=False):
-    """Arguments for Floor"""
-    include: 'MemberIncludeFromMemberRecursive4'
-
-
-class MemberArgsFromFloorRecursive4(TypedDict, total=False):
-    """Arguments for Floor"""
-    
-    
 
 class FindManyMemberArgsFromFloor(TypedDict, total=False):
     """Arguments for Floor"""
@@ -2598,106 +1349,19 @@ class FindManyMemberArgsFromFloor(TypedDict, total=False):
     where: 'MemberWhereInput'
     cursor: 'MemberWhereUniqueInput'
     distinct: List['MemberScalarFieldKeys']
-    include: 'MemberIncludeFromMemberRecursive1'
+    include: 'MemberIncludeFromMember'
 
-
-class FindManyMemberArgsFromFloorRecursive1(TypedDict, total=False):
-    """Arguments for Floor"""
-    take: int
-    skip: int
-    order_by: Union['MemberOrderByInput', List['MemberOrderByInput']]
-    where: 'MemberWhereInput'
-    cursor: 'MemberWhereUniqueInput'
-    distinct: List['MemberScalarFieldKeys']
-    include: 'MemberIncludeFromMemberRecursive2'
-
-
-class FindManyMemberArgsFromFloorRecursive2(TypedDict, total=False):
-    """Arguments for Floor"""
-    take: int
-    skip: int
-    order_by: Union['MemberOrderByInput', List['MemberOrderByInput']]
-    where: 'MemberWhereInput'
-    cursor: 'MemberWhereUniqueInput'
-    distinct: List['MemberScalarFieldKeys']
-    include: 'MemberIncludeFromMemberRecursive3'
-
-
-class FindManyMemberArgsFromFloorRecursive3(TypedDict, total=False):
-    """Arguments for Floor"""
-    take: int
-    skip: int
-    order_by: Union['MemberOrderByInput', List['MemberOrderByInput']]
-    where: 'MemberWhereInput'
-    cursor: 'MemberWhereUniqueInput'
-    distinct: List['MemberScalarFieldKeys']
-    include: 'MemberIncludeFromMemberRecursive4'
-
-
-class FindManyMemberArgsFromFloorRecursive4(TypedDict, total=False):
-    """Arguments for Floor"""
-    take: int
-    skip: int
-    order_by: Union['MemberOrderByInput', List['MemberOrderByInput']]
-    where: 'MemberWhereInput'
-    cursor: 'MemberWhereUniqueInput'
-    distinct: List['MemberScalarFieldKeys']
-    
-    
 
 class ReservationIncludeFromFloor(TypedDict, total=False):
     """Relational arguments for Floor"""
-    table: Union[bool, 'TableArgsFromFloorRecursive1']
-    member: Union[bool, 'MemberArgsFromFloorRecursive1']
+    table: Union[bool, 'TableArgsFromFloor']
+    member: Union[bool, 'MemberArgsFromFloor']
 
-
-class ReservationIncludeFromFloorRecursive1(TypedDict, total=False):
-    """Relational arguments for Floor"""
-    table: Union[bool, 'TableArgsFromFloorRecursive2']
-    member: Union[bool, 'MemberArgsFromFloorRecursive2']
-
-
-class ReservationIncludeFromFloorRecursive2(TypedDict, total=False):
-    """Relational arguments for Floor"""
-    table: Union[bool, 'TableArgsFromFloorRecursive3']
-    member: Union[bool, 'MemberArgsFromFloorRecursive3']
-
-
-class ReservationIncludeFromFloorRecursive3(TypedDict, total=False):
-    """Relational arguments for Floor"""
-    table: Union[bool, 'TableArgsFromFloorRecursive4']
-    member: Union[bool, 'MemberArgsFromFloorRecursive4']
-
-
-class ReservationIncludeFromFloorRecursive4(TypedDict, total=False):
-    """Relational arguments for Floor"""
-
-    
 
 class ReservationArgsFromFloor(TypedDict, total=False):
     """Arguments for Floor"""
-    include: 'ReservationIncludeFromReservationRecursive1'
+    include: 'ReservationIncludeFromReservation'
 
-
-class ReservationArgsFromFloorRecursive1(TypedDict, total=False):
-    """Arguments for Floor"""
-    include: 'ReservationIncludeFromReservationRecursive2'
-
-
-class ReservationArgsFromFloorRecursive2(TypedDict, total=False):
-    """Arguments for Floor"""
-    include: 'ReservationIncludeFromReservationRecursive3'
-
-
-class ReservationArgsFromFloorRecursive3(TypedDict, total=False):
-    """Arguments for Floor"""
-    include: 'ReservationIncludeFromReservationRecursive4'
-
-
-class ReservationArgsFromFloorRecursive4(TypedDict, total=False):
-    """Arguments for Floor"""
-    
-    
 
 class FindManyReservationArgsFromFloor(TypedDict, total=False):
     """Arguments for Floor"""
@@ -2707,133 +1371,33 @@ class FindManyReservationArgsFromFloor(TypedDict, total=False):
     where: 'ReservationWhereInput'
     cursor: 'ReservationWhereUniqueInput'
     distinct: List['ReservationScalarFieldKeys']
-    include: 'ReservationIncludeFromReservationRecursive1'
+    include: 'ReservationIncludeFromReservation'
 
 
-class FindManyReservationArgsFromFloorRecursive1(TypedDict, total=False):
-    """Arguments for Floor"""
-    take: int
-    skip: int
-    order_by: Union['ReservationOrderByInput', List['ReservationOrderByInput']]
-    where: 'ReservationWhereInput'
-    cursor: 'ReservationWhereUniqueInput'
-    distinct: List['ReservationScalarFieldKeys']
-    include: 'ReservationIncludeFromReservationRecursive2'
-
-
-class FindManyReservationArgsFromFloorRecursive2(TypedDict, total=False):
-    """Arguments for Floor"""
-    take: int
-    skip: int
-    order_by: Union['ReservationOrderByInput', List['ReservationOrderByInput']]
-    where: 'ReservationWhereInput'
-    cursor: 'ReservationWhereUniqueInput'
-    distinct: List['ReservationScalarFieldKeys']
-    include: 'ReservationIncludeFromReservationRecursive3'
-
-
-class FindManyReservationArgsFromFloorRecursive3(TypedDict, total=False):
-    """Arguments for Floor"""
-    take: int
-    skip: int
-    order_by: Union['ReservationOrderByInput', List['ReservationOrderByInput']]
-    where: 'ReservationWhereInput'
-    cursor: 'ReservationWhereUniqueInput'
-    distinct: List['ReservationScalarFieldKeys']
-    include: 'ReservationIncludeFromReservationRecursive4'
-
-
-class FindManyReservationArgsFromFloorRecursive4(TypedDict, total=False):
-    """Arguments for Floor"""
-    take: int
-    skip: int
-    order_by: Union['ReservationOrderByInput', List['ReservationOrderByInput']]
-    where: 'ReservationWhereInput'
-    cursor: 'ReservationWhereUniqueInput'
-    distinct: List['ReservationScalarFieldKeys']
-    
 
 
 FindManyFloorArgs = FindManyFloorArgsFromFloor
 FindFirstFloorArgs = FindManyFloorArgsFromFloor
 
 
-    
-
 class FloorWhereInput(TypedDict, total=False):
     """Floor arguments for searching"""
     id: Union[_int, 'types.IntFilter']
-    name: Union[_str, 'types.StringFilter']
+    name: Union[None, _str, 'types.StringFilter']
     restaurantId: Union[_int, 'types.IntFilter']
     restaurant: 'RestaurantRelationFilter'
     tables: 'TableListRelationFilter'
 
-    # should be noted that AND and NOT should be Union['FloorWhereInputRecursive1', List['FloorWhereInputRecursive1']]
+    # should be noted that AND and NOT should be Union['FloorWhereInput', List['FloorWhereInput']]
     # but this causes mypy to hang :/
-    AND: List['FloorWhereInputRecursive1']
-    OR: List['FloorWhereInputRecursive1']
-    NOT: List['FloorWhereInputRecursive1']
-
-
-class FloorWhereInputRecursive1(TypedDict, total=False):
-    """Floor arguments for searching"""
-    id: Union[_int, 'types.IntFilter']
-    name: Union[_str, 'types.StringFilter']
-    restaurantId: Union[_int, 'types.IntFilter']
-    restaurant: 'RestaurantRelationFilter'
-    tables: 'TableListRelationFilter'
-
-    # should be noted that AND and NOT should be Union['FloorWhereInputRecursive2', List['FloorWhereInputRecursive2']]
-    # but this causes mypy to hang :/
-    AND: List['FloorWhereInputRecursive2']
-    OR: List['FloorWhereInputRecursive2']
-    NOT: List['FloorWhereInputRecursive2']
-
-
-class FloorWhereInputRecursive2(TypedDict, total=False):
-    """Floor arguments for searching"""
-    id: Union[_int, 'types.IntFilter']
-    name: Union[_str, 'types.StringFilter']
-    restaurantId: Union[_int, 'types.IntFilter']
-    restaurant: 'RestaurantRelationFilter'
-    tables: 'TableListRelationFilter'
-
-    # should be noted that AND and NOT should be Union['FloorWhereInputRecursive3', List['FloorWhereInputRecursive3']]
-    # but this causes mypy to hang :/
-    AND: List['FloorWhereInputRecursive3']
-    OR: List['FloorWhereInputRecursive3']
-    NOT: List['FloorWhereInputRecursive3']
-
-
-class FloorWhereInputRecursive3(TypedDict, total=False):
-    """Floor arguments for searching"""
-    id: Union[_int, 'types.IntFilter']
-    name: Union[_str, 'types.StringFilter']
-    restaurantId: Union[_int, 'types.IntFilter']
-    restaurant: 'RestaurantRelationFilter'
-    tables: 'TableListRelationFilter'
-
-    # should be noted that AND and NOT should be Union['FloorWhereInputRecursive4', List['FloorWhereInputRecursive4']]
-    # but this causes mypy to hang :/
-    AND: List['FloorWhereInputRecursive4']
-    OR: List['FloorWhereInputRecursive4']
-    NOT: List['FloorWhereInputRecursive4']
-
-
-class FloorWhereInputRecursive4(TypedDict, total=False):
-    """Floor arguments for searching"""
-    id: Union[_int, 'types.IntFilter']
-    name: Union[_str, 'types.StringFilter']
-    restaurantId: Union[_int, 'types.IntFilter']
-    restaurant: 'RestaurantRelationFilter'
-    tables: 'TableListRelationFilter'
+    AND: List['FloorWhereInput']
+    OR: List['FloorWhereInput']
+    NOT: List['FloorWhereInput']
 
 
 
 # aggregate Floor types
 
-
-    
 
 class FloorScalarWhereWithAggregatesInput(TypedDict, total=False):
     """Floor arguments for searching"""
@@ -2841,49 +1405,9 @@ class FloorScalarWhereWithAggregatesInput(TypedDict, total=False):
     name: Union[_str, 'types.StringWithAggregatesFilter']
     restaurantId: Union[_int, 'types.IntWithAggregatesFilter']
 
-    AND: List['FloorScalarWhereWithAggregatesInputRecursive1']
-    OR: List['FloorScalarWhereWithAggregatesInputRecursive1']
-    NOT: List['FloorScalarWhereWithAggregatesInputRecursive1']
-
-
-class FloorScalarWhereWithAggregatesInputRecursive1(TypedDict, total=False):
-    """Floor arguments for searching"""
-    id: Union[_int, 'types.IntWithAggregatesFilter']
-    name: Union[_str, 'types.StringWithAggregatesFilter']
-    restaurantId: Union[_int, 'types.IntWithAggregatesFilter']
-
-    AND: List['FloorScalarWhereWithAggregatesInputRecursive2']
-    OR: List['FloorScalarWhereWithAggregatesInputRecursive2']
-    NOT: List['FloorScalarWhereWithAggregatesInputRecursive2']
-
-
-class FloorScalarWhereWithAggregatesInputRecursive2(TypedDict, total=False):
-    """Floor arguments for searching"""
-    id: Union[_int, 'types.IntWithAggregatesFilter']
-    name: Union[_str, 'types.StringWithAggregatesFilter']
-    restaurantId: Union[_int, 'types.IntWithAggregatesFilter']
-
-    AND: List['FloorScalarWhereWithAggregatesInputRecursive3']
-    OR: List['FloorScalarWhereWithAggregatesInputRecursive3']
-    NOT: List['FloorScalarWhereWithAggregatesInputRecursive3']
-
-
-class FloorScalarWhereWithAggregatesInputRecursive3(TypedDict, total=False):
-    """Floor arguments for searching"""
-    id: Union[_int, 'types.IntWithAggregatesFilter']
-    name: Union[_str, 'types.StringWithAggregatesFilter']
-    restaurantId: Union[_int, 'types.IntWithAggregatesFilter']
-
-    AND: List['FloorScalarWhereWithAggregatesInputRecursive4']
-    OR: List['FloorScalarWhereWithAggregatesInputRecursive4']
-    NOT: List['FloorScalarWhereWithAggregatesInputRecursive4']
-
-
-class FloorScalarWhereWithAggregatesInputRecursive4(TypedDict, total=False):
-    """Floor arguments for searching"""
-    id: Union[_int, 'types.IntWithAggregatesFilter']
-    name: Union[_str, 'types.StringWithAggregatesFilter']
-    restaurantId: Union[_int, 'types.IntWithAggregatesFilter']
+    AND: List['FloorScalarWhereWithAggregatesInput']
+    OR: List['FloorScalarWhereWithAggregatesInput']
+    NOT: List['FloorScalarWhereWithAggregatesInput']
 
 
 
@@ -2992,15 +1516,22 @@ FloorRelationalFieldKeys = Literal[
 class TableOptionalCreateInput(TypedDict, total=False):
     """Optional arguments to the Table create method"""
     id: _int
-    floorId: _int
+    floorId: Optional[_int]
     floor: 'FloorCreateNestedWithoutRelationsInput'
+    capacity: Optional[_int]
+    posX: Optional[_int]
+    posY: Optional[_int]
+    width: Optional[_int]
+    height: Optional[_int]
+    rotation: Optional[_int]
+    label: Optional[_str]
+    area: Optional[_str]
     reservations: 'ReservationCreateManyNestedWithoutRelationsInput'
 
 
 class TableCreateInput(TableOptionalCreateInput):
     """Required arguments to the Table create method"""
     number: _int
-    capacity: _int
 
 
 # TODO: remove this in favour of without explicit relations
@@ -3009,13 +1540,20 @@ class TableCreateInput(TableOptionalCreateInput):
 class TableOptionalCreateWithoutRelationsInput(TypedDict, total=False):
     """Optional arguments to the Table create method, without relations"""
     id: _int
-    floorId: _int
+    floorId: Optional[_int]
+    capacity: Optional[_int]
+    posX: Optional[_int]
+    posY: Optional[_int]
+    width: Optional[_int]
+    height: Optional[_int]
+    rotation: Optional[_int]
+    label: Optional[_str]
+    area: Optional[_str]
 
 
 class TableCreateWithoutRelationsInput(TableOptionalCreateWithoutRelationsInput):
     """Required arguments to the Table create method, without relations"""
     number: _int
-    capacity: _int
 
 class TableConnectOrCreateWithoutRelationsInput(TypedDict):
     create: 'TableCreateWithoutRelationsInput'
@@ -3048,7 +1586,14 @@ class TableUpdateInput(TypedDict, total=False):
     id: Union[AtomicIntInput, _int]
     number: Union[AtomicIntInput, _int]
     floor: 'FloorUpdateOneWithoutRelationsInput'
-    capacity: Union[AtomicIntInput, _int]
+    capacity: Optional[Union[AtomicIntInput, _int]]
+    posX: Optional[Union[AtomicIntInput, _int]]
+    posY: Optional[Union[AtomicIntInput, _int]]
+    width: Optional[Union[AtomicIntInput, _int]]
+    height: Optional[Union[AtomicIntInput, _int]]
+    rotation: Optional[Union[AtomicIntInput, _int]]
+    label: Optional[_str]
+    area: Optional[_str]
     reservations: 'ReservationUpdateManyWithoutRelationsInput'
 
 
@@ -3056,7 +1601,14 @@ class TableUpdateManyMutationInput(TypedDict, total=False):
     """Arguments for updating many records"""
     id: Union[AtomicIntInput, _int]
     number: Union[AtomicIntInput, _int]
-    capacity: Union[AtomicIntInput, _int]
+    capacity: Optional[Union[AtomicIntInput, _int]]
+    posX: Optional[Union[AtomicIntInput, _int]]
+    posY: Optional[Union[AtomicIntInput, _int]]
+    width: Optional[Union[AtomicIntInput, _int]]
+    height: Optional[Union[AtomicIntInput, _int]]
+    rotation: Optional[Union[AtomicIntInput, _int]]
+    label: Optional[_str]
+    area: Optional[_str]
 
 
 class TableUpdateManyWithoutRelationsInput(TypedDict, total=False):
@@ -3123,11 +1675,74 @@ _Table_capacity_OrderByInput = TypedDict(
     total=True
 )
 
+_Table_posX_OrderByInput = TypedDict(
+    '_Table_posX_OrderByInput',
+    {
+        'posX': 'SortOrder',
+    },
+    total=True
+)
+
+_Table_posY_OrderByInput = TypedDict(
+    '_Table_posY_OrderByInput',
+    {
+        'posY': 'SortOrder',
+    },
+    total=True
+)
+
+_Table_width_OrderByInput = TypedDict(
+    '_Table_width_OrderByInput',
+    {
+        'width': 'SortOrder',
+    },
+    total=True
+)
+
+_Table_height_OrderByInput = TypedDict(
+    '_Table_height_OrderByInput',
+    {
+        'height': 'SortOrder',
+    },
+    total=True
+)
+
+_Table_rotation_OrderByInput = TypedDict(
+    '_Table_rotation_OrderByInput',
+    {
+        'rotation': 'SortOrder',
+    },
+    total=True
+)
+
+_Table_label_OrderByInput = TypedDict(
+    '_Table_label_OrderByInput',
+    {
+        'label': 'SortOrder',
+    },
+    total=True
+)
+
+_Table_area_OrderByInput = TypedDict(
+    '_Table_area_OrderByInput',
+    {
+        'area': 'SortOrder',
+    },
+    total=True
+)
+
 TableOrderByInput = Union[
     '_Table_id_OrderByInput',
     '_Table_number_OrderByInput',
     '_Table_floorId_OrderByInput',
     '_Table_capacity_OrderByInput',
+    '_Table_posX_OrderByInput',
+    '_Table_posY_OrderByInput',
+    '_Table_width_OrderByInput',
+    '_Table_height_OrderByInput',
+    '_Table_rotation_OrderByInput',
+    '_Table_label_OrderByInput',
+    '_Table_area_OrderByInput',
 ]
 
 
@@ -3136,24 +1751,21 @@ TableOrderByInput = Union[
 # TODO: cleanup these types
 
 
-# Dict[str, Any] is a mypy limitation
-# see https://github.com/RobertCraigie/prisma-client-py/issues/45
-# switch to pyright for improved types, see https://prisma-client-py.readthedocs.io/en/stable/reference/limitations/
 
 TableRelationFilter = TypedDict(
     'TableRelationFilter',
     {
-        'is': 'Dict[str, Any]',
-        'is_not': 'Dict[str, Any]',
+        'is': 'TableWhereInput',
+        'is_not': 'TableWhereInput',
     },
     total=False,
 )
 
 
 class TableListRelationFilter(TypedDict, total=False):
-    some: 'Dict[str, Any]'
-    none: 'Dict[str, Any]'
-    every: 'Dict[str, Any]'
+    some: 'TableWhereInput'
+    none: 'TableWhereInput'
+    every: 'TableWhereInput'
 
 
 class TableInclude(TypedDict, total=False):
@@ -3162,57 +1774,15 @@ class TableInclude(TypedDict, total=False):
     reservations: Union[bool, 'FindManyReservationArgsFromTable']
 
 
-    
-
 class RestaurantIncludeFromTable(TypedDict, total=False):
     """Relational arguments for Table"""
-    floors: Union[bool, 'FindManyFloorArgsFromTableRecursive1']
+    floors: Union[bool, 'FindManyFloorArgsFromTable']
 
-
-class RestaurantIncludeFromTableRecursive1(TypedDict, total=False):
-    """Relational arguments for Table"""
-    floors: Union[bool, 'FindManyFloorArgsFromTableRecursive2']
-
-
-class RestaurantIncludeFromTableRecursive2(TypedDict, total=False):
-    """Relational arguments for Table"""
-    floors: Union[bool, 'FindManyFloorArgsFromTableRecursive3']
-
-
-class RestaurantIncludeFromTableRecursive3(TypedDict, total=False):
-    """Relational arguments for Table"""
-    floors: Union[bool, 'FindManyFloorArgsFromTableRecursive4']
-
-
-class RestaurantIncludeFromTableRecursive4(TypedDict, total=False):
-    """Relational arguments for Table"""
-
-    
 
 class RestaurantArgsFromTable(TypedDict, total=False):
     """Arguments for Table"""
-    include: 'RestaurantIncludeFromRestaurantRecursive1'
+    include: 'RestaurantIncludeFromRestaurant'
 
-
-class RestaurantArgsFromTableRecursive1(TypedDict, total=False):
-    """Arguments for Table"""
-    include: 'RestaurantIncludeFromRestaurantRecursive2'
-
-
-class RestaurantArgsFromTableRecursive2(TypedDict, total=False):
-    """Arguments for Table"""
-    include: 'RestaurantIncludeFromRestaurantRecursive3'
-
-
-class RestaurantArgsFromTableRecursive3(TypedDict, total=False):
-    """Arguments for Table"""
-    include: 'RestaurantIncludeFromRestaurantRecursive4'
-
-
-class RestaurantArgsFromTableRecursive4(TypedDict, total=False):
-    """Arguments for Table"""
-    
-    
 
 class FindManyRestaurantArgsFromTable(TypedDict, total=False):
     """Arguments for Table"""
@@ -3222,106 +1792,19 @@ class FindManyRestaurantArgsFromTable(TypedDict, total=False):
     where: 'RestaurantWhereInput'
     cursor: 'RestaurantWhereUniqueInput'
     distinct: List['RestaurantScalarFieldKeys']
-    include: 'RestaurantIncludeFromRestaurantRecursive1'
+    include: 'RestaurantIncludeFromRestaurant'
 
-
-class FindManyRestaurantArgsFromTableRecursive1(TypedDict, total=False):
-    """Arguments for Table"""
-    take: int
-    skip: int
-    order_by: Union['RestaurantOrderByInput', List['RestaurantOrderByInput']]
-    where: 'RestaurantWhereInput'
-    cursor: 'RestaurantWhereUniqueInput'
-    distinct: List['RestaurantScalarFieldKeys']
-    include: 'RestaurantIncludeFromRestaurantRecursive2'
-
-
-class FindManyRestaurantArgsFromTableRecursive2(TypedDict, total=False):
-    """Arguments for Table"""
-    take: int
-    skip: int
-    order_by: Union['RestaurantOrderByInput', List['RestaurantOrderByInput']]
-    where: 'RestaurantWhereInput'
-    cursor: 'RestaurantWhereUniqueInput'
-    distinct: List['RestaurantScalarFieldKeys']
-    include: 'RestaurantIncludeFromRestaurantRecursive3'
-
-
-class FindManyRestaurantArgsFromTableRecursive3(TypedDict, total=False):
-    """Arguments for Table"""
-    take: int
-    skip: int
-    order_by: Union['RestaurantOrderByInput', List['RestaurantOrderByInput']]
-    where: 'RestaurantWhereInput'
-    cursor: 'RestaurantWhereUniqueInput'
-    distinct: List['RestaurantScalarFieldKeys']
-    include: 'RestaurantIncludeFromRestaurantRecursive4'
-
-
-class FindManyRestaurantArgsFromTableRecursive4(TypedDict, total=False):
-    """Arguments for Table"""
-    take: int
-    skip: int
-    order_by: Union['RestaurantOrderByInput', List['RestaurantOrderByInput']]
-    where: 'RestaurantWhereInput'
-    cursor: 'RestaurantWhereUniqueInput'
-    distinct: List['RestaurantScalarFieldKeys']
-    
-    
 
 class FloorIncludeFromTable(TypedDict, total=False):
     """Relational arguments for Table"""
-    restaurant: Union[bool, 'RestaurantArgsFromTableRecursive1']
-    tables: Union[bool, 'FindManyTableArgsFromTableRecursive1']
+    restaurant: Union[bool, 'RestaurantArgsFromTable']
+    tables: Union[bool, 'FindManyTableArgsFromTable']
 
-
-class FloorIncludeFromTableRecursive1(TypedDict, total=False):
-    """Relational arguments for Table"""
-    restaurant: Union[bool, 'RestaurantArgsFromTableRecursive2']
-    tables: Union[bool, 'FindManyTableArgsFromTableRecursive2']
-
-
-class FloorIncludeFromTableRecursive2(TypedDict, total=False):
-    """Relational arguments for Table"""
-    restaurant: Union[bool, 'RestaurantArgsFromTableRecursive3']
-    tables: Union[bool, 'FindManyTableArgsFromTableRecursive3']
-
-
-class FloorIncludeFromTableRecursive3(TypedDict, total=False):
-    """Relational arguments for Table"""
-    restaurant: Union[bool, 'RestaurantArgsFromTableRecursive4']
-    tables: Union[bool, 'FindManyTableArgsFromTableRecursive4']
-
-
-class FloorIncludeFromTableRecursive4(TypedDict, total=False):
-    """Relational arguments for Table"""
-
-    
 
 class FloorArgsFromTable(TypedDict, total=False):
     """Arguments for Table"""
-    include: 'FloorIncludeFromFloorRecursive1'
+    include: 'FloorIncludeFromFloor'
 
-
-class FloorArgsFromTableRecursive1(TypedDict, total=False):
-    """Arguments for Table"""
-    include: 'FloorIncludeFromFloorRecursive2'
-
-
-class FloorArgsFromTableRecursive2(TypedDict, total=False):
-    """Arguments for Table"""
-    include: 'FloorIncludeFromFloorRecursive3'
-
-
-class FloorArgsFromTableRecursive3(TypedDict, total=False):
-    """Arguments for Table"""
-    include: 'FloorIncludeFromFloorRecursive4'
-
-
-class FloorArgsFromTableRecursive4(TypedDict, total=False):
-    """Arguments for Table"""
-    
-    
 
 class FindManyFloorArgsFromTable(TypedDict, total=False):
     """Arguments for Table"""
@@ -3331,106 +1814,19 @@ class FindManyFloorArgsFromTable(TypedDict, total=False):
     where: 'FloorWhereInput'
     cursor: 'FloorWhereUniqueInput'
     distinct: List['FloorScalarFieldKeys']
-    include: 'FloorIncludeFromFloorRecursive1'
+    include: 'FloorIncludeFromFloor'
 
-
-class FindManyFloorArgsFromTableRecursive1(TypedDict, total=False):
-    """Arguments for Table"""
-    take: int
-    skip: int
-    order_by: Union['FloorOrderByInput', List['FloorOrderByInput']]
-    where: 'FloorWhereInput'
-    cursor: 'FloorWhereUniqueInput'
-    distinct: List['FloorScalarFieldKeys']
-    include: 'FloorIncludeFromFloorRecursive2'
-
-
-class FindManyFloorArgsFromTableRecursive2(TypedDict, total=False):
-    """Arguments for Table"""
-    take: int
-    skip: int
-    order_by: Union['FloorOrderByInput', List['FloorOrderByInput']]
-    where: 'FloorWhereInput'
-    cursor: 'FloorWhereUniqueInput'
-    distinct: List['FloorScalarFieldKeys']
-    include: 'FloorIncludeFromFloorRecursive3'
-
-
-class FindManyFloorArgsFromTableRecursive3(TypedDict, total=False):
-    """Arguments for Table"""
-    take: int
-    skip: int
-    order_by: Union['FloorOrderByInput', List['FloorOrderByInput']]
-    where: 'FloorWhereInput'
-    cursor: 'FloorWhereUniqueInput'
-    distinct: List['FloorScalarFieldKeys']
-    include: 'FloorIncludeFromFloorRecursive4'
-
-
-class FindManyFloorArgsFromTableRecursive4(TypedDict, total=False):
-    """Arguments for Table"""
-    take: int
-    skip: int
-    order_by: Union['FloorOrderByInput', List['FloorOrderByInput']]
-    where: 'FloorWhereInput'
-    cursor: 'FloorWhereUniqueInput'
-    distinct: List['FloorScalarFieldKeys']
-    
-    
 
 class TableIncludeFromTable(TypedDict, total=False):
     """Relational arguments for Table"""
-    floor: Union[bool, 'FloorArgsFromTableRecursive1']
-    reservations: Union[bool, 'FindManyReservationArgsFromTableRecursive1']
+    floor: Union[bool, 'FloorArgsFromTable']
+    reservations: Union[bool, 'FindManyReservationArgsFromTable']
 
-
-class TableIncludeFromTableRecursive1(TypedDict, total=False):
-    """Relational arguments for Table"""
-    floor: Union[bool, 'FloorArgsFromTableRecursive2']
-    reservations: Union[bool, 'FindManyReservationArgsFromTableRecursive2']
-
-
-class TableIncludeFromTableRecursive2(TypedDict, total=False):
-    """Relational arguments for Table"""
-    floor: Union[bool, 'FloorArgsFromTableRecursive3']
-    reservations: Union[bool, 'FindManyReservationArgsFromTableRecursive3']
-
-
-class TableIncludeFromTableRecursive3(TypedDict, total=False):
-    """Relational arguments for Table"""
-    floor: Union[bool, 'FloorArgsFromTableRecursive4']
-    reservations: Union[bool, 'FindManyReservationArgsFromTableRecursive4']
-
-
-class TableIncludeFromTableRecursive4(TypedDict, total=False):
-    """Relational arguments for Table"""
-
-    
 
 class TableArgsFromTable(TypedDict, total=False):
     """Arguments for Table"""
-    include: 'TableIncludeFromTableRecursive1'
+    include: 'TableIncludeFromTable'
 
-
-class TableArgsFromTableRecursive1(TypedDict, total=False):
-    """Arguments for Table"""
-    include: 'TableIncludeFromTableRecursive2'
-
-
-class TableArgsFromTableRecursive2(TypedDict, total=False):
-    """Arguments for Table"""
-    include: 'TableIncludeFromTableRecursive3'
-
-
-class TableArgsFromTableRecursive3(TypedDict, total=False):
-    """Arguments for Table"""
-    include: 'TableIncludeFromTableRecursive4'
-
-
-class TableArgsFromTableRecursive4(TypedDict, total=False):
-    """Arguments for Table"""
-    
-    
 
 class FindManyTableArgsFromTable(TypedDict, total=False):
     """Arguments for Table"""
@@ -3440,102 +1836,18 @@ class FindManyTableArgsFromTable(TypedDict, total=False):
     where: 'TableWhereInput'
     cursor: 'TableWhereUniqueInput'
     distinct: List['TableScalarFieldKeys']
-    include: 'TableIncludeFromTableRecursive1'
+    include: 'TableIncludeFromTable'
 
-
-class FindManyTableArgsFromTableRecursive1(TypedDict, total=False):
-    """Arguments for Table"""
-    take: int
-    skip: int
-    order_by: Union['TableOrderByInput', List['TableOrderByInput']]
-    where: 'TableWhereInput'
-    cursor: 'TableWhereUniqueInput'
-    distinct: List['TableScalarFieldKeys']
-    include: 'TableIncludeFromTableRecursive2'
-
-
-class FindManyTableArgsFromTableRecursive2(TypedDict, total=False):
-    """Arguments for Table"""
-    take: int
-    skip: int
-    order_by: Union['TableOrderByInput', List['TableOrderByInput']]
-    where: 'TableWhereInput'
-    cursor: 'TableWhereUniqueInput'
-    distinct: List['TableScalarFieldKeys']
-    include: 'TableIncludeFromTableRecursive3'
-
-
-class FindManyTableArgsFromTableRecursive3(TypedDict, total=False):
-    """Arguments for Table"""
-    take: int
-    skip: int
-    order_by: Union['TableOrderByInput', List['TableOrderByInput']]
-    where: 'TableWhereInput'
-    cursor: 'TableWhereUniqueInput'
-    distinct: List['TableScalarFieldKeys']
-    include: 'TableIncludeFromTableRecursive4'
-
-
-class FindManyTableArgsFromTableRecursive4(TypedDict, total=False):
-    """Arguments for Table"""
-    take: int
-    skip: int
-    order_by: Union['TableOrderByInput', List['TableOrderByInput']]
-    where: 'TableWhereInput'
-    cursor: 'TableWhereUniqueInput'
-    distinct: List['TableScalarFieldKeys']
-    
-    
 
 class MemberIncludeFromTable(TypedDict, total=False):
     """Relational arguments for Table"""
-    reservations: Union[bool, 'FindManyReservationArgsFromTableRecursive1']
+    reservations: Union[bool, 'FindManyReservationArgsFromTable']
 
-
-class MemberIncludeFromTableRecursive1(TypedDict, total=False):
-    """Relational arguments for Table"""
-    reservations: Union[bool, 'FindManyReservationArgsFromTableRecursive2']
-
-
-class MemberIncludeFromTableRecursive2(TypedDict, total=False):
-    """Relational arguments for Table"""
-    reservations: Union[bool, 'FindManyReservationArgsFromTableRecursive3']
-
-
-class MemberIncludeFromTableRecursive3(TypedDict, total=False):
-    """Relational arguments for Table"""
-    reservations: Union[bool, 'FindManyReservationArgsFromTableRecursive4']
-
-
-class MemberIncludeFromTableRecursive4(TypedDict, total=False):
-    """Relational arguments for Table"""
-
-    
 
 class MemberArgsFromTable(TypedDict, total=False):
     """Arguments for Table"""
-    include: 'MemberIncludeFromMemberRecursive1'
+    include: 'MemberIncludeFromMember'
 
-
-class MemberArgsFromTableRecursive1(TypedDict, total=False):
-    """Arguments for Table"""
-    include: 'MemberIncludeFromMemberRecursive2'
-
-
-class MemberArgsFromTableRecursive2(TypedDict, total=False):
-    """Arguments for Table"""
-    include: 'MemberIncludeFromMemberRecursive3'
-
-
-class MemberArgsFromTableRecursive3(TypedDict, total=False):
-    """Arguments for Table"""
-    include: 'MemberIncludeFromMemberRecursive4'
-
-
-class MemberArgsFromTableRecursive4(TypedDict, total=False):
-    """Arguments for Table"""
-    
-    
 
 class FindManyMemberArgsFromTable(TypedDict, total=False):
     """Arguments for Table"""
@@ -3545,106 +1857,19 @@ class FindManyMemberArgsFromTable(TypedDict, total=False):
     where: 'MemberWhereInput'
     cursor: 'MemberWhereUniqueInput'
     distinct: List['MemberScalarFieldKeys']
-    include: 'MemberIncludeFromMemberRecursive1'
+    include: 'MemberIncludeFromMember'
 
-
-class FindManyMemberArgsFromTableRecursive1(TypedDict, total=False):
-    """Arguments for Table"""
-    take: int
-    skip: int
-    order_by: Union['MemberOrderByInput', List['MemberOrderByInput']]
-    where: 'MemberWhereInput'
-    cursor: 'MemberWhereUniqueInput'
-    distinct: List['MemberScalarFieldKeys']
-    include: 'MemberIncludeFromMemberRecursive2'
-
-
-class FindManyMemberArgsFromTableRecursive2(TypedDict, total=False):
-    """Arguments for Table"""
-    take: int
-    skip: int
-    order_by: Union['MemberOrderByInput', List['MemberOrderByInput']]
-    where: 'MemberWhereInput'
-    cursor: 'MemberWhereUniqueInput'
-    distinct: List['MemberScalarFieldKeys']
-    include: 'MemberIncludeFromMemberRecursive3'
-
-
-class FindManyMemberArgsFromTableRecursive3(TypedDict, total=False):
-    """Arguments for Table"""
-    take: int
-    skip: int
-    order_by: Union['MemberOrderByInput', List['MemberOrderByInput']]
-    where: 'MemberWhereInput'
-    cursor: 'MemberWhereUniqueInput'
-    distinct: List['MemberScalarFieldKeys']
-    include: 'MemberIncludeFromMemberRecursive4'
-
-
-class FindManyMemberArgsFromTableRecursive4(TypedDict, total=False):
-    """Arguments for Table"""
-    take: int
-    skip: int
-    order_by: Union['MemberOrderByInput', List['MemberOrderByInput']]
-    where: 'MemberWhereInput'
-    cursor: 'MemberWhereUniqueInput'
-    distinct: List['MemberScalarFieldKeys']
-    
-    
 
 class ReservationIncludeFromTable(TypedDict, total=False):
     """Relational arguments for Table"""
-    table: Union[bool, 'TableArgsFromTableRecursive1']
-    member: Union[bool, 'MemberArgsFromTableRecursive1']
+    table: Union[bool, 'TableArgsFromTable']
+    member: Union[bool, 'MemberArgsFromTable']
 
-
-class ReservationIncludeFromTableRecursive1(TypedDict, total=False):
-    """Relational arguments for Table"""
-    table: Union[bool, 'TableArgsFromTableRecursive2']
-    member: Union[bool, 'MemberArgsFromTableRecursive2']
-
-
-class ReservationIncludeFromTableRecursive2(TypedDict, total=False):
-    """Relational arguments for Table"""
-    table: Union[bool, 'TableArgsFromTableRecursive3']
-    member: Union[bool, 'MemberArgsFromTableRecursive3']
-
-
-class ReservationIncludeFromTableRecursive3(TypedDict, total=False):
-    """Relational arguments for Table"""
-    table: Union[bool, 'TableArgsFromTableRecursive4']
-    member: Union[bool, 'MemberArgsFromTableRecursive4']
-
-
-class ReservationIncludeFromTableRecursive4(TypedDict, total=False):
-    """Relational arguments for Table"""
-
-    
 
 class ReservationArgsFromTable(TypedDict, total=False):
     """Arguments for Table"""
-    include: 'ReservationIncludeFromReservationRecursive1'
+    include: 'ReservationIncludeFromReservation'
 
-
-class ReservationArgsFromTableRecursive1(TypedDict, total=False):
-    """Arguments for Table"""
-    include: 'ReservationIncludeFromReservationRecursive2'
-
-
-class ReservationArgsFromTableRecursive2(TypedDict, total=False):
-    """Arguments for Table"""
-    include: 'ReservationIncludeFromReservationRecursive3'
-
-
-class ReservationArgsFromTableRecursive3(TypedDict, total=False):
-    """Arguments for Table"""
-    include: 'ReservationIncludeFromReservationRecursive4'
-
-
-class ReservationArgsFromTableRecursive4(TypedDict, total=False):
-    """Arguments for Table"""
-    
-    
 
 class FindManyReservationArgsFromTable(TypedDict, total=False):
     """Arguments for Table"""
@@ -3654,138 +1879,41 @@ class FindManyReservationArgsFromTable(TypedDict, total=False):
     where: 'ReservationWhereInput'
     cursor: 'ReservationWhereUniqueInput'
     distinct: List['ReservationScalarFieldKeys']
-    include: 'ReservationIncludeFromReservationRecursive1'
+    include: 'ReservationIncludeFromReservation'
 
 
-class FindManyReservationArgsFromTableRecursive1(TypedDict, total=False):
-    """Arguments for Table"""
-    take: int
-    skip: int
-    order_by: Union['ReservationOrderByInput', List['ReservationOrderByInput']]
-    where: 'ReservationWhereInput'
-    cursor: 'ReservationWhereUniqueInput'
-    distinct: List['ReservationScalarFieldKeys']
-    include: 'ReservationIncludeFromReservationRecursive2'
-
-
-class FindManyReservationArgsFromTableRecursive2(TypedDict, total=False):
-    """Arguments for Table"""
-    take: int
-    skip: int
-    order_by: Union['ReservationOrderByInput', List['ReservationOrderByInput']]
-    where: 'ReservationWhereInput'
-    cursor: 'ReservationWhereUniqueInput'
-    distinct: List['ReservationScalarFieldKeys']
-    include: 'ReservationIncludeFromReservationRecursive3'
-
-
-class FindManyReservationArgsFromTableRecursive3(TypedDict, total=False):
-    """Arguments for Table"""
-    take: int
-    skip: int
-    order_by: Union['ReservationOrderByInput', List['ReservationOrderByInput']]
-    where: 'ReservationWhereInput'
-    cursor: 'ReservationWhereUniqueInput'
-    distinct: List['ReservationScalarFieldKeys']
-    include: 'ReservationIncludeFromReservationRecursive4'
-
-
-class FindManyReservationArgsFromTableRecursive4(TypedDict, total=False):
-    """Arguments for Table"""
-    take: int
-    skip: int
-    order_by: Union['ReservationOrderByInput', List['ReservationOrderByInput']]
-    where: 'ReservationWhereInput'
-    cursor: 'ReservationWhereUniqueInput'
-    distinct: List['ReservationScalarFieldKeys']
-    
 
 
 FindManyTableArgs = FindManyTableArgsFromTable
 FindFirstTableArgs = FindManyTableArgsFromTable
 
 
-    
-
 class TableWhereInput(TypedDict, total=False):
     """Table arguments for searching"""
     id: Union[_int, 'types.IntFilter']
     number: Union[_int, 'types.IntFilter']
-    floorId: Union[_int, 'types.IntFilter']
+    floorId: Union[None, _int, 'types.IntFilter']
     floor: 'FloorRelationFilter'
-    capacity: Union[_int, 'types.IntFilter']
+    capacity: Union[None, _int, 'types.IntFilter']
+    posX: Union[None, _int, 'types.IntFilter']
+    posY: Union[None, _int, 'types.IntFilter']
+    width: Union[None, _int, 'types.IntFilter']
+    height: Union[None, _int, 'types.IntFilter']
+    rotation: Union[None, _int, 'types.IntFilter']
+    label: Union[None, _str, 'types.StringFilter']
+    area: Union[None, _str, 'types.StringFilter']
     reservations: 'ReservationListRelationFilter'
 
-    # should be noted that AND and NOT should be Union['TableWhereInputRecursive1', List['TableWhereInputRecursive1']]
+    # should be noted that AND and NOT should be Union['TableWhereInput', List['TableWhereInput']]
     # but this causes mypy to hang :/
-    AND: List['TableWhereInputRecursive1']
-    OR: List['TableWhereInputRecursive1']
-    NOT: List['TableWhereInputRecursive1']
-
-
-class TableWhereInputRecursive1(TypedDict, total=False):
-    """Table arguments for searching"""
-    id: Union[_int, 'types.IntFilter']
-    number: Union[_int, 'types.IntFilter']
-    floorId: Union[_int, 'types.IntFilter']
-    floor: 'FloorRelationFilter'
-    capacity: Union[_int, 'types.IntFilter']
-    reservations: 'ReservationListRelationFilter'
-
-    # should be noted that AND and NOT should be Union['TableWhereInputRecursive2', List['TableWhereInputRecursive2']]
-    # but this causes mypy to hang :/
-    AND: List['TableWhereInputRecursive2']
-    OR: List['TableWhereInputRecursive2']
-    NOT: List['TableWhereInputRecursive2']
-
-
-class TableWhereInputRecursive2(TypedDict, total=False):
-    """Table arguments for searching"""
-    id: Union[_int, 'types.IntFilter']
-    number: Union[_int, 'types.IntFilter']
-    floorId: Union[_int, 'types.IntFilter']
-    floor: 'FloorRelationFilter'
-    capacity: Union[_int, 'types.IntFilter']
-    reservations: 'ReservationListRelationFilter'
-
-    # should be noted that AND and NOT should be Union['TableWhereInputRecursive3', List['TableWhereInputRecursive3']]
-    # but this causes mypy to hang :/
-    AND: List['TableWhereInputRecursive3']
-    OR: List['TableWhereInputRecursive3']
-    NOT: List['TableWhereInputRecursive3']
-
-
-class TableWhereInputRecursive3(TypedDict, total=False):
-    """Table arguments for searching"""
-    id: Union[_int, 'types.IntFilter']
-    number: Union[_int, 'types.IntFilter']
-    floorId: Union[_int, 'types.IntFilter']
-    floor: 'FloorRelationFilter'
-    capacity: Union[_int, 'types.IntFilter']
-    reservations: 'ReservationListRelationFilter'
-
-    # should be noted that AND and NOT should be Union['TableWhereInputRecursive4', List['TableWhereInputRecursive4']]
-    # but this causes mypy to hang :/
-    AND: List['TableWhereInputRecursive4']
-    OR: List['TableWhereInputRecursive4']
-    NOT: List['TableWhereInputRecursive4']
-
-
-class TableWhereInputRecursive4(TypedDict, total=False):
-    """Table arguments for searching"""
-    id: Union[_int, 'types.IntFilter']
-    number: Union[_int, 'types.IntFilter']
-    floorId: Union[_int, 'types.IntFilter']
-    floor: 'FloorRelationFilter'
-    capacity: Union[_int, 'types.IntFilter']
-    reservations: 'ReservationListRelationFilter'
+    AND: List['TableWhereInput']
+    OR: List['TableWhereInput']
+    NOT: List['TableWhereInput']
 
 
 
 # aggregate Table types
 
-
-    
 
 class TableScalarWhereWithAggregatesInput(TypedDict, total=False):
     """Table arguments for searching"""
@@ -3793,54 +1921,17 @@ class TableScalarWhereWithAggregatesInput(TypedDict, total=False):
     number: Union[_int, 'types.IntWithAggregatesFilter']
     floorId: Union[_int, 'types.IntWithAggregatesFilter']
     capacity: Union[_int, 'types.IntWithAggregatesFilter']
+    posX: Union[_int, 'types.IntWithAggregatesFilter']
+    posY: Union[_int, 'types.IntWithAggregatesFilter']
+    width: Union[_int, 'types.IntWithAggregatesFilter']
+    height: Union[_int, 'types.IntWithAggregatesFilter']
+    rotation: Union[_int, 'types.IntWithAggregatesFilter']
+    label: Union[_str, 'types.StringWithAggregatesFilter']
+    area: Union[_str, 'types.StringWithAggregatesFilter']
 
-    AND: List['TableScalarWhereWithAggregatesInputRecursive1']
-    OR: List['TableScalarWhereWithAggregatesInputRecursive1']
-    NOT: List['TableScalarWhereWithAggregatesInputRecursive1']
-
-
-class TableScalarWhereWithAggregatesInputRecursive1(TypedDict, total=False):
-    """Table arguments for searching"""
-    id: Union[_int, 'types.IntWithAggregatesFilter']
-    number: Union[_int, 'types.IntWithAggregatesFilter']
-    floorId: Union[_int, 'types.IntWithAggregatesFilter']
-    capacity: Union[_int, 'types.IntWithAggregatesFilter']
-
-    AND: List['TableScalarWhereWithAggregatesInputRecursive2']
-    OR: List['TableScalarWhereWithAggregatesInputRecursive2']
-    NOT: List['TableScalarWhereWithAggregatesInputRecursive2']
-
-
-class TableScalarWhereWithAggregatesInputRecursive2(TypedDict, total=False):
-    """Table arguments for searching"""
-    id: Union[_int, 'types.IntWithAggregatesFilter']
-    number: Union[_int, 'types.IntWithAggregatesFilter']
-    floorId: Union[_int, 'types.IntWithAggregatesFilter']
-    capacity: Union[_int, 'types.IntWithAggregatesFilter']
-
-    AND: List['TableScalarWhereWithAggregatesInputRecursive3']
-    OR: List['TableScalarWhereWithAggregatesInputRecursive3']
-    NOT: List['TableScalarWhereWithAggregatesInputRecursive3']
-
-
-class TableScalarWhereWithAggregatesInputRecursive3(TypedDict, total=False):
-    """Table arguments for searching"""
-    id: Union[_int, 'types.IntWithAggregatesFilter']
-    number: Union[_int, 'types.IntWithAggregatesFilter']
-    floorId: Union[_int, 'types.IntWithAggregatesFilter']
-    capacity: Union[_int, 'types.IntWithAggregatesFilter']
-
-    AND: List['TableScalarWhereWithAggregatesInputRecursive4']
-    OR: List['TableScalarWhereWithAggregatesInputRecursive4']
-    NOT: List['TableScalarWhereWithAggregatesInputRecursive4']
-
-
-class TableScalarWhereWithAggregatesInputRecursive4(TypedDict, total=False):
-    """Table arguments for searching"""
-    id: Union[_int, 'types.IntWithAggregatesFilter']
-    number: Union[_int, 'types.IntWithAggregatesFilter']
-    floorId: Union[_int, 'types.IntWithAggregatesFilter']
-    capacity: Union[_int, 'types.IntWithAggregatesFilter']
+    AND: List['TableScalarWhereWithAggregatesInput']
+    OR: List['TableScalarWhereWithAggregatesInput']
+    NOT: List['TableScalarWhereWithAggregatesInput']
 
 
 
@@ -3849,6 +1940,13 @@ class TableGroupByOutput(TypedDict, total=False):
     number: _int
     floorId: _int
     capacity: _int
+    posX: _int
+    posY: _int
+    width: _int
+    height: _int
+    rotation: _int
+    label: _str
+    area: _str
     _sum: 'TableSumAggregateOutput'
     _avg: 'TableAvgAggregateOutput'
     _min: 'TableMinAggregateOutput'
@@ -3862,6 +1960,11 @@ class TableAvgAggregateOutput(TypedDict, total=False):
     number: float
     floorId: float
     capacity: float
+    posX: float
+    posY: float
+    width: float
+    height: float
+    rotation: float
 
 
 class TableSumAggregateOutput(TypedDict, total=False):
@@ -3870,6 +1973,11 @@ class TableSumAggregateOutput(TypedDict, total=False):
     number: _int
     floorId: _int
     capacity: _int
+    posX: _int
+    posY: _int
+    width: _int
+    height: _int
+    rotation: _int
 
 
 class TableScalarAggregateOutput(TypedDict, total=False):
@@ -3878,6 +1986,13 @@ class TableScalarAggregateOutput(TypedDict, total=False):
     number: _int
     floorId: _int
     capacity: _int
+    posX: _int
+    posY: _int
+    width: _int
+    height: _int
+    rotation: _int
+    label: _str
+    area: _str
 
 
 TableMinAggregateOutput = TableScalarAggregateOutput
@@ -3890,6 +2005,13 @@ class TableMaxAggregateInput(TypedDict, total=False):
     number: bool
     floorId: bool
     capacity: bool
+    posX: bool
+    posY: bool
+    width: bool
+    height: bool
+    rotation: bool
+    label: bool
+    area: bool
 
 
 class TableMinAggregateInput(TypedDict, total=False):
@@ -3898,6 +2020,13 @@ class TableMinAggregateInput(TypedDict, total=False):
     number: bool
     floorId: bool
     capacity: bool
+    posX: bool
+    posY: bool
+    width: bool
+    height: bool
+    rotation: bool
+    label: bool
+    area: bool
 
 
 class TableNumberAggregateInput(TypedDict, total=False):
@@ -3906,6 +2035,11 @@ class TableNumberAggregateInput(TypedDict, total=False):
     number: bool
     floorId: bool
     capacity: bool
+    posX: bool
+    posY: bool
+    width: bool
+    height: bool
+    rotation: bool
 
 
 TableAvgAggregateInput = TableNumberAggregateInput
@@ -3919,6 +2053,13 @@ TableCountAggregateInput = TypedDict(
         'number': bool,
         'floorId': bool,
         'capacity': bool,
+        'posX': bool,
+        'posY': bool,
+        'width': bool,
+        'height': bool,
+        'rotation': bool,
+        'label': bool,
+        'area': bool,
         '_all': bool,
     },
     total=False,
@@ -3931,6 +2072,13 @@ TableCountAggregateOutput = TypedDict(
         'number': int,
         'floorId': int,
         'capacity': int,
+        'posX': int,
+        'posY': int,
+        'width': int,
+        'height': int,
+        'rotation': int,
+        'label': int,
+        'area': int,
         '_all': int,
     },
     total=False,
@@ -3943,6 +2091,13 @@ TableKeys = Literal[
     'floorId',
     'floor',
     'capacity',
+    'posX',
+    'posY',
+    'width',
+    'height',
+    'rotation',
+    'label',
+    'area',
     'reservations',
 ]
 TableScalarFieldKeys = Literal[
@@ -3950,6 +2105,13 @@ TableScalarFieldKeys = Literal[
     'number',
     'floorId',
     'capacity',
+    'posX',
+    'posY',
+    'width',
+    'height',
+    'rotation',
+    'label',
+    'area',
 ]
 TableScalarFieldKeysT = TypeVar('TableScalarFieldKeysT', bound=TableScalarFieldKeys)
 
@@ -3963,6 +2125,7 @@ TableRelationalFieldKeys = Literal[
 class MemberOptionalCreateInput(TypedDict, total=False):
     """Optional arguments to the Member create method"""
     id: _int
+    phone: Optional[_str]
     reservations: 'ReservationCreateManyNestedWithoutRelationsInput'
 
 
@@ -3970,7 +2133,6 @@ class MemberCreateInput(MemberOptionalCreateInput):
     """Required arguments to the Member create method"""
     name: _str
     email: _str
-    phone: _str
 
 
 # TODO: remove this in favour of without explicit relations
@@ -3979,13 +2141,13 @@ class MemberCreateInput(MemberOptionalCreateInput):
 class MemberOptionalCreateWithoutRelationsInput(TypedDict, total=False):
     """Optional arguments to the Member create method, without relations"""
     id: _int
+    phone: Optional[_str]
 
 
 class MemberCreateWithoutRelationsInput(MemberOptionalCreateWithoutRelationsInput):
     """Required arguments to the Member create method, without relations"""
     name: _str
     email: _str
-    phone: _str
 
 class MemberConnectOrCreateWithoutRelationsInput(TypedDict):
     create: 'MemberCreateWithoutRelationsInput'
@@ -4010,7 +2172,18 @@ _MemberWhereUnique_id_Input = TypedDict(
     total=True
 )
 
-MemberWhereUniqueInput = _MemberWhereUnique_id_Input
+_MemberWhereUnique_email_Input = TypedDict(
+    '_MemberWhereUnique_email_Input',
+    {
+        'email': '_str',
+    },
+    total=True
+)
+
+MemberWhereUniqueInput = Union[
+    '_MemberWhereUnique_id_Input',
+    '_MemberWhereUnique_email_Input',
+]
 
 
 class MemberUpdateInput(TypedDict, total=False):
@@ -4018,8 +2191,8 @@ class MemberUpdateInput(TypedDict, total=False):
     id: Union[AtomicIntInput, _int]
     name: _str
     email: _str
+    phone: Optional[_str]
     reservations: 'ReservationUpdateManyWithoutRelationsInput'
-    phone: _str
 
 
 class MemberUpdateManyMutationInput(TypedDict, total=False):
@@ -4027,7 +2200,7 @@ class MemberUpdateManyMutationInput(TypedDict, total=False):
     id: Union[AtomicIntInput, _int]
     name: _str
     email: _str
-    phone: _str
+    phone: Optional[_str]
 
 
 class MemberUpdateManyWithoutRelationsInput(TypedDict, total=False):
@@ -4107,24 +2280,21 @@ MemberOrderByInput = Union[
 # TODO: cleanup these types
 
 
-# Dict[str, Any] is a mypy limitation
-# see https://github.com/RobertCraigie/prisma-client-py/issues/45
-# switch to pyright for improved types, see https://prisma-client-py.readthedocs.io/en/stable/reference/limitations/
 
 MemberRelationFilter = TypedDict(
     'MemberRelationFilter',
     {
-        'is': 'Dict[str, Any]',
-        'is_not': 'Dict[str, Any]',
+        'is': 'MemberWhereInput',
+        'is_not': 'MemberWhereInput',
     },
     total=False,
 )
 
 
 class MemberListRelationFilter(TypedDict, total=False):
-    some: 'Dict[str, Any]'
-    none: 'Dict[str, Any]'
-    every: 'Dict[str, Any]'
+    some: 'MemberWhereInput'
+    none: 'MemberWhereInput'
+    every: 'MemberWhereInput'
 
 
 class MemberInclude(TypedDict, total=False):
@@ -4132,57 +2302,15 @@ class MemberInclude(TypedDict, total=False):
     reservations: Union[bool, 'FindManyReservationArgsFromMember']
 
 
-    
-
 class RestaurantIncludeFromMember(TypedDict, total=False):
     """Relational arguments for Member"""
-    floors: Union[bool, 'FindManyFloorArgsFromMemberRecursive1']
+    floors: Union[bool, 'FindManyFloorArgsFromMember']
 
-
-class RestaurantIncludeFromMemberRecursive1(TypedDict, total=False):
-    """Relational arguments for Member"""
-    floors: Union[bool, 'FindManyFloorArgsFromMemberRecursive2']
-
-
-class RestaurantIncludeFromMemberRecursive2(TypedDict, total=False):
-    """Relational arguments for Member"""
-    floors: Union[bool, 'FindManyFloorArgsFromMemberRecursive3']
-
-
-class RestaurantIncludeFromMemberRecursive3(TypedDict, total=False):
-    """Relational arguments for Member"""
-    floors: Union[bool, 'FindManyFloorArgsFromMemberRecursive4']
-
-
-class RestaurantIncludeFromMemberRecursive4(TypedDict, total=False):
-    """Relational arguments for Member"""
-
-    
 
 class RestaurantArgsFromMember(TypedDict, total=False):
     """Arguments for Member"""
-    include: 'RestaurantIncludeFromRestaurantRecursive1'
+    include: 'RestaurantIncludeFromRestaurant'
 
-
-class RestaurantArgsFromMemberRecursive1(TypedDict, total=False):
-    """Arguments for Member"""
-    include: 'RestaurantIncludeFromRestaurantRecursive2'
-
-
-class RestaurantArgsFromMemberRecursive2(TypedDict, total=False):
-    """Arguments for Member"""
-    include: 'RestaurantIncludeFromRestaurantRecursive3'
-
-
-class RestaurantArgsFromMemberRecursive3(TypedDict, total=False):
-    """Arguments for Member"""
-    include: 'RestaurantIncludeFromRestaurantRecursive4'
-
-
-class RestaurantArgsFromMemberRecursive4(TypedDict, total=False):
-    """Arguments for Member"""
-    
-    
 
 class FindManyRestaurantArgsFromMember(TypedDict, total=False):
     """Arguments for Member"""
@@ -4192,106 +2320,19 @@ class FindManyRestaurantArgsFromMember(TypedDict, total=False):
     where: 'RestaurantWhereInput'
     cursor: 'RestaurantWhereUniqueInput'
     distinct: List['RestaurantScalarFieldKeys']
-    include: 'RestaurantIncludeFromRestaurantRecursive1'
+    include: 'RestaurantIncludeFromRestaurant'
 
-
-class FindManyRestaurantArgsFromMemberRecursive1(TypedDict, total=False):
-    """Arguments for Member"""
-    take: int
-    skip: int
-    order_by: Union['RestaurantOrderByInput', List['RestaurantOrderByInput']]
-    where: 'RestaurantWhereInput'
-    cursor: 'RestaurantWhereUniqueInput'
-    distinct: List['RestaurantScalarFieldKeys']
-    include: 'RestaurantIncludeFromRestaurantRecursive2'
-
-
-class FindManyRestaurantArgsFromMemberRecursive2(TypedDict, total=False):
-    """Arguments for Member"""
-    take: int
-    skip: int
-    order_by: Union['RestaurantOrderByInput', List['RestaurantOrderByInput']]
-    where: 'RestaurantWhereInput'
-    cursor: 'RestaurantWhereUniqueInput'
-    distinct: List['RestaurantScalarFieldKeys']
-    include: 'RestaurantIncludeFromRestaurantRecursive3'
-
-
-class FindManyRestaurantArgsFromMemberRecursive3(TypedDict, total=False):
-    """Arguments for Member"""
-    take: int
-    skip: int
-    order_by: Union['RestaurantOrderByInput', List['RestaurantOrderByInput']]
-    where: 'RestaurantWhereInput'
-    cursor: 'RestaurantWhereUniqueInput'
-    distinct: List['RestaurantScalarFieldKeys']
-    include: 'RestaurantIncludeFromRestaurantRecursive4'
-
-
-class FindManyRestaurantArgsFromMemberRecursive4(TypedDict, total=False):
-    """Arguments for Member"""
-    take: int
-    skip: int
-    order_by: Union['RestaurantOrderByInput', List['RestaurantOrderByInput']]
-    where: 'RestaurantWhereInput'
-    cursor: 'RestaurantWhereUniqueInput'
-    distinct: List['RestaurantScalarFieldKeys']
-    
-    
 
 class FloorIncludeFromMember(TypedDict, total=False):
     """Relational arguments for Member"""
-    restaurant: Union[bool, 'RestaurantArgsFromMemberRecursive1']
-    tables: Union[bool, 'FindManyTableArgsFromMemberRecursive1']
+    restaurant: Union[bool, 'RestaurantArgsFromMember']
+    tables: Union[bool, 'FindManyTableArgsFromMember']
 
-
-class FloorIncludeFromMemberRecursive1(TypedDict, total=False):
-    """Relational arguments for Member"""
-    restaurant: Union[bool, 'RestaurantArgsFromMemberRecursive2']
-    tables: Union[bool, 'FindManyTableArgsFromMemberRecursive2']
-
-
-class FloorIncludeFromMemberRecursive2(TypedDict, total=False):
-    """Relational arguments for Member"""
-    restaurant: Union[bool, 'RestaurantArgsFromMemberRecursive3']
-    tables: Union[bool, 'FindManyTableArgsFromMemberRecursive3']
-
-
-class FloorIncludeFromMemberRecursive3(TypedDict, total=False):
-    """Relational arguments for Member"""
-    restaurant: Union[bool, 'RestaurantArgsFromMemberRecursive4']
-    tables: Union[bool, 'FindManyTableArgsFromMemberRecursive4']
-
-
-class FloorIncludeFromMemberRecursive4(TypedDict, total=False):
-    """Relational arguments for Member"""
-
-    
 
 class FloorArgsFromMember(TypedDict, total=False):
     """Arguments for Member"""
-    include: 'FloorIncludeFromFloorRecursive1'
+    include: 'FloorIncludeFromFloor'
 
-
-class FloorArgsFromMemberRecursive1(TypedDict, total=False):
-    """Arguments for Member"""
-    include: 'FloorIncludeFromFloorRecursive2'
-
-
-class FloorArgsFromMemberRecursive2(TypedDict, total=False):
-    """Arguments for Member"""
-    include: 'FloorIncludeFromFloorRecursive3'
-
-
-class FloorArgsFromMemberRecursive3(TypedDict, total=False):
-    """Arguments for Member"""
-    include: 'FloorIncludeFromFloorRecursive4'
-
-
-class FloorArgsFromMemberRecursive4(TypedDict, total=False):
-    """Arguments for Member"""
-    
-    
 
 class FindManyFloorArgsFromMember(TypedDict, total=False):
     """Arguments for Member"""
@@ -4301,106 +2342,19 @@ class FindManyFloorArgsFromMember(TypedDict, total=False):
     where: 'FloorWhereInput'
     cursor: 'FloorWhereUniqueInput'
     distinct: List['FloorScalarFieldKeys']
-    include: 'FloorIncludeFromFloorRecursive1'
+    include: 'FloorIncludeFromFloor'
 
-
-class FindManyFloorArgsFromMemberRecursive1(TypedDict, total=False):
-    """Arguments for Member"""
-    take: int
-    skip: int
-    order_by: Union['FloorOrderByInput', List['FloorOrderByInput']]
-    where: 'FloorWhereInput'
-    cursor: 'FloorWhereUniqueInput'
-    distinct: List['FloorScalarFieldKeys']
-    include: 'FloorIncludeFromFloorRecursive2'
-
-
-class FindManyFloorArgsFromMemberRecursive2(TypedDict, total=False):
-    """Arguments for Member"""
-    take: int
-    skip: int
-    order_by: Union['FloorOrderByInput', List['FloorOrderByInput']]
-    where: 'FloorWhereInput'
-    cursor: 'FloorWhereUniqueInput'
-    distinct: List['FloorScalarFieldKeys']
-    include: 'FloorIncludeFromFloorRecursive3'
-
-
-class FindManyFloorArgsFromMemberRecursive3(TypedDict, total=False):
-    """Arguments for Member"""
-    take: int
-    skip: int
-    order_by: Union['FloorOrderByInput', List['FloorOrderByInput']]
-    where: 'FloorWhereInput'
-    cursor: 'FloorWhereUniqueInput'
-    distinct: List['FloorScalarFieldKeys']
-    include: 'FloorIncludeFromFloorRecursive4'
-
-
-class FindManyFloorArgsFromMemberRecursive4(TypedDict, total=False):
-    """Arguments for Member"""
-    take: int
-    skip: int
-    order_by: Union['FloorOrderByInput', List['FloorOrderByInput']]
-    where: 'FloorWhereInput'
-    cursor: 'FloorWhereUniqueInput'
-    distinct: List['FloorScalarFieldKeys']
-    
-    
 
 class TableIncludeFromMember(TypedDict, total=False):
     """Relational arguments for Member"""
-    floor: Union[bool, 'FloorArgsFromMemberRecursive1']
-    reservations: Union[bool, 'FindManyReservationArgsFromMemberRecursive1']
+    floor: Union[bool, 'FloorArgsFromMember']
+    reservations: Union[bool, 'FindManyReservationArgsFromMember']
 
-
-class TableIncludeFromMemberRecursive1(TypedDict, total=False):
-    """Relational arguments for Member"""
-    floor: Union[bool, 'FloorArgsFromMemberRecursive2']
-    reservations: Union[bool, 'FindManyReservationArgsFromMemberRecursive2']
-
-
-class TableIncludeFromMemberRecursive2(TypedDict, total=False):
-    """Relational arguments for Member"""
-    floor: Union[bool, 'FloorArgsFromMemberRecursive3']
-    reservations: Union[bool, 'FindManyReservationArgsFromMemberRecursive3']
-
-
-class TableIncludeFromMemberRecursive3(TypedDict, total=False):
-    """Relational arguments for Member"""
-    floor: Union[bool, 'FloorArgsFromMemberRecursive4']
-    reservations: Union[bool, 'FindManyReservationArgsFromMemberRecursive4']
-
-
-class TableIncludeFromMemberRecursive4(TypedDict, total=False):
-    """Relational arguments for Member"""
-
-    
 
 class TableArgsFromMember(TypedDict, total=False):
     """Arguments for Member"""
-    include: 'TableIncludeFromTableRecursive1'
+    include: 'TableIncludeFromTable'
 
-
-class TableArgsFromMemberRecursive1(TypedDict, total=False):
-    """Arguments for Member"""
-    include: 'TableIncludeFromTableRecursive2'
-
-
-class TableArgsFromMemberRecursive2(TypedDict, total=False):
-    """Arguments for Member"""
-    include: 'TableIncludeFromTableRecursive3'
-
-
-class TableArgsFromMemberRecursive3(TypedDict, total=False):
-    """Arguments for Member"""
-    include: 'TableIncludeFromTableRecursive4'
-
-
-class TableArgsFromMemberRecursive4(TypedDict, total=False):
-    """Arguments for Member"""
-    
-    
 
 class FindManyTableArgsFromMember(TypedDict, total=False):
     """Arguments for Member"""
@@ -4410,102 +2364,18 @@ class FindManyTableArgsFromMember(TypedDict, total=False):
     where: 'TableWhereInput'
     cursor: 'TableWhereUniqueInput'
     distinct: List['TableScalarFieldKeys']
-    include: 'TableIncludeFromTableRecursive1'
+    include: 'TableIncludeFromTable'
 
-
-class FindManyTableArgsFromMemberRecursive1(TypedDict, total=False):
-    """Arguments for Member"""
-    take: int
-    skip: int
-    order_by: Union['TableOrderByInput', List['TableOrderByInput']]
-    where: 'TableWhereInput'
-    cursor: 'TableWhereUniqueInput'
-    distinct: List['TableScalarFieldKeys']
-    include: 'TableIncludeFromTableRecursive2'
-
-
-class FindManyTableArgsFromMemberRecursive2(TypedDict, total=False):
-    """Arguments for Member"""
-    take: int
-    skip: int
-    order_by: Union['TableOrderByInput', List['TableOrderByInput']]
-    where: 'TableWhereInput'
-    cursor: 'TableWhereUniqueInput'
-    distinct: List['TableScalarFieldKeys']
-    include: 'TableIncludeFromTableRecursive3'
-
-
-class FindManyTableArgsFromMemberRecursive3(TypedDict, total=False):
-    """Arguments for Member"""
-    take: int
-    skip: int
-    order_by: Union['TableOrderByInput', List['TableOrderByInput']]
-    where: 'TableWhereInput'
-    cursor: 'TableWhereUniqueInput'
-    distinct: List['TableScalarFieldKeys']
-    include: 'TableIncludeFromTableRecursive4'
-
-
-class FindManyTableArgsFromMemberRecursive4(TypedDict, total=False):
-    """Arguments for Member"""
-    take: int
-    skip: int
-    order_by: Union['TableOrderByInput', List['TableOrderByInput']]
-    where: 'TableWhereInput'
-    cursor: 'TableWhereUniqueInput'
-    distinct: List['TableScalarFieldKeys']
-    
-    
 
 class MemberIncludeFromMember(TypedDict, total=False):
     """Relational arguments for Member"""
-    reservations: Union[bool, 'FindManyReservationArgsFromMemberRecursive1']
+    reservations: Union[bool, 'FindManyReservationArgsFromMember']
 
-
-class MemberIncludeFromMemberRecursive1(TypedDict, total=False):
-    """Relational arguments for Member"""
-    reservations: Union[bool, 'FindManyReservationArgsFromMemberRecursive2']
-
-
-class MemberIncludeFromMemberRecursive2(TypedDict, total=False):
-    """Relational arguments for Member"""
-    reservations: Union[bool, 'FindManyReservationArgsFromMemberRecursive3']
-
-
-class MemberIncludeFromMemberRecursive3(TypedDict, total=False):
-    """Relational arguments for Member"""
-    reservations: Union[bool, 'FindManyReservationArgsFromMemberRecursive4']
-
-
-class MemberIncludeFromMemberRecursive4(TypedDict, total=False):
-    """Relational arguments for Member"""
-
-    
 
 class MemberArgsFromMember(TypedDict, total=False):
     """Arguments for Member"""
-    include: 'MemberIncludeFromMemberRecursive1'
+    include: 'MemberIncludeFromMember'
 
-
-class MemberArgsFromMemberRecursive1(TypedDict, total=False):
-    """Arguments for Member"""
-    include: 'MemberIncludeFromMemberRecursive2'
-
-
-class MemberArgsFromMemberRecursive2(TypedDict, total=False):
-    """Arguments for Member"""
-    include: 'MemberIncludeFromMemberRecursive3'
-
-
-class MemberArgsFromMemberRecursive3(TypedDict, total=False):
-    """Arguments for Member"""
-    include: 'MemberIncludeFromMemberRecursive4'
-
-
-class MemberArgsFromMemberRecursive4(TypedDict, total=False):
-    """Arguments for Member"""
-    
-    
 
 class FindManyMemberArgsFromMember(TypedDict, total=False):
     """Arguments for Member"""
@@ -4515,106 +2385,19 @@ class FindManyMemberArgsFromMember(TypedDict, total=False):
     where: 'MemberWhereInput'
     cursor: 'MemberWhereUniqueInput'
     distinct: List['MemberScalarFieldKeys']
-    include: 'MemberIncludeFromMemberRecursive1'
+    include: 'MemberIncludeFromMember'
 
-
-class FindManyMemberArgsFromMemberRecursive1(TypedDict, total=False):
-    """Arguments for Member"""
-    take: int
-    skip: int
-    order_by: Union['MemberOrderByInput', List['MemberOrderByInput']]
-    where: 'MemberWhereInput'
-    cursor: 'MemberWhereUniqueInput'
-    distinct: List['MemberScalarFieldKeys']
-    include: 'MemberIncludeFromMemberRecursive2'
-
-
-class FindManyMemberArgsFromMemberRecursive2(TypedDict, total=False):
-    """Arguments for Member"""
-    take: int
-    skip: int
-    order_by: Union['MemberOrderByInput', List['MemberOrderByInput']]
-    where: 'MemberWhereInput'
-    cursor: 'MemberWhereUniqueInput'
-    distinct: List['MemberScalarFieldKeys']
-    include: 'MemberIncludeFromMemberRecursive3'
-
-
-class FindManyMemberArgsFromMemberRecursive3(TypedDict, total=False):
-    """Arguments for Member"""
-    take: int
-    skip: int
-    order_by: Union['MemberOrderByInput', List['MemberOrderByInput']]
-    where: 'MemberWhereInput'
-    cursor: 'MemberWhereUniqueInput'
-    distinct: List['MemberScalarFieldKeys']
-    include: 'MemberIncludeFromMemberRecursive4'
-
-
-class FindManyMemberArgsFromMemberRecursive4(TypedDict, total=False):
-    """Arguments for Member"""
-    take: int
-    skip: int
-    order_by: Union['MemberOrderByInput', List['MemberOrderByInput']]
-    where: 'MemberWhereInput'
-    cursor: 'MemberWhereUniqueInput'
-    distinct: List['MemberScalarFieldKeys']
-    
-    
 
 class ReservationIncludeFromMember(TypedDict, total=False):
     """Relational arguments for Member"""
-    table: Union[bool, 'TableArgsFromMemberRecursive1']
-    member: Union[bool, 'MemberArgsFromMemberRecursive1']
+    table: Union[bool, 'TableArgsFromMember']
+    member: Union[bool, 'MemberArgsFromMember']
 
-
-class ReservationIncludeFromMemberRecursive1(TypedDict, total=False):
-    """Relational arguments for Member"""
-    table: Union[bool, 'TableArgsFromMemberRecursive2']
-    member: Union[bool, 'MemberArgsFromMemberRecursive2']
-
-
-class ReservationIncludeFromMemberRecursive2(TypedDict, total=False):
-    """Relational arguments for Member"""
-    table: Union[bool, 'TableArgsFromMemberRecursive3']
-    member: Union[bool, 'MemberArgsFromMemberRecursive3']
-
-
-class ReservationIncludeFromMemberRecursive3(TypedDict, total=False):
-    """Relational arguments for Member"""
-    table: Union[bool, 'TableArgsFromMemberRecursive4']
-    member: Union[bool, 'MemberArgsFromMemberRecursive4']
-
-
-class ReservationIncludeFromMemberRecursive4(TypedDict, total=False):
-    """Relational arguments for Member"""
-
-    
 
 class ReservationArgsFromMember(TypedDict, total=False):
     """Arguments for Member"""
-    include: 'ReservationIncludeFromReservationRecursive1'
+    include: 'ReservationIncludeFromReservation'
 
-
-class ReservationArgsFromMemberRecursive1(TypedDict, total=False):
-    """Arguments for Member"""
-    include: 'ReservationIncludeFromReservationRecursive2'
-
-
-class ReservationArgsFromMemberRecursive2(TypedDict, total=False):
-    """Arguments for Member"""
-    include: 'ReservationIncludeFromReservationRecursive3'
-
-
-class ReservationArgsFromMemberRecursive3(TypedDict, total=False):
-    """Arguments for Member"""
-    include: 'ReservationIncludeFromReservationRecursive4'
-
-
-class ReservationArgsFromMemberRecursive4(TypedDict, total=False):
-    """Arguments for Member"""
-    
-    
 
 class FindManyReservationArgsFromMember(TypedDict, total=False):
     """Arguments for Member"""
@@ -4624,133 +2407,33 @@ class FindManyReservationArgsFromMember(TypedDict, total=False):
     where: 'ReservationWhereInput'
     cursor: 'ReservationWhereUniqueInput'
     distinct: List['ReservationScalarFieldKeys']
-    include: 'ReservationIncludeFromReservationRecursive1'
+    include: 'ReservationIncludeFromReservation'
 
 
-class FindManyReservationArgsFromMemberRecursive1(TypedDict, total=False):
-    """Arguments for Member"""
-    take: int
-    skip: int
-    order_by: Union['ReservationOrderByInput', List['ReservationOrderByInput']]
-    where: 'ReservationWhereInput'
-    cursor: 'ReservationWhereUniqueInput'
-    distinct: List['ReservationScalarFieldKeys']
-    include: 'ReservationIncludeFromReservationRecursive2'
-
-
-class FindManyReservationArgsFromMemberRecursive2(TypedDict, total=False):
-    """Arguments for Member"""
-    take: int
-    skip: int
-    order_by: Union['ReservationOrderByInput', List['ReservationOrderByInput']]
-    where: 'ReservationWhereInput'
-    cursor: 'ReservationWhereUniqueInput'
-    distinct: List['ReservationScalarFieldKeys']
-    include: 'ReservationIncludeFromReservationRecursive3'
-
-
-class FindManyReservationArgsFromMemberRecursive3(TypedDict, total=False):
-    """Arguments for Member"""
-    take: int
-    skip: int
-    order_by: Union['ReservationOrderByInput', List['ReservationOrderByInput']]
-    where: 'ReservationWhereInput'
-    cursor: 'ReservationWhereUniqueInput'
-    distinct: List['ReservationScalarFieldKeys']
-    include: 'ReservationIncludeFromReservationRecursive4'
-
-
-class FindManyReservationArgsFromMemberRecursive4(TypedDict, total=False):
-    """Arguments for Member"""
-    take: int
-    skip: int
-    order_by: Union['ReservationOrderByInput', List['ReservationOrderByInput']]
-    where: 'ReservationWhereInput'
-    cursor: 'ReservationWhereUniqueInput'
-    distinct: List['ReservationScalarFieldKeys']
-    
 
 
 FindManyMemberArgs = FindManyMemberArgsFromMember
 FindFirstMemberArgs = FindManyMemberArgsFromMember
 
 
-    
-
 class MemberWhereInput(TypedDict, total=False):
     """Member arguments for searching"""
     id: Union[_int, 'types.IntFilter']
     name: Union[_str, 'types.StringFilter']
     email: Union[_str, 'types.StringFilter']
+    phone: Union[None, _str, 'types.StringFilter']
     reservations: 'ReservationListRelationFilter'
-    phone: Union[_str, 'types.StringFilter']
 
-    # should be noted that AND and NOT should be Union['MemberWhereInputRecursive1', List['MemberWhereInputRecursive1']]
+    # should be noted that AND and NOT should be Union['MemberWhereInput', List['MemberWhereInput']]
     # but this causes mypy to hang :/
-    AND: List['MemberWhereInputRecursive1']
-    OR: List['MemberWhereInputRecursive1']
-    NOT: List['MemberWhereInputRecursive1']
-
-
-class MemberWhereInputRecursive1(TypedDict, total=False):
-    """Member arguments for searching"""
-    id: Union[_int, 'types.IntFilter']
-    name: Union[_str, 'types.StringFilter']
-    email: Union[_str, 'types.StringFilter']
-    reservations: 'ReservationListRelationFilter'
-    phone: Union[_str, 'types.StringFilter']
-
-    # should be noted that AND and NOT should be Union['MemberWhereInputRecursive2', List['MemberWhereInputRecursive2']]
-    # but this causes mypy to hang :/
-    AND: List['MemberWhereInputRecursive2']
-    OR: List['MemberWhereInputRecursive2']
-    NOT: List['MemberWhereInputRecursive2']
-
-
-class MemberWhereInputRecursive2(TypedDict, total=False):
-    """Member arguments for searching"""
-    id: Union[_int, 'types.IntFilter']
-    name: Union[_str, 'types.StringFilter']
-    email: Union[_str, 'types.StringFilter']
-    reservations: 'ReservationListRelationFilter'
-    phone: Union[_str, 'types.StringFilter']
-
-    # should be noted that AND and NOT should be Union['MemberWhereInputRecursive3', List['MemberWhereInputRecursive3']]
-    # but this causes mypy to hang :/
-    AND: List['MemberWhereInputRecursive3']
-    OR: List['MemberWhereInputRecursive3']
-    NOT: List['MemberWhereInputRecursive3']
-
-
-class MemberWhereInputRecursive3(TypedDict, total=False):
-    """Member arguments for searching"""
-    id: Union[_int, 'types.IntFilter']
-    name: Union[_str, 'types.StringFilter']
-    email: Union[_str, 'types.StringFilter']
-    reservations: 'ReservationListRelationFilter'
-    phone: Union[_str, 'types.StringFilter']
-
-    # should be noted that AND and NOT should be Union['MemberWhereInputRecursive4', List['MemberWhereInputRecursive4']]
-    # but this causes mypy to hang :/
-    AND: List['MemberWhereInputRecursive4']
-    OR: List['MemberWhereInputRecursive4']
-    NOT: List['MemberWhereInputRecursive4']
-
-
-class MemberWhereInputRecursive4(TypedDict, total=False):
-    """Member arguments for searching"""
-    id: Union[_int, 'types.IntFilter']
-    name: Union[_str, 'types.StringFilter']
-    email: Union[_str, 'types.StringFilter']
-    reservations: 'ReservationListRelationFilter'
-    phone: Union[_str, 'types.StringFilter']
+    AND: List['MemberWhereInput']
+    OR: List['MemberWhereInput']
+    NOT: List['MemberWhereInput']
 
 
 
 # aggregate Member types
 
-
-    
 
 class MemberScalarWhereWithAggregatesInput(TypedDict, total=False):
     """Member arguments for searching"""
@@ -4759,53 +2442,9 @@ class MemberScalarWhereWithAggregatesInput(TypedDict, total=False):
     email: Union[_str, 'types.StringWithAggregatesFilter']
     phone: Union[_str, 'types.StringWithAggregatesFilter']
 
-    AND: List['MemberScalarWhereWithAggregatesInputRecursive1']
-    OR: List['MemberScalarWhereWithAggregatesInputRecursive1']
-    NOT: List['MemberScalarWhereWithAggregatesInputRecursive1']
-
-
-class MemberScalarWhereWithAggregatesInputRecursive1(TypedDict, total=False):
-    """Member arguments for searching"""
-    id: Union[_int, 'types.IntWithAggregatesFilter']
-    name: Union[_str, 'types.StringWithAggregatesFilter']
-    email: Union[_str, 'types.StringWithAggregatesFilter']
-    phone: Union[_str, 'types.StringWithAggregatesFilter']
-
-    AND: List['MemberScalarWhereWithAggregatesInputRecursive2']
-    OR: List['MemberScalarWhereWithAggregatesInputRecursive2']
-    NOT: List['MemberScalarWhereWithAggregatesInputRecursive2']
-
-
-class MemberScalarWhereWithAggregatesInputRecursive2(TypedDict, total=False):
-    """Member arguments for searching"""
-    id: Union[_int, 'types.IntWithAggregatesFilter']
-    name: Union[_str, 'types.StringWithAggregatesFilter']
-    email: Union[_str, 'types.StringWithAggregatesFilter']
-    phone: Union[_str, 'types.StringWithAggregatesFilter']
-
-    AND: List['MemberScalarWhereWithAggregatesInputRecursive3']
-    OR: List['MemberScalarWhereWithAggregatesInputRecursive3']
-    NOT: List['MemberScalarWhereWithAggregatesInputRecursive3']
-
-
-class MemberScalarWhereWithAggregatesInputRecursive3(TypedDict, total=False):
-    """Member arguments for searching"""
-    id: Union[_int, 'types.IntWithAggregatesFilter']
-    name: Union[_str, 'types.StringWithAggregatesFilter']
-    email: Union[_str, 'types.StringWithAggregatesFilter']
-    phone: Union[_str, 'types.StringWithAggregatesFilter']
-
-    AND: List['MemberScalarWhereWithAggregatesInputRecursive4']
-    OR: List['MemberScalarWhereWithAggregatesInputRecursive4']
-    NOT: List['MemberScalarWhereWithAggregatesInputRecursive4']
-
-
-class MemberScalarWhereWithAggregatesInputRecursive4(TypedDict, total=False):
-    """Member arguments for searching"""
-    id: Union[_int, 'types.IntWithAggregatesFilter']
-    name: Union[_str, 'types.StringWithAggregatesFilter']
-    email: Union[_str, 'types.StringWithAggregatesFilter']
-    phone: Union[_str, 'types.StringWithAggregatesFilter']
+    AND: List['MemberScalarWhereWithAggregatesInput']
+    OR: List['MemberScalarWhereWithAggregatesInput']
+    NOT: List['MemberScalarWhereWithAggregatesInput']
 
 
 
@@ -4897,8 +2536,8 @@ MemberKeys = Literal[
     'id',
     'name',
     'email',
-    'reservations',
     'phone',
+    'reservations',
 ]
 MemberScalarFieldKeys = Literal[
     'id',
@@ -4921,6 +2560,11 @@ class ReservationOptionalCreateInput(TypedDict, total=False):
     table: 'TableCreateNestedWithoutRelationsInput'
     memberId: _int
     member: 'MemberCreateNestedWithoutRelationsInput'
+    status: _str
+    partySize: Optional[_int]
+    notes: Optional[_str]
+    createdAt: datetime.datetime
+    updatedAt: datetime.datetime
 
 
 class ReservationCreateInput(ReservationOptionalCreateInput):
@@ -4936,6 +2580,11 @@ class ReservationOptionalCreateWithoutRelationsInput(TypedDict, total=False):
     id: _int
     tableId: _int
     memberId: _int
+    status: _str
+    partySize: Optional[_int]
+    notes: Optional[_str]
+    createdAt: datetime.datetime
+    updatedAt: datetime.datetime
 
 
 class ReservationCreateWithoutRelationsInput(ReservationOptionalCreateWithoutRelationsInput):
@@ -4974,12 +2623,22 @@ class ReservationUpdateInput(TypedDict, total=False):
     date: datetime.datetime
     table: 'TableUpdateOneWithoutRelationsInput'
     member: 'MemberUpdateOneWithoutRelationsInput'
+    status: _str
+    partySize: Optional[Union[AtomicIntInput, _int]]
+    notes: Optional[_str]
+    createdAt: datetime.datetime
+    updatedAt: datetime.datetime
 
 
 class ReservationUpdateManyMutationInput(TypedDict, total=False):
     """Arguments for updating many records"""
     id: Union[AtomicIntInput, _int]
     date: datetime.datetime
+    status: _str
+    partySize: Optional[Union[AtomicIntInput, _int]]
+    notes: Optional[_str]
+    createdAt: datetime.datetime
+    updatedAt: datetime.datetime
 
 
 class ReservationUpdateManyWithoutRelationsInput(TypedDict, total=False):
@@ -5046,11 +2705,56 @@ _Reservation_memberId_OrderByInput = TypedDict(
     total=True
 )
 
+_Reservation_status_OrderByInput = TypedDict(
+    '_Reservation_status_OrderByInput',
+    {
+        'status': 'SortOrder',
+    },
+    total=True
+)
+
+_Reservation_partySize_OrderByInput = TypedDict(
+    '_Reservation_partySize_OrderByInput',
+    {
+        'partySize': 'SortOrder',
+    },
+    total=True
+)
+
+_Reservation_notes_OrderByInput = TypedDict(
+    '_Reservation_notes_OrderByInput',
+    {
+        'notes': 'SortOrder',
+    },
+    total=True
+)
+
+_Reservation_createdAt_OrderByInput = TypedDict(
+    '_Reservation_createdAt_OrderByInput',
+    {
+        'createdAt': 'SortOrder',
+    },
+    total=True
+)
+
+_Reservation_updatedAt_OrderByInput = TypedDict(
+    '_Reservation_updatedAt_OrderByInput',
+    {
+        'updatedAt': 'SortOrder',
+    },
+    total=True
+)
+
 ReservationOrderByInput = Union[
     '_Reservation_id_OrderByInput',
     '_Reservation_date_OrderByInput',
     '_Reservation_tableId_OrderByInput',
     '_Reservation_memberId_OrderByInput',
+    '_Reservation_status_OrderByInput',
+    '_Reservation_partySize_OrderByInput',
+    '_Reservation_notes_OrderByInput',
+    '_Reservation_createdAt_OrderByInput',
+    '_Reservation_updatedAt_OrderByInput',
 ]
 
 
@@ -5059,24 +2763,21 @@ ReservationOrderByInput = Union[
 # TODO: cleanup these types
 
 
-# Dict[str, Any] is a mypy limitation
-# see https://github.com/RobertCraigie/prisma-client-py/issues/45
-# switch to pyright for improved types, see https://prisma-client-py.readthedocs.io/en/stable/reference/limitations/
 
 ReservationRelationFilter = TypedDict(
     'ReservationRelationFilter',
     {
-        'is': 'Dict[str, Any]',
-        'is_not': 'Dict[str, Any]',
+        'is': 'ReservationWhereInput',
+        'is_not': 'ReservationWhereInput',
     },
     total=False,
 )
 
 
 class ReservationListRelationFilter(TypedDict, total=False):
-    some: 'Dict[str, Any]'
-    none: 'Dict[str, Any]'
-    every: 'Dict[str, Any]'
+    some: 'ReservationWhereInput'
+    none: 'ReservationWhereInput'
+    every: 'ReservationWhereInput'
 
 
 class ReservationInclude(TypedDict, total=False):
@@ -5085,57 +2786,15 @@ class ReservationInclude(TypedDict, total=False):
     member: Union[bool, 'MemberArgsFromReservation']
 
 
-    
-
 class RestaurantIncludeFromReservation(TypedDict, total=False):
     """Relational arguments for Reservation"""
-    floors: Union[bool, 'FindManyFloorArgsFromReservationRecursive1']
+    floors: Union[bool, 'FindManyFloorArgsFromReservation']
 
-
-class RestaurantIncludeFromReservationRecursive1(TypedDict, total=False):
-    """Relational arguments for Reservation"""
-    floors: Union[bool, 'FindManyFloorArgsFromReservationRecursive2']
-
-
-class RestaurantIncludeFromReservationRecursive2(TypedDict, total=False):
-    """Relational arguments for Reservation"""
-    floors: Union[bool, 'FindManyFloorArgsFromReservationRecursive3']
-
-
-class RestaurantIncludeFromReservationRecursive3(TypedDict, total=False):
-    """Relational arguments for Reservation"""
-    floors: Union[bool, 'FindManyFloorArgsFromReservationRecursive4']
-
-
-class RestaurantIncludeFromReservationRecursive4(TypedDict, total=False):
-    """Relational arguments for Reservation"""
-
-    
 
 class RestaurantArgsFromReservation(TypedDict, total=False):
     """Arguments for Reservation"""
-    include: 'RestaurantIncludeFromRestaurantRecursive1'
+    include: 'RestaurantIncludeFromRestaurant'
 
-
-class RestaurantArgsFromReservationRecursive1(TypedDict, total=False):
-    """Arguments for Reservation"""
-    include: 'RestaurantIncludeFromRestaurantRecursive2'
-
-
-class RestaurantArgsFromReservationRecursive2(TypedDict, total=False):
-    """Arguments for Reservation"""
-    include: 'RestaurantIncludeFromRestaurantRecursive3'
-
-
-class RestaurantArgsFromReservationRecursive3(TypedDict, total=False):
-    """Arguments for Reservation"""
-    include: 'RestaurantIncludeFromRestaurantRecursive4'
-
-
-class RestaurantArgsFromReservationRecursive4(TypedDict, total=False):
-    """Arguments for Reservation"""
-    
-    
 
 class FindManyRestaurantArgsFromReservation(TypedDict, total=False):
     """Arguments for Reservation"""
@@ -5145,106 +2804,19 @@ class FindManyRestaurantArgsFromReservation(TypedDict, total=False):
     where: 'RestaurantWhereInput'
     cursor: 'RestaurantWhereUniqueInput'
     distinct: List['RestaurantScalarFieldKeys']
-    include: 'RestaurantIncludeFromRestaurantRecursive1'
+    include: 'RestaurantIncludeFromRestaurant'
 
-
-class FindManyRestaurantArgsFromReservationRecursive1(TypedDict, total=False):
-    """Arguments for Reservation"""
-    take: int
-    skip: int
-    order_by: Union['RestaurantOrderByInput', List['RestaurantOrderByInput']]
-    where: 'RestaurantWhereInput'
-    cursor: 'RestaurantWhereUniqueInput'
-    distinct: List['RestaurantScalarFieldKeys']
-    include: 'RestaurantIncludeFromRestaurantRecursive2'
-
-
-class FindManyRestaurantArgsFromReservationRecursive2(TypedDict, total=False):
-    """Arguments for Reservation"""
-    take: int
-    skip: int
-    order_by: Union['RestaurantOrderByInput', List['RestaurantOrderByInput']]
-    where: 'RestaurantWhereInput'
-    cursor: 'RestaurantWhereUniqueInput'
-    distinct: List['RestaurantScalarFieldKeys']
-    include: 'RestaurantIncludeFromRestaurantRecursive3'
-
-
-class FindManyRestaurantArgsFromReservationRecursive3(TypedDict, total=False):
-    """Arguments for Reservation"""
-    take: int
-    skip: int
-    order_by: Union['RestaurantOrderByInput', List['RestaurantOrderByInput']]
-    where: 'RestaurantWhereInput'
-    cursor: 'RestaurantWhereUniqueInput'
-    distinct: List['RestaurantScalarFieldKeys']
-    include: 'RestaurantIncludeFromRestaurantRecursive4'
-
-
-class FindManyRestaurantArgsFromReservationRecursive4(TypedDict, total=False):
-    """Arguments for Reservation"""
-    take: int
-    skip: int
-    order_by: Union['RestaurantOrderByInput', List['RestaurantOrderByInput']]
-    where: 'RestaurantWhereInput'
-    cursor: 'RestaurantWhereUniqueInput'
-    distinct: List['RestaurantScalarFieldKeys']
-    
-    
 
 class FloorIncludeFromReservation(TypedDict, total=False):
     """Relational arguments for Reservation"""
-    restaurant: Union[bool, 'RestaurantArgsFromReservationRecursive1']
-    tables: Union[bool, 'FindManyTableArgsFromReservationRecursive1']
+    restaurant: Union[bool, 'RestaurantArgsFromReservation']
+    tables: Union[bool, 'FindManyTableArgsFromReservation']
 
-
-class FloorIncludeFromReservationRecursive1(TypedDict, total=False):
-    """Relational arguments for Reservation"""
-    restaurant: Union[bool, 'RestaurantArgsFromReservationRecursive2']
-    tables: Union[bool, 'FindManyTableArgsFromReservationRecursive2']
-
-
-class FloorIncludeFromReservationRecursive2(TypedDict, total=False):
-    """Relational arguments for Reservation"""
-    restaurant: Union[bool, 'RestaurantArgsFromReservationRecursive3']
-    tables: Union[bool, 'FindManyTableArgsFromReservationRecursive3']
-
-
-class FloorIncludeFromReservationRecursive3(TypedDict, total=False):
-    """Relational arguments for Reservation"""
-    restaurant: Union[bool, 'RestaurantArgsFromReservationRecursive4']
-    tables: Union[bool, 'FindManyTableArgsFromReservationRecursive4']
-
-
-class FloorIncludeFromReservationRecursive4(TypedDict, total=False):
-    """Relational arguments for Reservation"""
-
-    
 
 class FloorArgsFromReservation(TypedDict, total=False):
     """Arguments for Reservation"""
-    include: 'FloorIncludeFromFloorRecursive1'
+    include: 'FloorIncludeFromFloor'
 
-
-class FloorArgsFromReservationRecursive1(TypedDict, total=False):
-    """Arguments for Reservation"""
-    include: 'FloorIncludeFromFloorRecursive2'
-
-
-class FloorArgsFromReservationRecursive2(TypedDict, total=False):
-    """Arguments for Reservation"""
-    include: 'FloorIncludeFromFloorRecursive3'
-
-
-class FloorArgsFromReservationRecursive3(TypedDict, total=False):
-    """Arguments for Reservation"""
-    include: 'FloorIncludeFromFloorRecursive4'
-
-
-class FloorArgsFromReservationRecursive4(TypedDict, total=False):
-    """Arguments for Reservation"""
-    
-    
 
 class FindManyFloorArgsFromReservation(TypedDict, total=False):
     """Arguments for Reservation"""
@@ -5254,106 +2826,19 @@ class FindManyFloorArgsFromReservation(TypedDict, total=False):
     where: 'FloorWhereInput'
     cursor: 'FloorWhereUniqueInput'
     distinct: List['FloorScalarFieldKeys']
-    include: 'FloorIncludeFromFloorRecursive1'
+    include: 'FloorIncludeFromFloor'
 
-
-class FindManyFloorArgsFromReservationRecursive1(TypedDict, total=False):
-    """Arguments for Reservation"""
-    take: int
-    skip: int
-    order_by: Union['FloorOrderByInput', List['FloorOrderByInput']]
-    where: 'FloorWhereInput'
-    cursor: 'FloorWhereUniqueInput'
-    distinct: List['FloorScalarFieldKeys']
-    include: 'FloorIncludeFromFloorRecursive2'
-
-
-class FindManyFloorArgsFromReservationRecursive2(TypedDict, total=False):
-    """Arguments for Reservation"""
-    take: int
-    skip: int
-    order_by: Union['FloorOrderByInput', List['FloorOrderByInput']]
-    where: 'FloorWhereInput'
-    cursor: 'FloorWhereUniqueInput'
-    distinct: List['FloorScalarFieldKeys']
-    include: 'FloorIncludeFromFloorRecursive3'
-
-
-class FindManyFloorArgsFromReservationRecursive3(TypedDict, total=False):
-    """Arguments for Reservation"""
-    take: int
-    skip: int
-    order_by: Union['FloorOrderByInput', List['FloorOrderByInput']]
-    where: 'FloorWhereInput'
-    cursor: 'FloorWhereUniqueInput'
-    distinct: List['FloorScalarFieldKeys']
-    include: 'FloorIncludeFromFloorRecursive4'
-
-
-class FindManyFloorArgsFromReservationRecursive4(TypedDict, total=False):
-    """Arguments for Reservation"""
-    take: int
-    skip: int
-    order_by: Union['FloorOrderByInput', List['FloorOrderByInput']]
-    where: 'FloorWhereInput'
-    cursor: 'FloorWhereUniqueInput'
-    distinct: List['FloorScalarFieldKeys']
-    
-    
 
 class TableIncludeFromReservation(TypedDict, total=False):
     """Relational arguments for Reservation"""
-    floor: Union[bool, 'FloorArgsFromReservationRecursive1']
-    reservations: Union[bool, 'FindManyReservationArgsFromReservationRecursive1']
+    floor: Union[bool, 'FloorArgsFromReservation']
+    reservations: Union[bool, 'FindManyReservationArgsFromReservation']
 
-
-class TableIncludeFromReservationRecursive1(TypedDict, total=False):
-    """Relational arguments for Reservation"""
-    floor: Union[bool, 'FloorArgsFromReservationRecursive2']
-    reservations: Union[bool, 'FindManyReservationArgsFromReservationRecursive2']
-
-
-class TableIncludeFromReservationRecursive2(TypedDict, total=False):
-    """Relational arguments for Reservation"""
-    floor: Union[bool, 'FloorArgsFromReservationRecursive3']
-    reservations: Union[bool, 'FindManyReservationArgsFromReservationRecursive3']
-
-
-class TableIncludeFromReservationRecursive3(TypedDict, total=False):
-    """Relational arguments for Reservation"""
-    floor: Union[bool, 'FloorArgsFromReservationRecursive4']
-    reservations: Union[bool, 'FindManyReservationArgsFromReservationRecursive4']
-
-
-class TableIncludeFromReservationRecursive4(TypedDict, total=False):
-    """Relational arguments for Reservation"""
-
-    
 
 class TableArgsFromReservation(TypedDict, total=False):
     """Arguments for Reservation"""
-    include: 'TableIncludeFromTableRecursive1'
+    include: 'TableIncludeFromTable'
 
-
-class TableArgsFromReservationRecursive1(TypedDict, total=False):
-    """Arguments for Reservation"""
-    include: 'TableIncludeFromTableRecursive2'
-
-
-class TableArgsFromReservationRecursive2(TypedDict, total=False):
-    """Arguments for Reservation"""
-    include: 'TableIncludeFromTableRecursive3'
-
-
-class TableArgsFromReservationRecursive3(TypedDict, total=False):
-    """Arguments for Reservation"""
-    include: 'TableIncludeFromTableRecursive4'
-
-
-class TableArgsFromReservationRecursive4(TypedDict, total=False):
-    """Arguments for Reservation"""
-    
-    
 
 class FindManyTableArgsFromReservation(TypedDict, total=False):
     """Arguments for Reservation"""
@@ -5363,102 +2848,18 @@ class FindManyTableArgsFromReservation(TypedDict, total=False):
     where: 'TableWhereInput'
     cursor: 'TableWhereUniqueInput'
     distinct: List['TableScalarFieldKeys']
-    include: 'TableIncludeFromTableRecursive1'
+    include: 'TableIncludeFromTable'
 
-
-class FindManyTableArgsFromReservationRecursive1(TypedDict, total=False):
-    """Arguments for Reservation"""
-    take: int
-    skip: int
-    order_by: Union['TableOrderByInput', List['TableOrderByInput']]
-    where: 'TableWhereInput'
-    cursor: 'TableWhereUniqueInput'
-    distinct: List['TableScalarFieldKeys']
-    include: 'TableIncludeFromTableRecursive2'
-
-
-class FindManyTableArgsFromReservationRecursive2(TypedDict, total=False):
-    """Arguments for Reservation"""
-    take: int
-    skip: int
-    order_by: Union['TableOrderByInput', List['TableOrderByInput']]
-    where: 'TableWhereInput'
-    cursor: 'TableWhereUniqueInput'
-    distinct: List['TableScalarFieldKeys']
-    include: 'TableIncludeFromTableRecursive3'
-
-
-class FindManyTableArgsFromReservationRecursive3(TypedDict, total=False):
-    """Arguments for Reservation"""
-    take: int
-    skip: int
-    order_by: Union['TableOrderByInput', List['TableOrderByInput']]
-    where: 'TableWhereInput'
-    cursor: 'TableWhereUniqueInput'
-    distinct: List['TableScalarFieldKeys']
-    include: 'TableIncludeFromTableRecursive4'
-
-
-class FindManyTableArgsFromReservationRecursive4(TypedDict, total=False):
-    """Arguments for Reservation"""
-    take: int
-    skip: int
-    order_by: Union['TableOrderByInput', List['TableOrderByInput']]
-    where: 'TableWhereInput'
-    cursor: 'TableWhereUniqueInput'
-    distinct: List['TableScalarFieldKeys']
-    
-    
 
 class MemberIncludeFromReservation(TypedDict, total=False):
     """Relational arguments for Reservation"""
-    reservations: Union[bool, 'FindManyReservationArgsFromReservationRecursive1']
+    reservations: Union[bool, 'FindManyReservationArgsFromReservation']
 
-
-class MemberIncludeFromReservationRecursive1(TypedDict, total=False):
-    """Relational arguments for Reservation"""
-    reservations: Union[bool, 'FindManyReservationArgsFromReservationRecursive2']
-
-
-class MemberIncludeFromReservationRecursive2(TypedDict, total=False):
-    """Relational arguments for Reservation"""
-    reservations: Union[bool, 'FindManyReservationArgsFromReservationRecursive3']
-
-
-class MemberIncludeFromReservationRecursive3(TypedDict, total=False):
-    """Relational arguments for Reservation"""
-    reservations: Union[bool, 'FindManyReservationArgsFromReservationRecursive4']
-
-
-class MemberIncludeFromReservationRecursive4(TypedDict, total=False):
-    """Relational arguments for Reservation"""
-
-    
 
 class MemberArgsFromReservation(TypedDict, total=False):
     """Arguments for Reservation"""
-    include: 'MemberIncludeFromMemberRecursive1'
+    include: 'MemberIncludeFromMember'
 
-
-class MemberArgsFromReservationRecursive1(TypedDict, total=False):
-    """Arguments for Reservation"""
-    include: 'MemberIncludeFromMemberRecursive2'
-
-
-class MemberArgsFromReservationRecursive2(TypedDict, total=False):
-    """Arguments for Reservation"""
-    include: 'MemberIncludeFromMemberRecursive3'
-
-
-class MemberArgsFromReservationRecursive3(TypedDict, total=False):
-    """Arguments for Reservation"""
-    include: 'MemberIncludeFromMemberRecursive4'
-
-
-class MemberArgsFromReservationRecursive4(TypedDict, total=False):
-    """Arguments for Reservation"""
-    
-    
 
 class FindManyMemberArgsFromReservation(TypedDict, total=False):
     """Arguments for Reservation"""
@@ -5468,106 +2869,19 @@ class FindManyMemberArgsFromReservation(TypedDict, total=False):
     where: 'MemberWhereInput'
     cursor: 'MemberWhereUniqueInput'
     distinct: List['MemberScalarFieldKeys']
-    include: 'MemberIncludeFromMemberRecursive1'
+    include: 'MemberIncludeFromMember'
 
-
-class FindManyMemberArgsFromReservationRecursive1(TypedDict, total=False):
-    """Arguments for Reservation"""
-    take: int
-    skip: int
-    order_by: Union['MemberOrderByInput', List['MemberOrderByInput']]
-    where: 'MemberWhereInput'
-    cursor: 'MemberWhereUniqueInput'
-    distinct: List['MemberScalarFieldKeys']
-    include: 'MemberIncludeFromMemberRecursive2'
-
-
-class FindManyMemberArgsFromReservationRecursive2(TypedDict, total=False):
-    """Arguments for Reservation"""
-    take: int
-    skip: int
-    order_by: Union['MemberOrderByInput', List['MemberOrderByInput']]
-    where: 'MemberWhereInput'
-    cursor: 'MemberWhereUniqueInput'
-    distinct: List['MemberScalarFieldKeys']
-    include: 'MemberIncludeFromMemberRecursive3'
-
-
-class FindManyMemberArgsFromReservationRecursive3(TypedDict, total=False):
-    """Arguments for Reservation"""
-    take: int
-    skip: int
-    order_by: Union['MemberOrderByInput', List['MemberOrderByInput']]
-    where: 'MemberWhereInput'
-    cursor: 'MemberWhereUniqueInput'
-    distinct: List['MemberScalarFieldKeys']
-    include: 'MemberIncludeFromMemberRecursive4'
-
-
-class FindManyMemberArgsFromReservationRecursive4(TypedDict, total=False):
-    """Arguments for Reservation"""
-    take: int
-    skip: int
-    order_by: Union['MemberOrderByInput', List['MemberOrderByInput']]
-    where: 'MemberWhereInput'
-    cursor: 'MemberWhereUniqueInput'
-    distinct: List['MemberScalarFieldKeys']
-    
-    
 
 class ReservationIncludeFromReservation(TypedDict, total=False):
     """Relational arguments for Reservation"""
-    table: Union[bool, 'TableArgsFromReservationRecursive1']
-    member: Union[bool, 'MemberArgsFromReservationRecursive1']
+    table: Union[bool, 'TableArgsFromReservation']
+    member: Union[bool, 'MemberArgsFromReservation']
 
-
-class ReservationIncludeFromReservationRecursive1(TypedDict, total=False):
-    """Relational arguments for Reservation"""
-    table: Union[bool, 'TableArgsFromReservationRecursive2']
-    member: Union[bool, 'MemberArgsFromReservationRecursive2']
-
-
-class ReservationIncludeFromReservationRecursive2(TypedDict, total=False):
-    """Relational arguments for Reservation"""
-    table: Union[bool, 'TableArgsFromReservationRecursive3']
-    member: Union[bool, 'MemberArgsFromReservationRecursive3']
-
-
-class ReservationIncludeFromReservationRecursive3(TypedDict, total=False):
-    """Relational arguments for Reservation"""
-    table: Union[bool, 'TableArgsFromReservationRecursive4']
-    member: Union[bool, 'MemberArgsFromReservationRecursive4']
-
-
-class ReservationIncludeFromReservationRecursive4(TypedDict, total=False):
-    """Relational arguments for Reservation"""
-
-    
 
 class ReservationArgsFromReservation(TypedDict, total=False):
     """Arguments for Reservation"""
-    include: 'ReservationIncludeFromReservationRecursive1'
+    include: 'ReservationIncludeFromReservation'
 
-
-class ReservationArgsFromReservationRecursive1(TypedDict, total=False):
-    """Arguments for Reservation"""
-    include: 'ReservationIncludeFromReservationRecursive2'
-
-
-class ReservationArgsFromReservationRecursive2(TypedDict, total=False):
-    """Arguments for Reservation"""
-    include: 'ReservationIncludeFromReservationRecursive3'
-
-
-class ReservationArgsFromReservationRecursive3(TypedDict, total=False):
-    """Arguments for Reservation"""
-    include: 'ReservationIncludeFromReservationRecursive4'
-
-
-class ReservationArgsFromReservationRecursive4(TypedDict, total=False):
-    """Arguments for Reservation"""
-    
-    
 
 class FindManyReservationArgsFromReservation(TypedDict, total=False):
     """Arguments for Reservation"""
@@ -5577,58 +2891,14 @@ class FindManyReservationArgsFromReservation(TypedDict, total=False):
     where: 'ReservationWhereInput'
     cursor: 'ReservationWhereUniqueInput'
     distinct: List['ReservationScalarFieldKeys']
-    include: 'ReservationIncludeFromReservationRecursive1'
+    include: 'ReservationIncludeFromReservation'
 
 
-class FindManyReservationArgsFromReservationRecursive1(TypedDict, total=False):
-    """Arguments for Reservation"""
-    take: int
-    skip: int
-    order_by: Union['ReservationOrderByInput', List['ReservationOrderByInput']]
-    where: 'ReservationWhereInput'
-    cursor: 'ReservationWhereUniqueInput'
-    distinct: List['ReservationScalarFieldKeys']
-    include: 'ReservationIncludeFromReservationRecursive2'
-
-
-class FindManyReservationArgsFromReservationRecursive2(TypedDict, total=False):
-    """Arguments for Reservation"""
-    take: int
-    skip: int
-    order_by: Union['ReservationOrderByInput', List['ReservationOrderByInput']]
-    where: 'ReservationWhereInput'
-    cursor: 'ReservationWhereUniqueInput'
-    distinct: List['ReservationScalarFieldKeys']
-    include: 'ReservationIncludeFromReservationRecursive3'
-
-
-class FindManyReservationArgsFromReservationRecursive3(TypedDict, total=False):
-    """Arguments for Reservation"""
-    take: int
-    skip: int
-    order_by: Union['ReservationOrderByInput', List['ReservationOrderByInput']]
-    where: 'ReservationWhereInput'
-    cursor: 'ReservationWhereUniqueInput'
-    distinct: List['ReservationScalarFieldKeys']
-    include: 'ReservationIncludeFromReservationRecursive4'
-
-
-class FindManyReservationArgsFromReservationRecursive4(TypedDict, total=False):
-    """Arguments for Reservation"""
-    take: int
-    skip: int
-    order_by: Union['ReservationOrderByInput', List['ReservationOrderByInput']]
-    where: 'ReservationWhereInput'
-    cursor: 'ReservationWhereUniqueInput'
-    distinct: List['ReservationScalarFieldKeys']
-    
 
 
 FindManyReservationArgs = FindManyReservationArgsFromReservation
 FindFirstReservationArgs = FindManyReservationArgsFromReservation
 
-
-    
 
 class ReservationWhereInput(TypedDict, total=False):
     """Reservation arguments for searching"""
@@ -5638,77 +2908,22 @@ class ReservationWhereInput(TypedDict, total=False):
     table: 'TableRelationFilter'
     memberId: Union[_int, 'types.IntFilter']
     member: 'MemberRelationFilter'
+    status: Union[_str, 'types.StringFilter']
+    partySize: Union[None, _int, 'types.IntFilter']
+    notes: Union[None, _str, 'types.StringFilter']
+    createdAt: Union[datetime.datetime, 'types.DateTimeFilter']
+    updatedAt: Union[datetime.datetime, 'types.DateTimeFilter']
 
-    # should be noted that AND and NOT should be Union['ReservationWhereInputRecursive1', List['ReservationWhereInputRecursive1']]
+    # should be noted that AND and NOT should be Union['ReservationWhereInput', List['ReservationWhereInput']]
     # but this causes mypy to hang :/
-    AND: List['ReservationWhereInputRecursive1']
-    OR: List['ReservationWhereInputRecursive1']
-    NOT: List['ReservationWhereInputRecursive1']
-
-
-class ReservationWhereInputRecursive1(TypedDict, total=False):
-    """Reservation arguments for searching"""
-    id: Union[_int, 'types.IntFilter']
-    date: Union[datetime.datetime, 'types.DateTimeFilter']
-    tableId: Union[_int, 'types.IntFilter']
-    table: 'TableRelationFilter'
-    memberId: Union[_int, 'types.IntFilter']
-    member: 'MemberRelationFilter'
-
-    # should be noted that AND and NOT should be Union['ReservationWhereInputRecursive2', List['ReservationWhereInputRecursive2']]
-    # but this causes mypy to hang :/
-    AND: List['ReservationWhereInputRecursive2']
-    OR: List['ReservationWhereInputRecursive2']
-    NOT: List['ReservationWhereInputRecursive2']
-
-
-class ReservationWhereInputRecursive2(TypedDict, total=False):
-    """Reservation arguments for searching"""
-    id: Union[_int, 'types.IntFilter']
-    date: Union[datetime.datetime, 'types.DateTimeFilter']
-    tableId: Union[_int, 'types.IntFilter']
-    table: 'TableRelationFilter'
-    memberId: Union[_int, 'types.IntFilter']
-    member: 'MemberRelationFilter'
-
-    # should be noted that AND and NOT should be Union['ReservationWhereInputRecursive3', List['ReservationWhereInputRecursive3']]
-    # but this causes mypy to hang :/
-    AND: List['ReservationWhereInputRecursive3']
-    OR: List['ReservationWhereInputRecursive3']
-    NOT: List['ReservationWhereInputRecursive3']
-
-
-class ReservationWhereInputRecursive3(TypedDict, total=False):
-    """Reservation arguments for searching"""
-    id: Union[_int, 'types.IntFilter']
-    date: Union[datetime.datetime, 'types.DateTimeFilter']
-    tableId: Union[_int, 'types.IntFilter']
-    table: 'TableRelationFilter'
-    memberId: Union[_int, 'types.IntFilter']
-    member: 'MemberRelationFilter'
-
-    # should be noted that AND and NOT should be Union['ReservationWhereInputRecursive4', List['ReservationWhereInputRecursive4']]
-    # but this causes mypy to hang :/
-    AND: List['ReservationWhereInputRecursive4']
-    OR: List['ReservationWhereInputRecursive4']
-    NOT: List['ReservationWhereInputRecursive4']
-
-
-class ReservationWhereInputRecursive4(TypedDict, total=False):
-    """Reservation arguments for searching"""
-    id: Union[_int, 'types.IntFilter']
-    date: Union[datetime.datetime, 'types.DateTimeFilter']
-    tableId: Union[_int, 'types.IntFilter']
-    table: 'TableRelationFilter'
-    memberId: Union[_int, 'types.IntFilter']
-    member: 'MemberRelationFilter'
+    AND: List['ReservationWhereInput']
+    OR: List['ReservationWhereInput']
+    NOT: List['ReservationWhereInput']
 
 
 
 # aggregate Reservation types
 
-
-    
 
 class ReservationScalarWhereWithAggregatesInput(TypedDict, total=False):
     """Reservation arguments for searching"""
@@ -5716,54 +2931,15 @@ class ReservationScalarWhereWithAggregatesInput(TypedDict, total=False):
     date: Union[datetime.datetime, 'types.DateTimeWithAggregatesFilter']
     tableId: Union[_int, 'types.IntWithAggregatesFilter']
     memberId: Union[_int, 'types.IntWithAggregatesFilter']
+    status: Union[_str, 'types.StringWithAggregatesFilter']
+    partySize: Union[_int, 'types.IntWithAggregatesFilter']
+    notes: Union[_str, 'types.StringWithAggregatesFilter']
+    createdAt: Union[datetime.datetime, 'types.DateTimeWithAggregatesFilter']
+    updatedAt: Union[datetime.datetime, 'types.DateTimeWithAggregatesFilter']
 
-    AND: List['ReservationScalarWhereWithAggregatesInputRecursive1']
-    OR: List['ReservationScalarWhereWithAggregatesInputRecursive1']
-    NOT: List['ReservationScalarWhereWithAggregatesInputRecursive1']
-
-
-class ReservationScalarWhereWithAggregatesInputRecursive1(TypedDict, total=False):
-    """Reservation arguments for searching"""
-    id: Union[_int, 'types.IntWithAggregatesFilter']
-    date: Union[datetime.datetime, 'types.DateTimeWithAggregatesFilter']
-    tableId: Union[_int, 'types.IntWithAggregatesFilter']
-    memberId: Union[_int, 'types.IntWithAggregatesFilter']
-
-    AND: List['ReservationScalarWhereWithAggregatesInputRecursive2']
-    OR: List['ReservationScalarWhereWithAggregatesInputRecursive2']
-    NOT: List['ReservationScalarWhereWithAggregatesInputRecursive2']
-
-
-class ReservationScalarWhereWithAggregatesInputRecursive2(TypedDict, total=False):
-    """Reservation arguments for searching"""
-    id: Union[_int, 'types.IntWithAggregatesFilter']
-    date: Union[datetime.datetime, 'types.DateTimeWithAggregatesFilter']
-    tableId: Union[_int, 'types.IntWithAggregatesFilter']
-    memberId: Union[_int, 'types.IntWithAggregatesFilter']
-
-    AND: List['ReservationScalarWhereWithAggregatesInputRecursive3']
-    OR: List['ReservationScalarWhereWithAggregatesInputRecursive3']
-    NOT: List['ReservationScalarWhereWithAggregatesInputRecursive3']
-
-
-class ReservationScalarWhereWithAggregatesInputRecursive3(TypedDict, total=False):
-    """Reservation arguments for searching"""
-    id: Union[_int, 'types.IntWithAggregatesFilter']
-    date: Union[datetime.datetime, 'types.DateTimeWithAggregatesFilter']
-    tableId: Union[_int, 'types.IntWithAggregatesFilter']
-    memberId: Union[_int, 'types.IntWithAggregatesFilter']
-
-    AND: List['ReservationScalarWhereWithAggregatesInputRecursive4']
-    OR: List['ReservationScalarWhereWithAggregatesInputRecursive4']
-    NOT: List['ReservationScalarWhereWithAggregatesInputRecursive4']
-
-
-class ReservationScalarWhereWithAggregatesInputRecursive4(TypedDict, total=False):
-    """Reservation arguments for searching"""
-    id: Union[_int, 'types.IntWithAggregatesFilter']
-    date: Union[datetime.datetime, 'types.DateTimeWithAggregatesFilter']
-    tableId: Union[_int, 'types.IntWithAggregatesFilter']
-    memberId: Union[_int, 'types.IntWithAggregatesFilter']
+    AND: List['ReservationScalarWhereWithAggregatesInput']
+    OR: List['ReservationScalarWhereWithAggregatesInput']
+    NOT: List['ReservationScalarWhereWithAggregatesInput']
 
 
 
@@ -5772,6 +2948,11 @@ class ReservationGroupByOutput(TypedDict, total=False):
     date: datetime.datetime
     tableId: _int
     memberId: _int
+    status: _str
+    partySize: _int
+    notes: _str
+    createdAt: datetime.datetime
+    updatedAt: datetime.datetime
     _sum: 'ReservationSumAggregateOutput'
     _avg: 'ReservationAvgAggregateOutput'
     _min: 'ReservationMinAggregateOutput'
@@ -5784,6 +2965,7 @@ class ReservationAvgAggregateOutput(TypedDict, total=False):
     id: float
     tableId: float
     memberId: float
+    partySize: float
 
 
 class ReservationSumAggregateOutput(TypedDict, total=False):
@@ -5791,6 +2973,7 @@ class ReservationSumAggregateOutput(TypedDict, total=False):
     id: _int
     tableId: _int
     memberId: _int
+    partySize: _int
 
 
 class ReservationScalarAggregateOutput(TypedDict, total=False):
@@ -5799,6 +2982,11 @@ class ReservationScalarAggregateOutput(TypedDict, total=False):
     date: datetime.datetime
     tableId: _int
     memberId: _int
+    status: _str
+    partySize: _int
+    notes: _str
+    createdAt: datetime.datetime
+    updatedAt: datetime.datetime
 
 
 ReservationMinAggregateOutput = ReservationScalarAggregateOutput
@@ -5811,6 +2999,11 @@ class ReservationMaxAggregateInput(TypedDict, total=False):
     date: bool
     tableId: bool
     memberId: bool
+    status: bool
+    partySize: bool
+    notes: bool
+    createdAt: bool
+    updatedAt: bool
 
 
 class ReservationMinAggregateInput(TypedDict, total=False):
@@ -5819,6 +3012,11 @@ class ReservationMinAggregateInput(TypedDict, total=False):
     date: bool
     tableId: bool
     memberId: bool
+    status: bool
+    partySize: bool
+    notes: bool
+    createdAt: bool
+    updatedAt: bool
 
 
 class ReservationNumberAggregateInput(TypedDict, total=False):
@@ -5826,6 +3024,7 @@ class ReservationNumberAggregateInput(TypedDict, total=False):
     id: bool
     tableId: bool
     memberId: bool
+    partySize: bool
 
 
 ReservationAvgAggregateInput = ReservationNumberAggregateInput
@@ -5839,6 +3038,11 @@ ReservationCountAggregateInput = TypedDict(
         'date': bool,
         'tableId': bool,
         'memberId': bool,
+        'status': bool,
+        'partySize': bool,
+        'notes': bool,
+        'createdAt': bool,
+        'updatedAt': bool,
         '_all': bool,
     },
     total=False,
@@ -5851,6 +3055,11 @@ ReservationCountAggregateOutput = TypedDict(
         'date': int,
         'tableId': int,
         'memberId': int,
+        'status': int,
+        'partySize': int,
+        'notes': int,
+        'createdAt': int,
+        'updatedAt': int,
         '_all': int,
     },
     total=False,
@@ -5864,12 +3073,22 @@ ReservationKeys = Literal[
     'table',
     'memberId',
     'member',
+    'status',
+    'partySize',
+    'notes',
+    'createdAt',
+    'updatedAt',
 ]
 ReservationScalarFieldKeys = Literal[
     'id',
     'date',
     'tableId',
     'memberId',
+    'status',
+    'partySize',
+    'notes',
+    'createdAt',
+    'updatedAt',
 ]
 ReservationScalarFieldKeysT = TypeVar('ReservationScalarFieldKeysT', bound=ReservationScalarFieldKeys)
 

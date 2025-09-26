@@ -5,10 +5,13 @@ from db import connect, disconnect, prisma
 
 app = FastAPI(title="ResysPH API")
 
-# CORS (open for dev; tighten in prod)
+# CORS — restrict to your frontend in dev
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Or specify allowed origins in production
+    allow_origins=[
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -17,17 +20,16 @@ app.add_middleware(
 @app.on_event("startup")
 async def startup() -> None:
     await connect()
-    # Expose Prisma client globally if you want to access it from request.app.state
-    app.state.prisma = prisma
+    app.state.prisma = prisma  # optional: access via request.app.state.prisma
 
 @app.on_event("shutdown")
 async def shutdown() -> None:
     await disconnect()
 
-# Health check endpoint
+# Health check
 @app.get("/health")
 async def health():
     return {"status": "ok"}
 
-# Mount your API under /api
+# Mount API under /api
 app.include_router(api_router, prefix="/api")
